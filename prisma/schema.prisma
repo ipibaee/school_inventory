@@ -1,0 +1,103 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Location {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String?
+  items       Item[]
+}
+
+model Category {
+  id          String @id @default(cuid())
+  name        String @unique
+  description String?
+  items       Item[]
+}
+
+model Item {
+  id          String   @id @default(cuid())
+  name        String
+  barcode     String
+  description String?
+  quantity    Int      @default(0)
+  minStock    Int      @default(5)
+  imageUrl    String?
+  specification String?
+  
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  
+  locationId  String
+  location    Location @relation(fields: [locationId], references: [id])
+  
+  transactions Transaction[]
+  borrowings   Borrowing[]
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([barcode, locationId])
+}
+
+model Transaction {
+  id        String   @id @default(cuid())
+  type      String   // "IN" or "OUT"
+  quantity  Int
+  note      String?
+  date      DateTime @default(now())
+  
+  itemId    String
+  item      Item     @relation(fields: [itemId], references: [id])
+}
+
+model Borrowing {
+  id          String    @id @default(cuid())
+  studentName String
+  studentId   String?   // NIS/NISN (Optional now)
+  borrowDate  DateTime  @default(now())
+  dueDate     DateTime
+  returnDate  DateTime?
+  status      String    // "ACTIVE", "RETURNED", "OVERDUE"
+  condition   String?   // Condition upon return
+  
+  itemId      String
+  item        Item      @relation(fields: [itemId], references: [id])
+}
+
+model SchoolSettings {
+  id          String @id @default(cuid())
+  schoolName  String @default("Sekolah Ku")
+  address     String?
+  logoUrl     String?
+  phone       String?
+  email       String?
+  website     String?
+}
+
+model PrinterSettings {
+  id        String @id @default(cuid())
+  paperSize String @default("58mm") // "58mm" or "80mm"
+  header    String?
+  footer    String?
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String?  // For email login
+  image     String?
+  role      String   @default("TEACHER") // ADMIN, TECHNICIAN, TEACHER
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
