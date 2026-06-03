@@ -38,7 +38,7 @@ export function ThemeToggle() {
                         className={cn(
                             "p-1.5 rounded-lg transition-all duration-200 cursor-pointer outline-none relative hover:text-foreground active:scale-95",
                             isActive 
-                                ? "bg-white dark:bg-zinc-800 text-indigo-600 dark:text-indigo-400 shadow-xs border border-black/5 dark:border-white/5 scale-105" 
+                                ? "bg-white dark:bg-zinc-800 text-blue-600 dark:text-cyan-400 shadow-xs border border-black/5 dark:border-white/5 scale-105" 
                                 : "text-muted-foreground hover:bg-white/5 dark:hover:bg-white/5"
                         )}
                         title={opt.label}

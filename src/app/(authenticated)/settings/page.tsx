@@ -40,7 +40,7 @@ export default function SettingsPage() {
             toast.success("Pengaturan berhasil disimpan")
             loadSettings() // Reload to get new logo URL if changed
         } else {
-            toast.error(result.error)
+            toast.error(result.error || "Gagal menyimpan pengaturan")
         }
         setSaving(false)
     }
@@ -152,7 +152,7 @@ export default function SettingsPage() {
                                         className="w-full max-w-xs"
                                     />
                                     <p className="text-xs text-muted-foreground">
-                                        Format: PNG, JPG. Maksimal 2MB. Disarankan rasio 1:1.
+                                        Format: PNG, JPG. Maksimal 500 KB. Disarankan rasio 1:1.
                                     </p>
                                 </div>
                             </div>

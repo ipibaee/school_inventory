@@ -36,20 +36,17 @@ export async function updateSchoolSettings(formData: FormData) {
         let logoUrl = undefined
 
         if (logoFile && logoFile.size > 0) {
-            const buffer = Buffer.from(await logoFile.arrayBuffer())
-            const fileName = `logo-${Date.now()}.png`
-            const publicDir = path.join(process.cwd(), "public", "uploads")
-
-            // Ensure directory exists
-            try {
-                await fs.access(publicDir)
-            } catch {
-                await fs.mkdir(publicDir, { recursive: true })
+            const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp"]
+            if (!validTypes.includes(logoFile.type)) {
+                return { success: false, error: "Format file logo harus berupa PNG, JPG, JPEG, atau WEBP." }
+            }
+            if (logoFile.size > 500 * 1024) {
+                return { success: false, error: "Ukuran file logo maksimal adalah 500 KB." }
             }
 
-            const filePath = path.join(publicDir, fileName)
-            await fs.writeFile(filePath, buffer)
-            logoUrl = `/uploads/${fileName}`
+            const buffer = Buffer.from(await logoFile.arrayBuffer())
+            const base64String = buffer.toString("base64")
+            logoUrl = `data:${logoFile.type};base64,${base64String}`
         }
 
         const currentSettings = await prisma.schoolSettings.findFirst()

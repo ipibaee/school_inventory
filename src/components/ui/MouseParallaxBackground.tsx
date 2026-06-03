@@ -35,21 +35,21 @@ export function MouseParallaxBackground() {
         >
             {/* Ambient liquid blobs */}
             <div 
-                className="absolute w-[40vw] h-[40vw] min-w-[300px] min-h-[300px] rounded-full bg-indigo-500/20 dark:bg-indigo-600/12 blur-[100px] -top-20 -left-20 animate-float"
+                className="absolute w-[40vw] h-[40vw] min-w-[300px] min-h-[300px] rounded-full bg-blue-500/20 dark:bg-blue-600/12 blur-[100px] -top-20 -left-20 animate-float"
                 style={{
                     transform: "translate3d(calc(var(--mouse-x) * 0.7), calc(var(--mouse-y) * 0.7), 0)",
                     transition: "transform 0.1s ease-out"
                 }}
             />
             <div 
-                className="absolute w-[45vw] h-[45vw] min-w-[350px] min-h-[350px] rounded-full bg-pink-500/15 dark:bg-fuchsia-600/8 blur-[110px] -bottom-32 -right-32 animate-float-reverse"
+                className="absolute w-[45vw] h-[45vw] min-w-[350px] min-h-[350px] rounded-full bg-cyan-500/10 dark:bg-cyan-600/5 blur-[110px] -bottom-32 -right-32 animate-float-reverse"
                 style={{
                     transform: "translate3d(calc(var(--mouse-x) * -0.5), calc(var(--mouse-y) * -0.5), 0)",
                     transition: "transform 0.1s ease-out"
                 }}
             />
             <div 
-                className="absolute w-[35vw] h-[35vw] min-w-[280px] min-h-[280px] rounded-full bg-violet-400/15 dark:bg-purple-600/8 blur-[90px] top-1/3 left-1/2 animate-float"
+                className="absolute w-[35vw] h-[35vw] min-w-[280px] min-h-[280px] rounded-full bg-sky-400/10 dark:bg-blue-600/5 blur-[90px] top-1/3 left-1/2 animate-float"
                 style={{
                     transform: "translate3d(calc(var(--mouse-x) * 0.3 - 50%), calc(var(--mouse-y) * 0.3 - 50%), 0)",
                     transition: "transform 0.1s ease-out"

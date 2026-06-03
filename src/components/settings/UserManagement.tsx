@@ -108,13 +108,13 @@ export function UserManagement() {
                                         <TableCell className="font-medium">{user.name}</TableCell>
                                         <TableCell>{user.email}</TableCell>
                                         <TableCell>
-                                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${user.role === 'ADMIN' ? 'bg-purple-100 text-purple-800' :
-                                                    user.role === 'TEACHER' ? 'bg-blue-100 text-blue-800' :
-                                                        'bg-gray-100 text-gray-800'
-                                                }`}>
-                                                {user.role === 'ADMIN' ? 'Admin' :
-                                                    user.role === 'TEACHER' ? 'Guru' : 'Teknisi'}
-                                            </span>
+                                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${user.role === 'ADMIN' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
+                                                    user.role === 'TEACHER' ? 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-300' :
+                                                         'bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300'
+                                                 }`}>
+                                                 {user.role === 'ADMIN' ? 'Admin' :
+                                                     user.role === 'TEACHER' ? 'Guru' : 'Teknisi'}
+                                             </span>
                                         </TableCell>
                                         <TableCell className="text-right">
                                             <div className="flex justify-end gap-2">

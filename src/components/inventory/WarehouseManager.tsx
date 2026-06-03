@@ -176,7 +176,7 @@ function TransactionPanel({
                                 </div>
                                 <div className="text-right shrink-0">
                                     <div className="text-[10px] uppercase font-semibold text-slate-400">Stok Saat Ini</div>
-                                    <div className="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400 mt-0.5">{item.quantity}</div>
+                                    <div className="text-2xl font-extrabold text-blue-600 dark:text-cyan-400 mt-0.5">{item.quantity}</div>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +224,7 @@ function TransactionPanel({
                     </div>
                 ) : (
                     <div className="flex flex-col items-center justify-center py-10 text-slate-400 dark:text-slate-500 border-2 border-dashed border-border/40 dark:border-white/5 rounded-xl bg-white/5 dark:bg-black/5">
-                        <Package className="h-10 w-10 mb-3 opacity-30 text-indigo-500 animate-pulse" />
+                        <Package className="h-10 w-10 mb-3 opacity-30 text-blue-500 animate-pulse" />
                         <p className="text-sm font-semibold">Silakan scan barcode barang</p>
                         <p className="text-xs text-slate-400 mt-1">Masukkan 5 digit kode barcode barang Anda.</p>
                     </div>

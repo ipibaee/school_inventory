@@ -15,7 +15,7 @@ export default async function DashboardPage() {
         <div className="space-y-8 animate-fade-in">
             {/* Header section */}
             <div className="flex flex-col gap-2">
-                <h2 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-800 dark:from-white dark:via-indigo-100 dark:to-slate-200 bg-clip-text text-transparent">
+                <h2 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-blue-950 to-slate-800 dark:from-white dark:via-blue-100 dark:to-slate-200 bg-clip-text text-transparent">
                     Dasbor Inventaris
                 </h2>
                 <p className="text-slate-500 dark:text-slate-400 text-sm">
@@ -26,12 +26,12 @@ export default async function DashboardPage() {
             {/* Statistics Cards */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 {/* Total Items */}
-                <Card className="relative overflow-hidden group hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg hover:shadow-indigo-500/5 dark:hover:shadow-indigo-500/10 border-indigo-500/15 dark:border-indigo-500/5 transition-all duration-300">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full blur-2xl group-hover:bg-indigo-500/10 transition-colors" />
+                <Card className="relative overflow-hidden group hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 dark:hover:shadow-blue-500/10 border-blue-500/15 dark:border-blue-500/5 transition-all duration-300">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors" />
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400">Total Barang</CardTitle>
-                        <div className="h-8 w-8 rounded-xl bg-indigo-500/10 dark:bg-indigo-400/10 flex items-center justify-center border border-indigo-500/20">
-                            <Package className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                        <div className="h-8 w-8 rounded-xl bg-blue-500/10 dark:bg-blue-400/10 flex items-center justify-center border border-blue-500/20">
+                            <Package className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                         </div>
                     </CardHeader>
                     <CardContent className="pt-2">
@@ -39,7 +39,7 @@ export default async function DashboardPage() {
                             {stats.totalItems}
                         </div>
                         <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                            <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" /> Di semua laboratorium & ruang
+                            <span className="h-1.5 w-1.5 rounded-full bg-blue-500" /> Di semua laboratorium & ruang
                         </p>
                     </CardContent>
                 </Card>
@@ -87,12 +87,12 @@ export default async function DashboardPage() {
                 </Card>
 
                 {/* Today Transactions */}
-                <Card className="relative overflow-hidden group hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/5 dark:hover:shadow-emerald-500/10 border-emerald-500/15 dark:border-emerald-500/5 transition-all duration-300">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl group-hover:bg-emerald-500/10 transition-colors" />
+                <Card className="relative overflow-hidden group hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 border-cyan-500/15 dark:border-cyan-500/5 transition-all duration-300">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-colors" />
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400">Transaksi Hari Ini</CardTitle>
-                        <div className="h-8 w-8 rounded-xl bg-emerald-500/10 dark:bg-emerald-400/10 flex items-center justify-center border border-emerald-500/20">
-                            <TrendingUp className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                        <div className="h-8 w-8 rounded-xl bg-cyan-500/10 dark:bg-cyan-400/10 flex items-center justify-center border border-cyan-500/20">
+                            <TrendingUp className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
                         </div>
                     </CardHeader>
                     <CardContent className="pt-2">
@@ -100,7 +100,7 @@ export default async function DashboardPage() {
                             {stats.todayTransactions}
                         </div>
                         <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Mutasi keluar & masuk hari ini
+                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" /> Mutasi keluar & masuk hari ini
                         </p>
                     </CardContent>
                 </Card>
@@ -110,10 +110,10 @@ export default async function DashboardPage() {
             <div className="grid gap-6 lg:grid-cols-7">
                 {/* Recent Activities */}
                 <Card className="lg:col-span-4 border-0 shadow-lg relative overflow-hidden bg-white/30 dark:bg-zinc-950/20 backdrop-blur-xl">
-                    <div className="absolute top-0 left-0 w-full h-[2px] bg-indigo-500/20" />
+                    <div className="absolute top-0 left-0 w-full h-[2px] bg-blue-500/20" />
                     <CardHeader className="border-b border-border/40 dark:border-white/5 pb-4">
                         <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                            <Activity className="h-5 w-5 text-indigo-500" />
+                            <Activity className="h-5 w-5 text-blue-500" />
                             Aktivitas Terbaru
                         </CardTitle>
                         <CardDescription className="text-xs text-slate-400">Timeline pencatatan barang dan mutasi logistik.</CardDescription>
@@ -122,8 +122,8 @@ export default async function DashboardPage() {
                         <div className="relative pl-6 border-l-2 border-slate-200 dark:border-zinc-800 space-y-6">
                             {recentActivity.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center py-10 text-center animate-fade-in pl-0 border-l-0">
-                                    <div className="h-14 w-14 rounded-full bg-indigo-500/5 dark:bg-indigo-400/5 border border-indigo-500/10 flex items-center justify-center mb-4">
-                                        <Activity className="h-6 w-6 text-indigo-500/50" />
+                                    <div className="h-14 w-14 rounded-full bg-blue-500/5 dark:bg-blue-400/5 border border-blue-500/10 flex items-center justify-center mb-4">
+                                        <Activity className="h-6 w-6 text-blue-500/50" />
                                     </div>
                                     <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Semua Sunyi di Sini</p>
                                     <p className="text-xs text-slate-400 max-w-[280px] mt-1">Aktivitas inventaris dan transaksi baru akan muncul di timeline ini.</p>

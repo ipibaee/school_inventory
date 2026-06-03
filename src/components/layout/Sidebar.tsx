@@ -28,19 +28,19 @@ const routes = [
         label: "Inventaris",
         icon: Package,
         href: "/inventory",
-        color: "text-violet-500",
+        color: "text-blue-500",
     },
     {
         label: "Cetak Barcode",
         icon: ScanBarcode,
         href: "/inventory/barcode",
-        color: "text-indigo-500",
+        color: "text-cyan-500",
     },
     {
         label: "Peminjaman",
         icon: ShoppingCart,
         href: "/borrow",
-        color: "text-pink-600",
+        color: "text-teal-500",
     },
     {
         label: "Laporan",
@@ -52,7 +52,7 @@ const routes = [
         label: "Pengaturan",
         icon: Settings,
         href: "/settings",
-        color: "text-emerald-500",
+        color: "text-blue-600",
     },
 ]
 
@@ -104,7 +104,7 @@ export function Sidebar({ user, settings, isCollapsed = false, onToggleCollapse 
                         isCollapsed ? "justify-center pl-0" : "pl-3"
                     )}
                 >
-                    <div className={cn("relative w-8 h-8 flex items-center justify-center rounded-xl bg-indigo-500/10 dark:bg-indigo-400/10 border border-indigo-500/15 shadow-inner shrink-0", isCollapsed ? "mr-0" : "mr-4")}>
+                    <div className={cn("relative w-8 h-8 flex items-center justify-center rounded-xl bg-blue-500/10 dark:bg-cyan-400/10 border border-blue-500/15 shadow-inner shrink-0", isCollapsed ? "mr-0" : "mr-4")}>
                         {settings?.logoUrl ? (
                             <img
                                 src={settings.logoUrl}
@@ -112,12 +112,12 @@ export function Sidebar({ user, settings, isCollapsed = false, onToggleCollapse 
                                 className="w-6 h-6 object-contain"
                             />
                         ) : (
-                            <School className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                            <School className="w-5 h-5 text-blue-600 dark:text-cyan-400" />
                         )}
                     </div>
                     <h1 
                         className={cn(
-                            "text-lg font-bold tracking-tight bg-gradient-to-r from-slate-900 to-indigo-950 dark:from-white dark:to-indigo-200 bg-clip-text text-transparent truncate transition-all duration-300", 
+                            "text-lg font-bold tracking-tight bg-gradient-to-r from-slate-900 to-blue-950 dark:from-white dark:to-blue-200 bg-clip-text text-transparent truncate transition-all duration-300", 
                             isCollapsed ? "opacity-0 w-0 pointer-events-none hidden" : "opacity-100 w-auto"
                         )}
                     >
@@ -136,7 +136,7 @@ export function Sidebar({ user, settings, isCollapsed = false, onToggleCollapse 
                                 className={cn(
                                     "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-xl transition-all duration-200 active:scale-98",
                                     isActive
-                                        ? "text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 dark:bg-indigo-400/8 font-semibold shadow-xs"
+                                        ? "text-blue-600 dark:text-cyan-400 bg-blue-500/10 dark:bg-cyan-400/8 font-semibold shadow-xs"
                                         : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/50 dark:hover:bg-white/5"
                                 )}
                             >
@@ -145,7 +145,7 @@ export function Sidebar({ user, settings, isCollapsed = false, onToggleCollapse 
                                         className={cn(
                                             "h-5 w-5 transition-transform duration-300 group-hover:scale-110", 
                                             isCollapsed ? "mr-0" : "mr-3",
-                                            isActive ? "text-indigo-600 dark:text-indigo-400" : route.color
+                                            isActive ? "text-blue-600 dark:text-cyan-400" : route.color
                                         )} 
                                     />
                                     <span 
@@ -171,9 +171,9 @@ export function Sidebar({ user, settings, isCollapsed = false, onToggleCollapse 
                             "flex items-center w-full p-2 rounded-xl hover:bg-slate-100/50 dark:hover:bg-white/5 transition text-left cursor-pointer outline-none active:scale-98",
                             isCollapsed ? "justify-center" : ""
                         )}>
-                            <Avatar className={cn("h-8 w-8 shadow-xs border border-indigo-500/20 shrink-0", isCollapsed ? "mr-0" : "mr-3")}>
+                            <Avatar className={cn("h-8 w-8 shadow-xs border border-blue-500/20 shrink-0", isCollapsed ? "mr-0" : "mr-3")}>
                                 <AvatarImage src={user?.image || ""} />
-                                <AvatarFallback className="bg-gradient-to-r from-indigo-500 to-violet-500 text-white font-semibold">
+                                <AvatarFallback className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-semibold">
                                     {user?.name?.charAt(0).toUpperCase() || "U"}
                                 </AvatarFallback>
                             </Avatar>
