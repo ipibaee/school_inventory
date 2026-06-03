@@ -180,8 +180,9 @@ export function BorrowForm() {
                     <CardHeader>
                         <CardTitle>Keranjang ({cart.length} barang)</CardTitle>
                     </CardHeader>
-                    <CardContent className="flex-1 flex flex-col">
-                        <div className="flex-1 overflow-auto">
+                    <CardContent className="flex-1 flex flex-col p-4 md:p-6">
+                        {/* Desktop View */}
+                        <div className="hidden md:block flex-1 overflow-auto">
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -218,6 +219,31 @@ export function BorrowForm() {
                                     )}
                                 </TableBody>
                             </Table>
+                        </div>
+
+                        {/* Mobile View */}
+                        <div className="md:hidden flex-1 overflow-auto space-y-3">
+                            {cart.map((item) => (
+                                <div key={item.id} className="flex justify-between items-center p-3 rounded-xl border border-border/50 bg-white/20 dark:bg-black/10 backdrop-blur-md">
+                                    <div className="min-w-0 pr-2">
+                                        <div className="font-semibold text-sm text-slate-900 dark:text-white truncate">{item.name}</div>
+                                        <div className="text-xs text-slate-500 mt-1 truncate">Code: {item.barcode} • {item.location.name}</div>
+                                    </div>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => removeFromCart(item.id)}
+                                        className="text-red-600 hover:text-red-700 hover:bg-red-50 shrink-0"
+                                    >
+                                        <Trash className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            ))}
+                            {cart.length === 0 && (
+                                <div className="text-center py-8 text-muted-foreground text-sm">
+                                    Keranjang kosong. Scan barang untuk memulai.
+                                </div>
+                            )}
                         </div>
 
                         <div className="mt-8 pt-8 border-t">

@@ -176,27 +176,27 @@ export function BarcodeGenerator() {
 
     return (
         <div className="space-y-8">
-            <div className="flex justify-between items-start">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Cetak Barcode</h2>
-                    <p className="text-muted-foreground">
+            <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
+                <div className="space-y-1">
+                    <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Cetak Barcode</h2>
+                    <p className="text-sm text-muted-foreground">
                         Kelola dan cetak label barcode untuk inventaris sekolah.
                     </p>
                 </div>
-                <Card className="w-[400px]">
+                <Card className="w-full lg:w-[400px] shrink-0">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium">Pengaturan Printer (mm)</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
-                            <div className="flex gap-4">
+                            <div className="grid grid-cols-3 gap-3">
                                 <div className="space-y-1">
                                     <Label className="text-xs">Lebar Label</Label>
                                     <Input
                                         type="number"
                                         value={labelWidth}
                                         onChange={(e) => setLabelWidth(Number(e.target.value))}
-                                        className="h-8 w-20"
+                                        className="h-8 w-full"
                                     />
                                 </div>
                                 <div className="space-y-1">
@@ -205,13 +205,13 @@ export function BarcodeGenerator() {
                                         type="number"
                                         value={labelHeight}
                                         onChange={(e) => setLabelHeight(Number(e.target.value))}
-                                        className="h-8 w-20"
+                                        className="h-8 w-full"
                                     />
                                 </div>
                                 <div className="space-y-1">
                                     <Label className="text-xs">Mode</Label>
                                     <Select value={layoutMode} onValueChange={(v: "single" | "double") => setLayoutMode(v)}>
-                                        <SelectTrigger className="h-8 w-32">
+                                        <SelectTrigger className="h-8 w-full">
                                             <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
@@ -222,17 +222,19 @@ export function BarcodeGenerator() {
                                 </div>
                             </div>
 
-                            <div className="flex gap-4">
-                                {layoutMode === "double" && (
+                            <div className="grid grid-cols-2 gap-3">
+                                {layoutMode === "double" ? (
                                     <div className="space-y-1">
                                         <Label className="text-xs">Jarak (Gap)</Label>
                                         <Input
                                             type="number"
                                             value={gapSize}
                                             onChange={(e) => setGapSize(Number(e.target.value))}
-                                            className="h-8 w-20"
+                                            className="h-8 w-full"
                                         />
                                     </div>
+                                ) : (
+                                    <div />
                                 )}
                                 <div className="space-y-1">
                                     <Label className="text-xs">Skala Barcode</Label>
@@ -243,7 +245,7 @@ export function BarcodeGenerator() {
                                         step={0.1}
                                         value={barcodeScale}
                                         onChange={(e) => setBarcodeScale(Number(e.target.value))}
-                                        className="h-8 w-24"
+                                        className="h-8 w-full"
                                     />
                                 </div>
                             </div>
@@ -340,7 +342,7 @@ export function BarcodeGenerator() {
                                         placeholder="Contoh: RAM 8GB, SSD 256GB, Core i5"
                                     />
                                 </div>
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div className="space-y-2">
                                         <Label>Kategori</Label>
                                         <Select value={newItemCategory} onValueChange={setNewItemCategory}>
@@ -366,8 +368,9 @@ export function BarcodeGenerator() {
                                             value={generatedBarcode}
                                             readOnly
                                             placeholder="Klik tombol generate..."
+                                            className="w-full"
                                         />
-                                        <Button variant="outline" onClick={handleGenerateBarcode}>
+                                        <Button variant="outline" onClick={handleGenerateBarcode} className="shrink-0">
                                             <RefreshCw className="h-4 w-4 mr-2" />
                                             Generate
                                         </Button>
@@ -394,13 +397,14 @@ export function BarcodeGenerator() {
                         <CardTitle>Preview Label</CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-col items-center gap-6">
-                        <div
-                            className="border border-dashed border-gray-300 flex items-center justify-center bg-white"
-                            style={{
-                                width: `${totalPageWidth * 3.78}px`, // Approx px conversion
-                                height: `${labelHeight * 3.78}px`,
-                            }}
-                        >
+                        <div className="w-full overflow-x-auto py-4 flex justify-center scrollbar-none">
+                            <div
+                                className="border border-dashed border-gray-300 flex items-center justify-center bg-white shrink-0"
+                                style={{
+                                    width: `${totalPageWidth * 3.78}px`, // Approx px conversion
+                                    height: `${labelHeight * 3.78}px`,
+                                }}
+                            >
                             {/* Hidden Print Content - kept in DOM for react-to-print */}
                             <div style={{ position: "absolute", top: "-10000px", left: "-10000px" }}>
                                 <div ref={printRef}>
@@ -594,38 +598,38 @@ export function BarcodeGenerator() {
                                 ))}
                             </div>
                         </div>
+                    </div>
 
                         <div className="flex flex-col items-center gap-4 w-full">
-                            <div className="flex items-center gap-4 p-4 border rounded-lg bg-muted/50">
-                                <div className="flex flex-col gap-1">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-around gap-4 p-4 border rounded-lg bg-muted/50 w-full">
+                                <div className="flex flex-col gap-1 w-full sm:w-auto">
                                     <Label>Nomor Awal</Label>
                                     <Input
                                         type="number"
                                         min={1}
                                         value={startNumber}
                                         onChange={(e) => setStartNumber(Number(e.target.value))}
-                                        className="w-24"
+                                        className="w-full sm:w-24"
                                     />
                                 </div>
-                                <div className="flex flex-col gap-1">
+                                <div className="flex flex-col gap-1 w-full sm:w-auto">
                                     <Label>Nomor Akhir</Label>
                                     <Input
                                         type="number"
                                         min={startNumber}
                                         value={endNumber}
                                         onChange={(e) => setEndNumber(Number(e.target.value))}
-                                        className="w-24"
+                                        className="w-full sm:w-24"
                                     />
                                 </div>
-                                <div className="flex flex-col gap-1 justify-end h-full pt-6">
-                                    <div className="text-sm font-medium">
+                                <div className="flex flex-col gap-1 justify-end h-full pt-1 sm:pt-6 w-full sm:w-auto text-center sm:text-left">
+                                    <div className="text-sm font-semibold">
                                         Total: {totalItemsCount} Label
                                     </div>
                                 </div>
                             </div>
 
                             <Button size="lg" onClick={handlePrint} className="w-full max-w-sm">
-                                <Printer className="h-5 w-5 mr-2" />
                                 <Printer className="h-5 w-5 mr-2" />
                                 Cetak {totalItemsCount} Label Sekarang
                             </Button>

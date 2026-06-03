@@ -48,14 +48,14 @@ export function BorrowingReport() {
 
     return (
         <div className="space-y-4">
-            <div className="flex justify-between items-center print:hidden">
-                <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 print:hidden">
+                <div className="flex items-center gap-2 w-full sm:w-auto">
                     <Popover>
                         <PopoverTrigger asChild>
                             <Button
                                 variant={"outline"}
                                 className={cn(
-                                    "w-[300px] justify-start text-left font-normal",
+                                    "w-full sm:w-[300px] justify-start text-left font-normal",
                                     !date && "text-muted-foreground"
                                 )}
                             >
@@ -86,7 +86,7 @@ export function BorrowingReport() {
                         </PopoverContent>
                     </Popover>
                 </div>
-                <Button onClick={handlePrint}>
+                <Button onClick={handlePrint} className="w-full sm:w-auto">
                     <Printer className="mr-2 h-4 w-4" /> Cetak Laporan
                 </Button>
             </div>
@@ -99,59 +99,61 @@ export function BorrowingReport() {
                         <CardTitle>Riwayat Peminjam</CardTitle>
                     </CardHeader>
                     <CardContent className="p-0 print:p-0">
-                        <Table className="border print:border-black">
-                            <TableHeader>
-                                <TableRow className="print:border-black">
-                                    <TableHead className="print:text-black print:font-bold">Tanggal Pinjam</TableHead>
-                                    <TableHead className="print:text-black print:font-bold">Peminjam</TableHead>
-                                    <TableHead className="print:text-black print:font-bold">Barang</TableHead>
-                                    <TableHead className="print:text-black print:font-bold">Spesifikasi</TableHead>
-                                    <TableHead className="print:text-black print:font-bold">Tgl Kembali</TableHead>
-                                    <TableHead className="print:text-black print:font-bold">Status</TableHead>
-                                    <TableHead className="print:text-black print:font-bold">Kondisi</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {loading ? (
-                                    <TableRow>
-                                        <TableCell colSpan={7} className="text-center py-8">Memuat...</TableCell>
+                        <div className="overflow-x-auto w-full scrollbar-none">
+                            <Table className="border print:border-black">
+                                <TableHeader>
+                                    <TableRow className="print:border-black">
+                                        <TableHead className="print:text-black print:font-bold">Tanggal Pinjam</TableHead>
+                                        <TableHead className="print:text-black print:font-bold">Peminjam</TableHead>
+                                        <TableHead className="print:text-black print:font-bold">Barang</TableHead>
+                                        <TableHead className="print:text-black print:font-bold">Spesifikasi</TableHead>
+                                        <TableHead className="print:text-black print:font-bold">Tgl Kembali</TableHead>
+                                        <TableHead className="print:text-black print:font-bold">Status</TableHead>
+                                        <TableHead className="print:text-black print:font-bold">Kondisi</TableHead>
                                     </TableRow>
-                                ) : transactions.length === 0 ? (
-                                    <TableRow>
-                                        <TableCell colSpan={7} className="text-center py-8">Tidak ada riwayat peminjaman.</TableCell>
-                                    </TableRow>
-                                ) : (
-                                    transactions.map((tx) => (
-                                        <TableRow key={tx.id} className="print:border-black">
-                                            <TableCell className="whitespace-nowrap">
-                                                {format(new Date(tx.borrowDate), "dd/MM/yy")}
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className="font-medium">{tx.studentName}</div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className="font-medium">{tx.item.name}</div>
-                                                <div className="text-xs text-muted-foreground print:text-black">{tx.item.barcode}</div>
-                                            </TableCell>
-                                            <TableCell className="text-sm">
-                                                {tx.item.specification || "-"}
-                                            </TableCell>
-                                            <TableCell>
-                                                {tx.returnDate ? format(new Date(tx.returnDate), "dd/MM/yy") : "-"}
-                                            </TableCell>
-                                            <TableCell>
-                                                <Badge variant={tx.status === "RETURNED" ? "default" : "destructive"} className="print:border print:border-black print:text-black print:bg-transparent">
-                                                    {tx.status === "RETURNED" ? "DIKEMBALIKAN" : tx.status === "ACTIVE" ? "DIPINJAM" : "TERLAMBAT"}
-                                                </Badge>
-                                            </TableCell>
-                                            <TableCell>
-                                                {tx.condition || "-"}
-                                            </TableCell>
+                                </TableHeader>
+                                <TableBody>
+                                    {loading ? (
+                                        <TableRow>
+                                            <TableCell colSpan={7} className="text-center py-8">Memuat...</TableCell>
                                         </TableRow>
-                                    ))
-                                )}
-                            </TableBody>
-                        </Table>
+                                    ) : transactions.length === 0 ? (
+                                        <TableRow>
+                                            <TableCell colSpan={7} className="text-center py-8">Tidak ada riwayat peminjaman.</TableCell>
+                                        </TableRow>
+                                    ) : (
+                                        transactions.map((tx) => (
+                                            <TableRow key={tx.id} className="print:border-black">
+                                                <TableCell className="whitespace-nowrap">
+                                                    {format(new Date(tx.borrowDate), "dd/MM/yy")}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="font-medium">{tx.studentName}</div>
+                                                </TableCell>
+                                                <TableCell>
+                                                    <div className="font-medium">{tx.item.name}</div>
+                                                    <div className="text-xs text-muted-foreground print:text-black">{tx.item.barcode}</div>
+                                                </TableCell>
+                                                <TableCell className="text-sm">
+                                                    {tx.item.specification || "-"}
+                                                </TableCell>
+                                                <TableCell>
+                                                    {tx.returnDate ? format(new Date(tx.returnDate), "dd/MM/yy") : "-"}
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Badge variant={tx.status === "RETURNED" ? "default" : "destructive"} className="print:border print:border-black print:text-black print:bg-transparent">
+                                                        {tx.status === "RETURNED" ? "DIKEMBALIKAN" : tx.status === "ACTIVE" ? "DIPINJAM" : "TERLAMBAT"}
+                                                    </Badge>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {tx.condition || "-"}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </div>
                     </CardContent>
                 </Card>
             </div>

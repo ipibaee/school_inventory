@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { Sidebar } from "@/components/layout/Sidebar"
 import { Header } from "@/components/layout/Header"
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav"
 import { User } from "next-auth"
 
 interface AuthenticatedLayoutClientProps {
@@ -52,12 +53,15 @@ export function AuthenticatedLayoutClient({
                         settings={settings}
                     />
                 </div>
-                <main className="flex-1 overflow-y-auto print:overflow-visible relative z-10 animate-fade-in px-4 md:px-8 py-6">
+                <main className="flex-1 overflow-y-auto print:overflow-visible relative z-10 animate-fade-in px-4 md:px-8 pt-6 pb-28 md:py-6">
                     <div className="max-w-[1600px] mx-auto w-full">
                         {children}
                     </div>
                 </main>
             </div>
+
+            {/* Mobile Bottom Navigation */}
+            <MobileBottomNav user={user} />
         </div>
     )
 }
