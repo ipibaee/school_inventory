@@ -77,10 +77,10 @@ export default async function InventoryPage() {
                 <TabsContent value="list">
                     <Tabs defaultValue="all" className="space-y-4">
                         <div className="flex items-center justify-between">
-                            <TabsList className="h-auto flex-wrap justify-start gap-2 bg-transparent p-0">
+                            <TabsList className="h-auto flex-wrap justify-start gap-1.5 bg-transparent border-0 p-0">
                                 <TabsTrigger
                                     value="all"
-                                    className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border"
+                                    className="data-[state=active]:bg-indigo-600 dark:data-[state=active]:bg-indigo-500 data-[state=active]:text-white rounded-xl border border-border/50 dark:border-white/5 bg-white/40 dark:bg-black/25 text-slate-700 dark:text-slate-300 shadow-xs px-4 py-2"
                                 >
                                     Semua Barang
                                 </TabsTrigger>
@@ -88,7 +88,7 @@ export default async function InventoryPage() {
                                     <TabsTrigger
                                         key={loc.id}
                                         value={loc.id}
-                                        className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground border"
+                                        className="data-[state=active]:bg-indigo-600 dark:data-[state=active]:bg-indigo-500 data-[state=active]:text-white rounded-xl border border-border/50 dark:border-white/5 bg-white/40 dark:bg-black/25 text-slate-700 dark:text-slate-300 shadow-xs px-4 py-2"
                                     >
                                         {loc.name}
                                     </TabsTrigger>

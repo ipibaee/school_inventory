@@ -131,7 +131,7 @@ export default function SettingsPage() {
                         <div className="space-y-4 pt-4 border-t">
                             <Label>Logo Sekolah</Label>
                             <div className="flex items-center gap-6">
-                                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 h-32 w-32 flex items-center justify-center bg-gray-50 relative overflow-hidden">
+                                <div className="border-2 border-dashed border-border/60 rounded-2xl p-4 h-32 w-32 flex items-center justify-center bg-white/10 dark:bg-black/20 relative overflow-hidden transition-all hover:bg-white/20 dark:hover:bg-black/35 shadow-inner">
                                     {logoPreview ? (
                                         <Image
                                             src={logoPreview}
@@ -140,7 +140,7 @@ export default function SettingsPage() {
                                             className="object-contain p-2"
                                         />
                                     ) : (
-                                        <span className="text-xs text-gray-400 text-center">Belum ada logo</span>
+                                        <span className="text-xs text-slate-400 dark:text-slate-500 text-center font-medium">Belum ada logo</span>
                                     )}
                                 </div>
                                 <div className="space-y-2">
