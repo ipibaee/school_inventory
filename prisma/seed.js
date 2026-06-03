@@ -56,6 +56,21 @@ async function main() {
         },
     })
 
+    // Create Custom Admin User for SMK HKTI 2
+    const customHashedPassword = await bcrypt.hash('admin1234', 10)
+    await prisma.user.upsert({
+        where: { email: 'admin@smkhkti2.sch.id' },
+        update: {
+            password: customHashedPassword,
+        },
+        create: {
+            name: 'Admin SMK HKTI 2',
+            email: 'admin@smkhkti2.sch.id',
+            password: customHashedPassword,
+            role: 'ADMIN',
+        },
+    })
+
     console.log('Seed data created successfully')
 }
 
