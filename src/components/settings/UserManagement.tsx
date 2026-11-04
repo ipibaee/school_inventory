@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { getUsers, deleteUser } from "@/actions/users"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import {
     Table,
     TableBody,
@@ -11,8 +12,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { User, Plus, Pencil, Trash2 } from "lucide-react"
+import { Users, Plus, Pencil, Trash2 } from "lucide-react"
 import { UserForm } from "./UserForm"
 import { toast } from "sonner"
 import {
@@ -25,6 +25,12 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+
+function roleBadge(role: string) {
+    if (role === "ADMIN") return <Badge variant="brand">Admin</Badge>
+    if (role === "TEACHER") return <Badge variant="mint">Guru</Badge>
+    return <Badge variant="secondary">Teknisi</Badge>
+}
 
 export function UserManagement() {
     const [users, setUsers] = useState<any[]>([])
@@ -40,9 +46,7 @@ export function UserManagement() {
         setLoading(false)
     }
 
-    useEffect(() => {
-        fetchUsers()
-    }, [])
+    useEffect(() => { fetchUsers() }, [])
 
     const handleAdd = () => {
         setSelectedUser(null)
@@ -67,72 +71,75 @@ export function UserManagement() {
     }
 
     return (
-        <div className="space-y-4">
-            <div className="flex justify-end">
-                <Button onClick={handleAdd}>
-                    <Plus className="mr-2 h-4 w-4" /> Tambah Pengguna
+        <div className="rounded-2xl border border-line bg-surface overflow-hidden">
+            {/* Head */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-line">
+                <div className="flex items-center gap-2.5">
+                    <Users className="size-4 text-muted-ink" />
+                    <div className="flex flex-col gap-0.5">
+                        <span className="text-[14.5px] font-bold text-ink">Manajemen Pengguna</span>
+                        <span className="text-[11px] text-muted-ink">Kelola pengguna yang memiliki akses ke aplikasi.</span>
+                    </div>
+                </div>
+                <Button variant="primary" size="sm" onClick={handleAdd}>
+                    <Plus className="h-3.5 w-3.5" />
+                    Tambah
                 </Button>
             </div>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <User className="h-5 w-5" /> Daftar Pengguna
-                    </CardTitle>
-                    <CardDescription>
-                        Kelola pengguna yang memiliki akses ke aplikasi.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Nama</TableHead>
-                                <TableHead>Email</TableHead>
-                                <TableHead>Peran</TableHead>
-                                <TableHead className="text-right">Aksi</TableHead>
+            {/* Table */}
+            <Table>
+                <TableHeader>
+                    <TableRow>
+                        <TableHead>Nama</TableHead>
+                        <TableHead className="hidden sm:table-cell">Email</TableHead>
+                        <TableHead>Peran</TableHead>
+                        <TableHead className="text-right">Aksi</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {loading ? (
+                        <TableRow>
+                            <TableCell colSpan={4} className="text-center py-8 text-muted-ink text-sm">
+                                Memuat data pengguna…
+                            </TableCell>
+                        </TableRow>
+                    ) : users.length === 0 ? (
+                        <TableRow>
+                            <TableCell colSpan={4} className="text-center py-8 text-muted-ink text-sm">
+                                Belum ada pengguna terdaftar.
+                            </TableCell>
+                        </TableRow>
+                    ) : (
+                        users.map((user) => (
+                            <TableRow key={user.id}>
+                                <TableCell className="font-medium text-[13px] text-ink">{user.name}</TableCell>
+                                <TableCell className="hidden sm:table-cell text-[12.5px] text-muted-ink">{user.email}</TableCell>
+                                <TableCell>{roleBadge(user.role)}</TableCell>
+                                <TableCell className="text-right">
+                                    <div className="flex justify-end gap-1">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={() => handleEdit(user)}
+                                        >
+                                            <Pencil className="h-3.5 w-3.5" />
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="text-rose hover:text-rose hover:bg-rose/10"
+                                            onClick={() => setDeleteId(user.id)}
+                                        >
+                                            <Trash2 className="h-3.5 w-3.5" />
+                                        </Button>
+                                    </div>
+                                </TableCell>
                             </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {loading ? (
-                                <TableRow>
-                                    <TableCell colSpan={4} className="text-center py-8">Memuat...</TableCell>
-                                </TableRow>
-                            ) : users.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={4} className="text-center py-8">Tidak ada pengguna.</TableCell>
-                                </TableRow>
-                            ) : (
-                                users.map((user) => (
-                                    <TableRow key={user.id}>
-                                        <TableCell className="font-medium">{user.name}</TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>
-                                            <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${user.role === 'ADMIN' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300' :
-                                                    user.role === 'TEACHER' ? 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/30 dark:text-cyan-300' :
-                                                         'bg-slate-100 text-slate-800 dark:bg-slate-900/30 dark:text-slate-300'
-                                                 }`}>
-                                                 {user.role === 'ADMIN' ? 'Admin' :
-                                                     user.role === 'TEACHER' ? 'Guru' : 'Teknisi'}
-                                             </span>
-                                        </TableCell>
-                                        <TableCell className="text-right">
-                                            <div className="flex justify-end gap-2">
-                                                <Button variant="ghost" size="icon" onClick={() => handleEdit(user)}>
-                                                    <Pencil className="h-4 w-4" />
-                                                </Button>
-                                                <Button variant="ghost" size="icon" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => setDeleteId(user.id)}>
-                                                    <Trash2 className="h-4 w-4" />
-                                                </Button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))
-                            )}
-                        </TableBody>
-                    </Table>
-                </CardContent>
-            </Card>
+                        ))
+                    )}
+                </TableBody>
+            </Table>
 
             <UserForm
                 open={isFormOpen}
@@ -151,7 +158,7 @@ export function UserManagement() {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel>Batal</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
+                        <AlertDialogAction onClick={handleDelete} className="bg-rose hover:bg-rose/90 text-white">
                             Hapus
                         </AlertDialogAction>
                     </AlertDialogFooter>

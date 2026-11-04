@@ -1,284 +1,300 @@
+/* =============================================================================
+   HIKA Inventaris — Design tokens (v1)
+   Drop-in replacement for the theme layer of src/app/globals.css
+   Tailwind CSS v4 · next-themes class strategy (.dark)
+   -----------------------------------------------------------------------------
+   Sumber nilai: file desain iventaris.pen (variabel tema mode=light|dark)
+   ========================================================================== */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* --- shadcn/ui compatibility (nama lama tetap dipakai komponen lama) --- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  
-  /* Additional customized theme variables */
-  --color-glass-bg: var(--glass-bg);
-  --color-glass-border: var(--glass-border);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* --- design-system names (dipakai komponen baru) --- */
+  --color-app: var(--app-bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted-ink: var(--muted-ink);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-soft: var(--brand-soft);
+  --color-navy: var(--navy);
+  --color-navy-2: var(--navy-2);
+  --color-mint: var(--mint);
+  --color-mint-soft: var(--mint-soft);
+  --color-amber: var(--amber);
+  --color-amber-soft: var(--amber-soft);
+  --color-rose: var(--rose);
+  --color-rose-soft: var(--rose-soft);
+  --color-cyan: var(--cyan);
+
+  /* sidebar (shadcn sidebar primitive kalau dipakai) */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* radius */
+  --radius-sm: 0.375rem; /* 6px  — micro tag */
+  --radius-md: 0.5rem; /* 8px  — icon button kecil */
+  --radius-lg: 0.625rem; /* 10px — field, button, nav item */
+  --radius-xl: 0.75rem; /* 12px — user card sidebar */
+  --radius-2xl: 0.875rem; /* 14px — kartu mobile */
+  --radius-3xl: 1rem; /* 16px — kartu desktop */
+  --radius-card: 1rem;
+  --radius-pill: 9999px;
+
+  /* tipografi */
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plus-jakarta), ui-monospace, monospace;
+
+  /* shadow */
+  --shadow-panel: 0 1px 2px 0 rgb(11 27 46 / 0.04);
+  --shadow-dialog: 0 18px 48px -12px rgb(11 27 46 / 0.28),
+    0 2px 6px -2px rgb(11 27 46 / 0.08);
 }
 
+/* ============================== LIGHT (default) =========================== */
 :root {
-  --radius: 0.85rem;
-  --background: oklch(0.965 0.015 220);
-  --foreground: oklch(0.15 0.02 230);
-  --card: rgba(255, 255, 255, 0.45);
-  --card-foreground: oklch(0.15 0.02 230);
-  --popover: rgba(255, 255, 255, 0.85);
-  --popover-foreground: oklch(0.15 0.02 230);
-  --primary: oklch(0.48 0.18 230);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.92 0.02 220);
-  --secondary-foreground: oklch(0.35 0.12 230);
-  --muted: oklch(0.92 0.02 220);
-  --muted-foreground: oklch(0.55 0.02 230);
-  --accent: oklch(0.92 0.02 220);
-  --accent-foreground: oklch(0.35 0.12 230);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: rgba(148, 163, 184, 0.12);
-  --input: rgba(148, 163, 184, 0.1);
-  --ring: oklch(0.48 0.18 230);
-  
-  --chart-1: oklch(0.48 0.18 230);
-  --chart-2: oklch(0.68 0.16 210);
-  --chart-3: oklch(0.4 0.11 200);
-  --chart-4: oklch(0.78 0.12 180);
-  --chart-5: oklch(0.52 0.15 240);
-  
-  --sidebar: rgba(255, 255, 255, 0.6);
-  --sidebar-foreground: oklch(0.15 0.02 230);
-  --sidebar-primary: oklch(0.48 0.18 230);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: rgba(148, 163, 184, 0.08);
-  --sidebar-accent-foreground: oklch(0.35 0.12 230);
-  --sidebar-border: rgba(148, 163, 184, 0.12);
-  --sidebar-ring: oklch(0.48 0.18 230);
+  --radius: 0.625rem;
 
-  /* Glass variables light mode */
-  --glass-bg: rgba(255, 255, 255, 0.4);
-  --glass-panel-bg: rgba(255, 255, 255, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-shadow: rgba(15, 23, 42, 0.05);
-  --glass-glow: rgba(59, 130, 246, 0.08);
+  /* design tokens */
+  --app-bg: #f4f7fb;
+  --surface: #ffffff;
+  --surface-2: #fafcfe;
+  --line: #e3eaf3;
+  --ink: #0b1b2e;
+  --ink-soft: #3b4a5f;
+  --muted-ink: #74849a;
+  --brand: #2b4eff;
+  --brand-deep: #1633c7;
+  --brand-soft: #ebefff;
+  --navy: #0a1730;
+  --navy-2: #122444;
+  --mint: #0ea47a;
+  --mint-soft: #e4f7f0;
+  --amber: #c77605;
+  --amber-soft: #fdf2de;
+  --rose: #d93a47;
+  --rose-soft: #fdebec;
+  --cyan: #0e9bb5;
+
+  /* sidebar-local colors (di luar token global, dipakai di Sidebar) */
+  --nav-active: #1b3364;
+  --nav-idle: #93a7c4;
+  --nav-label: #5c7295;
+  --nav-brand-product: #8296b4;
+
+  /* shadcn mapping */
+  --background: var(--app-bg);
+  --foreground: var(--ink);
+  --card: var(--surface);
+  --card-foreground: var(--ink);
+  --popover: var(--surface);
+  --popover-foreground: var(--ink);
+  --primary: var(--brand);
+  --primary-foreground: #ffffff;
+  --secondary: var(--brand-soft);
+  --secondary-foreground: var(--brand-deep);
+  --muted: #eef3f9;
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--brand-soft);
+  --accent-foreground: var(--brand-deep);
+  --destructive: var(--rose);
+  --destructive-foreground: #ffffff;
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--brand);
+
+  --chart-1: #2b4eff;
+  --chart-2: #0ea47a;
+  --chart-3: #0e9bb5;
+  --chart-4: #c77605;
+  --chart-5: #8b95a8;
+
+  --sidebar: var(--navy);
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: var(--brand);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--nav-active);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: rgb(255 255 255 / 0.06);
+  --sidebar-ring: var(--brand);
 }
 
+/* ================================== DARK ================================== */
 .dark {
-  --background: oklch(0.11 0.02 230);
-  --foreground: oklch(0.985 0.005 220);
-  --card: rgba(10, 18, 40, 0.45);
-  --card-foreground: oklch(0.985 0.005 220);
-  --popover: rgba(10, 18, 40, 0.85);
-  --popover-foreground: oklch(0.985 0.005 220);
-  --primary: oklch(0.64 0.17 210);
-  --primary-foreground: oklch(0.11 0.02 230);
-  --secondary: oklch(0.16 0.02 230);
-  --secondary-foreground: oklch(0.985 0.005 220);
-  --muted: oklch(0.16 0.02 230);
-  --muted-foreground: oklch(0.68 0.01 220);
-  --accent: oklch(0.16 0.02 230);
-  --accent-foreground: oklch(0.985 0.005 220);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: rgba(255, 255, 255, 0.06);
-  --input: rgba(255, 255, 255, 0.04);
-  --ring: oklch(0.64 0.17 210);
-  
-  --chart-1: oklch(0.64 0.17 210);
-  --chart-2: oklch(0.48 0.18 230);
-  --chart-3: oklch(0.4 0.11 200);
-  --chart-4: oklch(0.78 0.12 180);
-  --chart-5: oklch(0.52 0.15 240);
-  
-  --sidebar: rgba(10, 18, 40, 0.65);
-  --sidebar-foreground: oklch(0.985 0.005 220);
-  --sidebar-primary: oklch(0.64 0.17 210);
-  --sidebar-primary-foreground: oklch(0.11 0.02 230);
-  --sidebar-accent: rgba(255, 255, 255, 0.04);
-  --sidebar-accent-foreground: oklch(0.985 0.005 220);
-  --sidebar-border: rgba(255, 255, 255, 0.06);
-  --sidebar-ring: oklch(0.64 0.17 210);
+  --app-bg: #202124;
+  --surface: #292a2d;
+  --surface-2: #303134;
+  --line: #3c4043;
+  --ink: #e8eaed;
+  --ink-soft: #bdc1c6;
+  --muted-ink: #9aa0a6;
+  --brand: #1a73e8;
+  --brand-deep: #8ab4f8;
+  --brand-soft: #2d3037;
+  --navy: #1b1c1f;
+  --navy-2: #2a2b2e;
+  --mint: #81c995;
+  --mint-soft: #2c3630;
+  --amber: #fdd663;
+  --amber-soft: #38321f;
+  --rose: #f28b82;
+  --rose-soft: #3a2b2a;
+  --cyan: #78d9ec;
 
-  /* Glass variables dark mode */
-  --glass-bg: rgba(10, 18, 40, 0.45);
-  --glass-panel-bg: rgba(8, 14, 32, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-shadow: rgba(0, 0, 0, 0.35);
-  --glass-glow: rgba(59, 130, 246, 0.1);
+  --nav-active: #34373d;
+  --nav-idle: #9aa0a6;
+  --nav-label: #6b7076;
+  --nav-brand-product: #9aa0a6;
+
+  --secondary: var(--brand-soft);
+  --secondary-foreground: var(--brand-deep);
+  --muted: #303134;
+  --muted-foreground: var(--muted-ink);
+  --accent: var(--brand-soft);
+  --accent-foreground: var(--brand-deep);
+  --destructive-foreground: #202124;
+
+  --chart-1: #8ab4f8;
+  --chart-2: #81c995;
+  --chart-3: #78d9ec;
+  --chart-4: #fdd663;
+  --chart-5: #bdc1c6;
 }
 
+/* ================================= BASE =================================== */
 @layer base {
   * {
-    @apply border-border/80 outline-ring/50 transition-colors duration-200;
+    @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground min-h-screen font-sans antialiased selection:bg-primary/20;
+    @apply min-h-screen bg-app font-sans text-ink antialiased;
+    font-feature-settings: "ss01" 1;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--brand) 18%, transparent);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-extrabold tracking-[-0.02em] text-ink;
+  }
+
+  :focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--brand) 55%, transparent);
+    outline-offset: 2px;
   }
 }
 
-/* Glassmorphism Utilities */
+/* =============================== UTILITIES ================================ */
+/* Kartu standar: surface + border 1px + radius 16. Ini pengganti glass-card. */
+@utility panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+/* Kartu mobile: radius 14 */
+@utility panel-sm {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 0.875rem;
+}
+
+/* Baris tabel / list */
+@utility row-divide {
+  border-bottom: 1px solid var(--line);
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* Label kecil kapital */
+@utility label-caps {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted-ink);
+}
+
+/* Angka barcode / kode */
+@utility code-ink {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* -------------------------------------------------------------------------
+   Kompatibilitas sementara: komponen lama masih memakai kelas glass-*.
+   Nilainya sudah "flat" supaya tidak ada glassmorphism tersisa.
+   Hapus kelas ini setelah semua pemakaian dimigrasi ke `panel`.
+   ------------------------------------------------------------------------- */
 @utility glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 10px 30px -10px var(--glass-shadow), inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
 }
 
 @utility glass-panel {
-  background: var(--glass-panel-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border-right: 1px solid var(--glass-border);
-  box-shadow: 4px 0 24px -4px var(--glass-shadow);
+  background: var(--navy);
+  border-right: 1px solid var(--line);
 }
 
 @utility glass-input {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-  .dark & {
-    background: rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 
 @utility glass-button {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  .dark & {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
+  background: var(--surface);
+  border: 1px solid var(--line);
 }
 
-/* Animations */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-  50% {
-    transform: translateY(-25px) rotate(5deg) scale(1.04);
-  }
-}
-
-@keyframes float-reverse {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg) scale(1);
-  }
-  50% {
-    transform: translateY(25px) rotate(-5deg) scale(0.96);
-  }
-}
-
+/* ============================== ANIMATIONS ================================ */
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@utility animate-float {
-  animation: float 10s ease-in-out infinite;
-}
-
-@utility animate-float-reverse {
-  animation: float-reverse 12s ease-in-out infinite;
-}
-
-@utility animate-fade-in {
-  animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.25);
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.45);
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-}
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.25);
-}
-
-/* Webkit Backdrop Filter Compatibility */
-.backdrop-blur-md {
-  -webkit-backdrop-filter: blur(12px);
-}
-.backdrop-blur-lg {
-  -webkit-backdrop-filter: blur(16px);
-}
-.backdrop-blur-xl {
-  -webkit-backdrop-filter: blur(24px);
-}
-
-/* Print Overrides to strip glassmorphism and force high contrast */
-@media print {
-  .glass-card, .glass-panel, .glass-input, .glass-button, Card, input, button {
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border: 1px solid #000 !important;
-    color: #000 !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-  body {
-    background: white !important;
-    color: black !important;
-  }
-}
-
-@utility scrollbar-none {
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
   }
 }
 
@@ -291,7 +307,82 @@
   }
 }
 
-@utility animate-slide-up {
-  animation: slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+@keyframes scan-line {
+  0% {
+    transform: translateY(-40%);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(40%);
+    opacity: 0.2;
+  }
 }
 
+@utility animate-fade-in {
+  animation: fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@utility animate-slide-up {
+  animation: slide-up 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@utility animate-scan-line {
+  animation: scan-line 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-scan-line {
+    animation: none !important;
+  }
+}
+
+/* ============================== SCROLLBAR ================================= */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--muted-ink) 28%, transparent);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--muted-ink) 45%, transparent);
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ================================= PRINT ================================== */
+/* Label barcode & laporan harus bersih: tanpa shadow, tanpa warna dekoratif. */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  .panel,
+  .panel-sm,
+  .glass-card,
+  .glass-panel,
+  .glass-input,
+  .glass-button {
+    background: #fff !important;
+    border: 1px solid #000 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

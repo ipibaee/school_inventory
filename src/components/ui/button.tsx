@@ -5,28 +5,28 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive active:scale-96",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[10px] text-[13.5px] font-bold transition-colors disabled:pointer-events-none disabled:opacity-45 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-brand/40 active:translate-y-px cursor-pointer",
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-500 dark:to-cyan-500 text-white shadow-md shadow-blue-500/10 hover:shadow-lg hover:shadow-blue-500/25 hover:brightness-110",
-        destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "glass-button text-foreground hover:bg-white/10 dark:hover:bg-black/20 hover:text-foreground",
-        secondary:
-          "bg-secondary/60 backdrop-blur-xs text-secondary-foreground hover:bg-secondary/80",
-        ghost:
-          "hover:bg-accent/40 hover:text-accent-foreground dark:hover:bg-accent/20",
-        link: "text-blue-600 dark:text-cyan-400 underline-offset-4 hover:underline",
+        default: "bg-brand text-white hover:bg-brand/90 shadow-none",
+        primary: "bg-brand text-white hover:bg-brand/90 shadow-none",
+        destructive: "bg-rose-soft text-rose hover:bg-rose-soft/80 border border-transparent",
+        danger: "bg-rose-soft text-rose hover:bg-rose-soft/80 border border-transparent",
+        outline: "bg-surface text-ink-soft border border-line hover:bg-surface-2",
+        secondary: "bg-surface text-ink-soft border border-line hover:bg-surface-2",
+        soft: "bg-brand-soft text-brand-deep hover:bg-brand-soft/80",
+        ghost: "text-muted-ink hover:text-ink hover:bg-surface-2",
+        link: "text-brand underline-offset-4 hover:underline",
+        icon: "bg-surface text-muted-ink border border-line hover:text-ink hover:bg-surface-2",
       },
       size: {
-        default: "h-10 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-lg gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-11 rounded-xl px-6 has-[>svg]:px-4",
-        icon: "size-10",
-        "icon-sm": "size-8",
-        "icon-lg": "size-12",
+        default: "h-10 px-[18px] py-[11px]",
+        sm: "h-8 rounded-[9px] px-3.5 py-1.5 text-xs",
+        lg: "h-11 rounded-[10px] px-6 text-sm",
+        icon: "size-[38px] p-0",
+        "icon-sm": "size-8 rounded-[9px] p-0",
+        "icon-lg": "size-11 rounded-[10px] p-0",
       },
     },
     defaultVariants: {

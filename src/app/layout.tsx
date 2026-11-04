@@ -1,16 +1,21 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner"
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
-import { ThemeProvider } from "@/components/ThemeProvider"
+import { Toaster } from "@/components/ui/sonner";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const jakarta = Plus_Jakarta_Sans({
+    subsets: ["latin"],
+    weight: ["200", "300", "400", "500", "600", "700", "800"],
+    variable: "--font-plus-jakarta",
+    display: "swap",
+});
 
 export const metadata: Metadata = {
-    title: "School Inventory System",
-    description: "Management system for school inventory and labs",
+    title: "HIKA Inventaris · SMK HKTI 2",
+    description: "Sistem Manajemen Inventaris & Laboratorium SMK HKTI 2 Purwareja Klampok",
 };
 
 export default function RootLayout({
@@ -19,8 +24,8 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
-            <body className={inter.className}>
+        <html lang="id" className={jakarta.variable} suppressHydrationWarning>
+            <body className="min-h-screen bg-app font-sans text-ink antialiased">
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -36,4 +41,3 @@ export default function RootLayout({
         </html>
     );
 }
-

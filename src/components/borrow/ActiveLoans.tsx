@@ -1,20 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { getActiveLoans, returnItem } from "@/actions/borrow"
 import { format, isPast, differenceInDays } from "date-fns"
-import { AlertCircle, Clock, CheckCircle2 } from "lucide-react"
+import { id } from "date-fns/locale"
+import { Clock, Loader2, ArrowRight } from "lucide-react"
 import { toast } from "sonner"
 import {
     AlertDialog,
@@ -28,7 +20,12 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-export function ActiveLoans() {
+interface ActiveLoansProps {
+    compact?: boolean
+    onUpdated?: () => void
+}
+
+export function ActiveLoans({ compact = false, onUpdated }: ActiveLoansProps) {
     const [loans, setLoans] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
@@ -48,105 +45,105 @@ export function ActiveLoans() {
         if (result.success) {
             toast.success("Barang berhasil dikembalikan")
             fetchLoans()
+            onUpdated?.()
         } else {
             toast.error("Gagal mengembalikan barang")
         }
     }
 
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                    <Clock className="h-5 w-5" /> Peminjaman Aktif
-                </CardTitle>
-            </CardHeader>
-            <CardContent>
-                <div className="rounded-md border">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead>Peminjam</TableHead>
-                                <TableHead>Barang</TableHead>
-                                <TableHead>Tanggal Pinjam</TableHead>
-                                <TableHead>Tanggal Kembali</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead className="text-right">Aksi</TableHead>
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {loading ? (
-                                <TableRow>
-                                    <TableCell colSpan={6} className="text-center py-8">
-                                        Memuat...
-                                    </TableCell>
-                                </TableRow>
-                            ) : loans.length === 0 ? (
-                                <TableRow>
-                                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                                        Tidak ada peminjaman aktif.
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                loans.map((loan) => {
-                                    const isOverdue = isPast(new Date(loan.dueDate)) && differenceInDays(new Date(), new Date(loan.dueDate)) > 0
-
-                                    return (
-                                        <TableRow key={loan.id}>
-                                            <TableCell>
-                                                <div className="font-medium">{loan.studentName}</div>
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className="font-medium">{loan.item.name}</div>
-                                                <div className="text-xs text-muted-foreground">{loan.item.barcode}</div>
-                                            </TableCell>
-                                            <TableCell>{format(new Date(loan.borrowDate), "dd MMM yyyy")}</TableCell>
-                                            <TableCell>
-                                                <div className={isOverdue ? "text-red-600 font-bold" : ""}>
-                                                    {format(new Date(loan.dueDate), "dd MMM yyyy")}
-                                                </div>
-                                            </TableCell>
-                                            <TableCell>
-                                                {isOverdue ? (
-                                                    <Badge variant="destructive" className="flex w-fit items-center gap-1">
-                                                        <AlertCircle className="h-3 w-3" /> Terlambat
-                                                    </Badge>
-                                                ) : (
-                                                    <Badge variant="secondary" className="bg-green-100 text-green-800 hover:bg-green-100">
-                                                        Aktif
-                                                    </Badge>
-                                                )}
-                                            </TableCell>
-                                            <TableCell className="text-right">
-                                                <AlertDialog>
-                                                    <AlertDialogTrigger asChild>
-                                                        <Button size="sm" variant="outline">Kembalikan</Button>
-                                                    </AlertDialogTrigger>
-                                                    <AlertDialogContent>
-                                                        <AlertDialogHeader>
-                                                            <AlertDialogTitle>Konfirmasi Pengembalian</AlertDialogTitle>
-                                                            <AlertDialogDescription>
-                                                                Apakah Anda yakin ingin menandai barang ini sudah dikembalikan?
-                                                                Ini mengasumsikan barang dalam kondisi <strong>Baik</strong>.
-                                                                Untuk kondisi lain, gunakan tab "Kembalikan Barang".
-                                                            </AlertDialogDescription>
-                                                        </AlertDialogHeader>
-                                                        <AlertDialogFooter>
-                                                            <AlertDialogCancel>Batal</AlertDialogCancel>
-                                                            <AlertDialogAction onClick={() => handleQuickReturn(loan.id)}>
-                                                                Konfirmasi Pengembalian
-                                                            </AlertDialogAction>
-                                                        </AlertDialogFooter>
-                                                    </AlertDialogContent>
-                                                </AlertDialog>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })
-                            )}
-                        </TableBody>
-                    </Table>
+        <div className="panel rounded-2xl flex flex-col overflow-hidden">
+            <div className="flex items-center justify-between p-4 lg:p-[18px_20px] border-b border-line bg-surface">
+                <div className="flex items-center gap-2">
+                    <span className="size-7 rounded-[8px] bg-amber-soft grid place-items-center text-amber shrink-0">
+                        <Clock className="size-3.5" />
+                    </span>
+                    <h3 className="text-[14.5px] font-bold text-ink">
+                        Peminjaman Aktif
+                    </h3>
                 </div>
-            </CardContent>
-        </Card>
+                <Badge variant="warning" className="text-[10px] px-2 py-0.5">
+                    {loans.length}
+                </Badge>
+            </div>
+
+            <div className="p-4 lg:p-[18px_20px] flex flex-col gap-3 overflow-y-auto max-h-[500px]">
+                {loading ? (
+                    <div className="flex items-center justify-center py-10 text-muted-ink">
+                        <Loader2 className="size-5 animate-spin mr-2" />
+                        <span className="text-xs">Memuat data peminjaman...</span>
+                    </div>
+                ) : loans.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-8 text-center text-xs text-muted-ink">
+                        Tidak ada peminjaman aktif saat ini.
+                    </div>
+                ) : (
+                    loans.map((loan) => {
+                        const isOverdue =
+                            isPast(new Date(loan.dueDate)) &&
+                            differenceInDays(new Date(), new Date(loan.dueDate)) > 0
+
+                        return (
+                            <div
+                                key={loan.id}
+                                className="p-3 rounded-[10px] bg-surface-2 border border-line flex flex-col gap-2"
+                            >
+                                <div className="flex items-start justify-between gap-2">
+                                    <div className="flex flex-col min-w-0">
+                                        <span className="text-xs font-bold text-ink truncate">
+                                            {loan.studentName}
+                                        </span>
+                                        <span className="text-[11px] text-muted-ink truncate">
+                                            {loan.item?.name} · {loan.item?.barcode}
+                                        </span>
+                                    </div>
+                                    <Badge
+                                        variant={isOverdue ? "rose" : "warning"}
+                                        dot
+                                        className="text-[10px] px-2 py-0 shrink-0"
+                                    >
+                                        {isOverdue ? "Terlambat" : "Dipinjam"}
+                                    </Badge>
+                                </div>
+
+                                <div className="flex items-center justify-between text-[10.5px] text-muted-ink pt-1 border-t border-line/60">
+                                    <span>
+                                        Tenggat: {format(new Date(loan.dueDate), "d MMM yyyy", { locale: id })}
+                                    </span>
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <button
+                                                type="button"
+                                                className="font-bold text-brand hover:underline cursor-pointer"
+                                            >
+                                                Kembalikan
+                                            </button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Konfirmasi Pengembalian</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    Tandai barang "{loan.item?.name}" yang dipinjam oleh{" "}
+                                                    {loan.studentName} sebagai sudah dikembalikan dalam kondisi baik?
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>Batal</AlertDialogCancel>
+                                                <AlertDialogAction
+                                                    onClick={() => handleQuickReturn(loan.id)}
+                                                    className="bg-brand text-white hover:bg-brand/90"
+                                                >
+                                                    Ya, Kembalikan
+                                                </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                </div>
+                            </div>
+                        )
+                    })
+                )}
+            </div>
+        </div>
     )
 }

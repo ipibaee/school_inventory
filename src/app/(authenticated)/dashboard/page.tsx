@@ -1,9 +1,25 @@
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Package, AlertTriangle, Clock, TrendingUp, ArrowDownLeft, ArrowUpRight, CheckCircle2, Activity } from "lucide-react"
-import { getDashboardStats, getRecentActivity, getLowStockItems } from "@/actions/dashboard"
+import Link from "next/link"
 import { format } from "date-fns"
 import { id } from "date-fns/locale"
-import { Badge } from "@/components/ui/badge"
+import {
+    Boxes,
+    TriangleAlert,
+    Clock,
+    ArrowLeftRight,
+    Search,
+    Bell,
+    Plus,
+    PackagePlus,
+    ShoppingCart,
+    CheckCircle2,
+    ArrowRight,
+} from "lucide-react"
+
+import { getDashboardStats, getRecentActivity, getLowStockItems } from "@/actions/dashboard"
+import { PageHeader } from "@/components/layout/PageHeader"
+import { MobileAppBar } from "@/components/layout/MobileAppBar"
+import { ThemeToggle } from "@/components/ui/ThemeToggle"
+import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 
 export default async function DashboardPage() {
@@ -11,219 +27,308 @@ export default async function DashboardPage() {
     const recentActivity = await getRecentActivity()
     const lowStockItems = await getLowStockItems()
 
+    const kpis = [
+        {
+            label: "Total Barang",
+            value: stats.totalItems,
+            caption: "Di semua laboratorium & ruang",
+            mobileCaption: "Semua lab & ruang",
+            icon: Boxes,
+            color: "brand",
+            chipBg: "bg-brand-soft",
+            iconColor: "text-brand",
+        },
+        {
+            label: "Stok Rendah",
+            value: stats.lowStockItems,
+            caption: "Barang perlu segera diisi",
+            mobileCaption: "Perlu pengisian",
+            icon: TriangleAlert,
+            color: "rose",
+            chipBg: "bg-rose-soft",
+            iconColor: "text-rose",
+        },
+        {
+            label: "Peminjaman Aktif",
+            value: stats.activeLoans,
+            caption: "Masih dipinjam pengguna",
+            mobileCaption: "Sedang dipakai",
+            icon: Clock,
+            color: "amber",
+            chipBg: "bg-amber-soft",
+            iconColor: "text-amber",
+        },
+        {
+            label: "Transaksi Hari Ini",
+            value: stats.todayTransactions,
+            caption: "Mutasi masuk & keluar",
+            mobileCaption: "Mutasi masuk/keluar",
+            icon: ArrowLeftRight,
+            color: "mint",
+            chipBg: "bg-mint-soft",
+            iconColor: "text-mint",
+        },
+    ]
+
     return (
-        <div className="space-y-8 animate-fade-in">
-            {/* Header section */}
-            <div className="flex flex-col gap-2">
-                <h2 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-slate-900 via-blue-950 to-slate-800 dark:from-white dark:via-blue-100 dark:to-slate-200 bg-clip-text text-transparent">
-                    Dasbor Inventaris
-                </h2>
-                <p className="text-slate-500 dark:text-slate-400 text-sm">
-                    Status stok barang dan ringkasan aktivitas sekolah terkini.
-                </p>
+        <div className="flex flex-col gap-4 lg:gap-[22px]">
+            {/* Mobile App Bar */}
+            <MobileAppBar
+                title="Dasbor"
+                subtitle="Status stok & aktivitas"
+                showBrandMark={true}
+            />
+
+            {/* Desktop PageHeader */}
+            <PageHeader
+                title="Dasbor Inventaris"
+                subtitle="Status stok barang dan ringkasan aktivitas sekolah terkini."
+                actions={
+                    <div className="flex items-center gap-2.5">
+                        <div className="relative flex items-center w-[236px]">
+                            <Search className="absolute left-3.5 size-4 text-muted-ink pointer-events-none" />
+                            <input
+                                type="text"
+                                placeholder="Cari barang atau barcode..."
+                                className="h-10 w-full rounded-[10px] border border-line bg-surface pl-10 pr-3.5 text-[13px] text-ink placeholder:text-muted-ink transition-colors outline-none focus:border-brand focus:ring-2 focus:ring-brand/25"
+                            />
+                        </div>
+                        <ThemeToggle />
+                        <button
+                            type="button"
+                            className="size-[38px] rounded-[10px] bg-surface border border-line grid place-items-center text-muted-ink hover:text-ink hover:bg-surface-2 transition-colors cursor-pointer"
+                            title="Notifikasi"
+                        >
+                            <Bell className="size-4" />
+                        </button>
+                        <Button asChild variant="primary" className="gap-2">
+                            <Link href="/inventory">
+                                <Plus className="size-4" />
+                                <span>Tambah Barang</span>
+                            </Link>
+                        </Button>
+                    </div>
+                }
+            />
+
+            {/* KPI Cards: Desktop 4 columns, Mobile 2 columns */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 lg:gap-3.5">
+                {kpis.map((kpi) => {
+                    const Icon = kpi.icon
+                    return (
+                        <div
+                            key={kpi.label}
+                            className="panel rounded-[14px] lg:rounded-2xl p-3.5 lg:p-[22px] flex flex-col justify-between gap-1.5 lg:gap-[18px]"
+                        >
+                            <div className="flex items-center justify-between">
+                                <span className="text-[9.5px] lg:text-[13px] font-semibold text-muted-ink lg:text-ink-soft">
+                                    {kpi.label}
+                                </span>
+                                <span
+                                    className={cn(
+                                        "grid place-items-center rounded-[7px] lg:rounded-[10px]",
+                                        "size-[22px] lg:size-[34px]",
+                                        kpi.chipBg
+                                    )}
+                                >
+                                    <Icon className={cn("size-[11px] lg:size-[17px]", kpi.iconColor)} />
+                                </span>
+                            </div>
+                            <div className="text-[23px] lg:text-[34px] font-extrabold tracking-[-0.8px] lg:tracking-[-1.2px] text-ink leading-tight tabular-nums">
+                                {kpi.value}
+                            </div>
+                            <p className="text-[9px] lg:text-xs text-muted-ink leading-[1.35] lg:leading-[1.4]">
+                                <span className="lg:hidden">{kpi.mobileCaption}</span>
+                                <span className="hidden lg:inline">{kpi.caption}</span>
+                            </p>
+                        </div>
+                    )
+                })}
             </div>
 
-            {/* Statistics Cards */}
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-                {/* Total Items */}
-                <Card className="relative overflow-hidden group hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/5 dark:hover:shadow-blue-500/10 border-blue-500/15 dark:border-blue-500/5 transition-all duration-300">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-colors" />
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400">Total Barang</CardTitle>
-                        <div className="h-8 w-8 rounded-xl bg-blue-500/10 dark:bg-blue-400/10 flex items-center justify-center border border-blue-500/20">
-                            <Package className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            {/* Body Section: Aktivitas Terbaru (left) + Stok Hampir Habis (right) */}
+            <div className="flex flex-col lg:flex-row gap-3.5 lg:gap-4 items-start">
+                {/* Aktivitas Terbaru */}
+                <div className="panel w-full lg:flex-1 rounded-[14px] lg:rounded-2xl flex flex-col">
+                    <div className="flex items-center justify-between p-3.5 lg:p-[22px] border-b border-line">
+                        <div className="flex flex-col gap-0.5">
+                            <h2 className="text-[12.5px] lg:text-[15.5px] font-bold text-ink">
+                                Aktivitas Terbaru
+                            </h2>
+                            <p className="text-[9.5px] lg:text-xs text-muted-ink hidden sm:block">
+                                Timeline pencatatan barang dan mutasi logistik.
+                            </p>
                         </div>
-                    </CardHeader>
-                    <CardContent className="pt-2">
-                        <div className="text-3.5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            {stats.totalItems}
+                        <div className="flex items-center gap-2">
+                            <span className="font-mono text-[9px] lg:text-[10px] tracking-wider text-mint font-bold px-2 py-0.5 rounded-full bg-mint-soft">
+                                LIVE
+                            </span>
+                            <Link
+                                href="/reports"
+                                className="text-[9.5px] lg:text-xs font-bold text-brand hover:underline"
+                            >
+                                Lihat semua
+                            </Link>
                         </div>
-                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                            <span className="h-1.5 w-1.5 rounded-full bg-blue-500" /> Di semua laboratorium & ruang
-                        </p>
-                    </CardContent>
-                </Card>
+                    </div>
 
-                {/* Low Stock Warning */}
-                <Card className="relative overflow-hidden group hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg hover:shadow-rose-500/5 dark:hover:shadow-rose-500/10 border-rose-500/15 dark:border-rose-500/5 transition-all duration-300">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 rounded-full blur-2xl group-hover:bg-rose-500/10 transition-colors" />
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400">Stok Rendah</CardTitle>
-                        <div className="h-8 w-8 rounded-xl bg-rose-500/10 dark:bg-rose-400/10 flex items-center justify-center border border-rose-500/20">
-                            <AlertTriangle className="h-4 w-4 text-rose-600 dark:text-rose-400" />
-                        </div>
-                    </CardHeader>
-                    <CardContent className="pt-2">
-                        <div className={cn(
-                            "text-3.5xl font-extrabold tracking-tight",
-                            stats.lowStockItems > 0 ? "text-rose-600 dark:text-rose-400" : "text-slate-900 dark:text-white"
-                        )}>
-                            {stats.lowStockItems}
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                            <span className={cn("h-1.5 w-1.5 rounded-full", stats.lowStockItems > 0 ? "bg-rose-500" : "bg-emerald-500")} /> 
-                            {stats.lowStockItems > 0 ? "Memerlukan pengisian ulang" : "Semua stok aman"}
-                        </p>
-                    </CardContent>
-                </Card>
+                    <div className="p-3.5 lg:p-[22px] flex flex-col gap-3 lg:gap-4">
+                        {recentActivity.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center py-10 text-center">
+                                <p className="text-sm font-semibold text-ink">Belum ada aktivitas</p>
+                                <p className="text-xs text-muted-ink mt-1">
+                                    Transaksi dan pergerakan barang akan tercatat otomatis di sini.
+                                </p>
+                            </div>
+                        ) : (
+                            recentActivity.slice(0, 6).map((tx) => {
+                                const isIncoming = tx.type === "IN"
+                                return (
+                                    <div
+                                        key={tx.id}
+                                        className="flex items-center gap-3 lg:gap-3.5 py-1"
+                                    >
+                                        <div
+                                            className={cn(
+                                                "size-[26px] lg:size-8 rounded-[8px] lg:rounded-[9px] grid place-items-center shrink-0",
+                                                isIncoming
+                                                    ? "bg-mint-soft text-mint"
+                                                    : "bg-rose-soft text-rose"
+                                            )}
+                                        >
+                                            {isIncoming ? (
+                                                <PackagePlus className="size-3 lg:size-4" />
+                                            ) : (
+                                                <ShoppingCart className="size-3 lg:size-4" />
+                                            )}
+                                        </div>
 
-                {/* Active Loans */}
-                <Card className="relative overflow-hidden group hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg hover:shadow-amber-500/5 dark:hover:shadow-amber-500/10 border-amber-500/15 dark:border-amber-500/5 transition-all duration-300">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition-colors" />
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400">Peminjaman Aktif</CardTitle>
-                        <div className="h-8 w-8 rounded-xl bg-amber-500/10 dark:bg-amber-400/10 flex items-center justify-center border border-amber-500/20">
-                            <Clock className="h-4 w-4 text-amber-600 dark:text-amber-400" />
-                        </div>
-                    </CardHeader>
-                    <CardContent className="pt-2">
-                        <div className="text-3.5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            {stats.activeLoans}
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                            <span className="h-1.5 w-1.5 rounded-full bg-amber-500" /> Sedang digunakan siswa/guru
-                        </p>
-                    </CardContent>
-                </Card>
-
-                {/* Today Transactions */}
-                <Card className="relative overflow-hidden group hover:scale-[1.02] hover:-translate-y-1 hover:shadow-lg hover:shadow-cyan-500/5 dark:hover:shadow-cyan-500/10 border-cyan-500/15 dark:border-cyan-500/5 transition-all duration-300">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-colors" />
-                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400">Transaksi Hari Ini</CardTitle>
-                        <div className="h-8 w-8 rounded-xl bg-cyan-500/10 dark:bg-cyan-400/10 flex items-center justify-center border border-cyan-500/20">
-                            <TrendingUp className="h-4 w-4 text-cyan-600 dark:text-cyan-400" />
-                        </div>
-                    </CardHeader>
-                    <CardContent className="pt-2">
-                        <div className="text-3.5xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-                            {stats.todayTransactions}
-                        </div>
-                        <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                            <span className="h-1.5 w-1.5 rounded-full bg-cyan-500" /> Mutasi keluar & masuk hari ini
-                        </p>
-                    </CardContent>
-                </Card>
-            </div>
-
-            {/* Feeds Section */}
-            <div className="grid gap-6 lg:grid-cols-7">
-                {/* Recent Activities */}
-                <Card className="lg:col-span-4 border-0 shadow-lg relative overflow-hidden bg-white/30 dark:bg-zinc-950/20 backdrop-blur-xl">
-                    <div className="absolute top-0 left-0 w-full h-[2px] bg-blue-500/20" />
-                    <CardHeader className="border-b border-border/40 dark:border-white/5 pb-4">
-                        <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                            <Activity className="h-5 w-5 text-blue-500" />
-                            Aktivitas Terbaru
-                        </CardTitle>
-                        <CardDescription className="text-xs text-slate-400">Timeline pencatatan barang dan mutasi logistik.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="pt-6">
-                        <div className="relative pl-6 border-l-2 border-slate-200 dark:border-zinc-800 space-y-6">
-                            {recentActivity.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center py-10 text-center animate-fade-in pl-0 border-l-0">
-                                    <div className="h-14 w-14 rounded-full bg-blue-500/5 dark:bg-blue-400/5 border border-blue-500/10 flex items-center justify-center mb-4">
-                                        <Activity className="h-6 w-6 text-blue-500/50" />
-                                    </div>
-                                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Semua Sunyi di Sini</p>
-                                    <p className="text-xs text-slate-400 max-w-[280px] mt-1">Aktivitas inventaris dan transaksi baru akan muncul di timeline ini.</p>
-                                </div>
-                            ) : (
-                                recentActivity.map((tx) => {
-                                    const isIncoming = tx.type === 'IN'
-                                    return (
-                                        <div key={tx.id} className="relative group animate-fade-in">
-                                            {/* Timeline Node Icon */}
-                                            <div className={cn(
-                                                "absolute -left-[35px] top-0 h-6 w-6 rounded-full flex items-center justify-center border shadow-xs transition-colors",
-                                                isIncoming 
-                                                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400 group-hover:bg-emerald-500/20" 
-                                                    : "bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400 group-hover:bg-rose-500/20"
-                                            )}>
-                                                {isIncoming ? <ArrowDownLeft className="h-3 w-3" /> : <ArrowUpRight className="h-3 w-3" />}
+                                        <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-[11px] lg:text-[13.5px] font-bold text-ink truncate">
+                                                    {isIncoming ? "Barang Masuk / Ditambah" : "Barang Dipinjam / Keluar"}
+                                                </span>
+                                                <span
+                                                    className={cn(
+                                                        "text-[8.5px] lg:text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase shrink-0",
+                                                        isIncoming
+                                                            ? "bg-mint-soft text-mint"
+                                                            : "bg-rose-soft text-rose"
+                                                    )}
+                                                >
+                                                    {isIncoming ? "masuk" : "keluar"}
+                                                </span>
                                             </div>
-                                            
-                                            {/* Content Block */}
-                                            <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 p-3 rounded-xl hover:bg-slate-100/50 dark:hover:bg-white/5 border border-transparent hover:border-border/30 transition-all duration-200">
-                                                <div>
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-                                                            {isIncoming ? 'Barang Masuk / Ditambah' : 'Barang Dipinjam / Keluar'}
-                                                        </span>
-                                                        <Badge variant={isIncoming ? "secondary" : "destructive"} className="text-[10px] px-1.5 py-0">
-                                                            {isIncoming ? "Masuk" : "Keluar"}
-                                                        </Badge>
-                                                    </div>
-                                                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                                                        {tx.item.name} <span className="font-semibold text-slate-600 dark:text-slate-300">({tx.quantity} unit)</span>
-                                                    </p>
-                                                </div>
-                                                <div className="text-right shrink-0">
-                                                    <span className="text-[10px] text-slate-400 font-mono">
-                                                        {format(new Date(tx.date), "PP p", { locale: id })}
-                                                    </span>
-                                                </div>
+                                            <span className="text-[9.5px] lg:text-[11.5px] text-muted-ink truncate">
+                                                {tx.item.name} · {tx.quantity} unit
+                                            </span>
+                                        </div>
+
+                                        <span className="font-mono text-[9px] lg:text-[10.5px] text-muted-ink shrink-0">
+                                            {format(new Date(tx.date), "d MMM · HH.mm", { locale: id })}
+                                        </span>
+                                    </div>
+                                )
+                            })
+                        )}
+                    </div>
+
+                    <div className="mt-auto px-3.5 lg:px-[22px] py-3 border-t border-line bg-surface-2 rounded-b-[14px] lg:rounded-b-2xl flex items-center justify-between text-[10.5px] lg:text-xs text-muted-ink">
+                        <span>Menampilkan {Math.min(recentActivity.length, 6)} aktivitas terbaru</span>
+                        <Link
+                            href="/reports"
+                            className="font-bold text-brand hover:underline inline-flex items-center gap-1"
+                        >
+                            <span>Laporan mutasi lengkap</span>
+                            <ArrowRight className="size-3" />
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Stok Hampir Habis */}
+                <div className="panel w-full lg:w-[322px] rounded-[14px] lg:rounded-2xl flex flex-col shrink-0">
+                    <div className="flex items-center justify-between p-3.5 lg:p-[22px] border-b border-line">
+                        <div className="flex items-center gap-2">
+                            <span className="size-7 rounded-[8px] bg-rose-soft grid place-items-center text-rose shrink-0">
+                                <TriangleAlert className="size-3.5" />
+                            </span>
+                            <div className="flex flex-col">
+                                <h2 className="text-[12.5px] lg:text-[15.5px] font-bold text-ink">
+                                    Stok Hampir Habis
+                                </h2>
+                                <p className="text-[9.5px] lg:text-xs text-muted-ink">
+                                    Perlu segera pengadaan
+                                </p>
+                            </div>
+                        </div>
+                        <span className="text-[10px] font-bold text-rose px-2 py-0.5 rounded-full bg-rose-soft">
+                            {lowStockItems.length}
+                        </span>
+                    </div>
+
+                    <div className="p-3.5 lg:p-[22px] flex flex-col gap-3">
+                        {lowStockItems.length === 0 ? (
+                            <div className="flex flex-col items-center justify-center py-8 text-center">
+                                <div className="size-10 rounded-full bg-mint-soft text-mint grid place-items-center mb-2">
+                                    <CheckCircle2 className="size-5" />
+                                </div>
+                                <p className="text-xs font-bold text-ink">Semua Stok Aman</p>
+                                <p className="text-[10.5px] text-muted-ink mt-0.5">
+                                    Persediaan semua unit mencukupi.
+                                </p>
+                            </div>
+                        ) : (
+                            lowStockItems.slice(0, 5).map((item) => {
+                                const percent = Math.min(
+                                    100,
+                                    Math.round((item.quantity / (item.minStock || 5)) * 100)
+                                )
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className="p-3 rounded-[10px] bg-surface-2 border border-line flex flex-col gap-2"
+                                    >
+                                        <div className="flex items-start justify-between gap-2">
+                                            <div className="flex flex-col min-w-0">
+                                                <span className="text-xs font-bold text-ink truncate">
+                                                    {item.name}
+                                                </span>
+                                                <span className="text-[10px] text-muted-ink truncate">
+                                                    {item.location.name}
+                                                </span>
+                                            </div>
+                                            <div className="text-right shrink-0">
+                                                <span className="text-xs font-extrabold text-rose font-mono">
+                                                    {item.quantity}
+                                                </span>
+                                                <span className="text-[9.5px] text-muted-ink font-mono block">
+                                                    /{item.minStock}
+                                                </span>
                                             </div>
                                         </div>
-                                    )
-                                })
-                            )}
-                        </div>
-                    </CardContent>
-                </Card>
 
-                {/* Low Stock Items */}
-                <Card className="lg:col-span-3 border-0 shadow-lg relative overflow-hidden bg-white/30 dark:bg-zinc-950/20 backdrop-blur-xl">
-                    <div className="absolute top-0 left-0 w-full h-[2px] bg-rose-500/20" />
-                    <CardHeader className="border-b border-border/40 dark:border-white/5 pb-4">
-                        <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-                            <AlertTriangle className="h-5 w-5 text-rose-500" />
-                            Stok Hampir Habis
-                        </CardTitle>
-                        <CardDescription className="text-xs text-slate-400">Segera lakukan pengadaan untuk barang berikut.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="pt-6">
-                        <div className="space-y-4">
-                            {lowStockItems.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center py-10 text-center animate-fade-in">
-                                    <div className="h-14 w-14 rounded-full bg-emerald-500/5 dark:bg-emerald-400/5 border border-emerald-500/10 flex items-center justify-center mb-4">
-                                        <CheckCircle2 className="h-6 w-6 text-emerald-500/70" />
-                                    </div>
-                                    <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Semua Stok Aman</p>
-                                    <p className="text-xs text-slate-400 max-w-[240px] mt-1">Luar biasa! Semua barang memiliki jumlah persediaan yang mencukupi.</p>
-                                </div>
-                            ) : (
-                                lowStockItems.map((item) => {
-                                    const percent = Math.min(100, Math.round((item.quantity / (item.minStock || 5)) * 100))
-                                    return (
-                                        <div key={item.id} className="p-3 border border-border/40 dark:border-white/5 bg-white/20 dark:bg-black/10 rounded-xl hover:shadow-xs transition-all duration-200 animate-fade-in">
-                                            <div className="flex items-start justify-between">
-                                                <div className="min-w-0">
-                                                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 truncate">{item.name}</p>
-                                                    <p className="text-xs text-slate-400 truncate mt-0.5">{item.location.name}</p>
-                                                </div>
-                                                <div className="text-right shrink-0">
-                                                    <span className="text-sm font-bold text-rose-600 dark:text-rose-400">{item.quantity}</span>
-                                                    <span className="text-xs text-slate-400 font-mono block">Min: {item.minStock}</span>
-                                                </div>
-                                            </div>
-                                            
-                                            {/* Visual Progress Bar */}
-                                            <div className="mt-3">
-                                                <div className="w-full bg-slate-200 dark:bg-zinc-800 h-1.5 rounded-full overflow-hidden">
-                                                    <div 
-                                                        className="bg-rose-500 h-full rounded-full transition-all duration-500" 
-                                                        style={{ width: `${percent}%` }}
-                                                    />
-                                                </div>
-                                            </div>
+                                        <div className="w-full bg-surface h-1.5 rounded-full overflow-hidden border border-line">
+                                            <div
+                                                className="bg-rose h-full rounded-full transition-all"
+                                                style={{ width: `${percent}%` }}
+                                            />
                                         </div>
-                                    )
-                                })
-                            )}
-                        </div>
-                    </CardContent>
-                </Card>
+                                    </div>
+                                )
+                            })
+                        )}
+                    </div>
+
+                    <div className="mt-auto px-3.5 lg:px-[22px] py-3 border-t border-line bg-surface-2 rounded-b-[14px] lg:rounded-b-2xl">
+                        <Link
+                            href="/inventory"
+                            className="text-xs font-bold text-brand hover:underline flex items-center justify-between"
+                        >
+                            <span>Buka inventaris</span>
+                            <ArrowRight className="size-3" />
+                        </Link>
+                    </div>
+                </div>
             </div>
         </div>
     )

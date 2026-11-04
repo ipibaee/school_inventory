@@ -1,0 +1,279 @@
+# Mobile Laporan — Dark
+
+- canvas id: `k7yCMm`
+- frame: 390×844 at (2150, 8740)
+- layout: layout=vertical
+- clip: true
+- background: light app-bg(#F4F7FB) · dark app-bg(#202124)
+
+## Layer tree (light theme resolved)
+
+- **Mobile Laporan — Dark** · `frame` · 390×844 · layout=vertical · fill: app-bg(#F4F7FB) · theme={"mode":"dark"} clip
+  - **App Bar** · `frame` · fill_container×fit · pad=13/16 justify=space_between align=center
+    - **Left** · `frame` · fit×fit · gap=9 align=center
+      - **Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 16 800 ls=-0.4 ink(#0B1B2E)): "Laporan"
+        - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 9.5 muted(#74849A)): "Per 4 Nov 2026 · 09.41"
+  - **Chips** · `frame` · fill_container×fit · gap=7 pad=0/16/10/16
+    - **Chip Stok** · `frame` · fit×fit · pad=6/11 · fill: brand(#2B4EFF) · r=999
+      - **Label** · `text` · fit×fit · fill: #FFFFFF
+        - text ($font-ui 10.5 600 #FFFFFF): "Stok"
+    - **Chip Peminjam** · `frame` · fit×fit · pad=6/11 · fill: surface(#FFFFFF) · r=999 stroke=line(#E3EAF3) strokeWidth=1
+      - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - text ($font-ui 10.5 600 ink-soft(#3B4A5F)): "Peminjam"
+    - **Chip Gudang** · `frame` · fit×fit · pad=6/11 · fill: surface(#FFFFFF) · r=999 stroke=line(#E3EAF3) strokeWidth=1
+      - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - text ($font-ui 10.5 600 ink-soft(#3B4A5F)): "Gudang"
+    - **Chip Masuk** · `frame` · fit×fit · pad=6/11 · fill: surface(#FFFFFF) · r=999 stroke=line(#E3EAF3) strokeWidth=1
+      - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - text ($font-ui 10.5 600 ink-soft(#3B4A5F)): "Masuk"
+  - **Filters** · `frame` · fill_container×fit · gap=8 pad=0/16/10/16
+    - **Select Semua Lokasi** · `frame` · fill_container×fit · gap=6 pad=8/10 align=center · fill: surface(#FFFFFF) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+      - **Icon** · `icon` · 12×12 · fill: muted(#74849A) · icon=map-pin library=lucide
+        - icon: map-pin [lucide] muted(#74849A)
+      - **Value** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - text ($font-ui 10 600 ink-soft(#3B4A5F)): "Semua Lokasi"
+      - **Chevron** · `icon` · 11×11 · fill: muted(#74849A) · icon=chevron-down library=lucide
+        - icon: chevron-down [lucide] muted(#74849A)
+    - **Select Semua Kategori** · `frame` · fill_container×fit · gap=6 pad=8/10 align=center · fill: surface(#FFFFFF) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+      - **Icon** · `icon` · 12×12 · fill: muted(#74849A) · icon=tag library=lucide
+        - icon: tag [lucide] muted(#74849A)
+      - **Value** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - text ($font-ui 10 600 ink-soft(#3B4A5F)): "Semua Kategori"
+      - **Chevron** · `icon` · 11×11 · fill: muted(#74849A) · icon=chevron-down library=lucide
+        - icon: chevron-down [lucide] muted(#74849A)
+  - **Content** · `frame` · fill_container×fill_container · layout=vertical gap=8 pad=0/16/12/16
+    - **Table Card** · `frame` · fill_container×fill_container · layout=vertical · fill: surface(#FFFFFF) · clip r=14 stroke=line(#E3EAF3) strokeWidth=1
+      - **Head** · `frame` · fill_container×fit · pad=10/13 justify=space_between align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 11.5 700 ink(#0B1B2E)): "Stok Saat Ini"
+        - **Meta** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 8.5 muted(#74849A)): "40 jenis · 312 unit"
+      - **Rows** · `frame` · fill_container×fit · layout=vertical
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 10.5 600 ink(#0B1B2E)): "Mouse Kabel"
+            - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8.5 muted(#74849A)): "45685 · Lab. Software 1"
+          - **Qty** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - text ($font-ui 11 700 ink(#0B1B2E)): "112"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 10.5 600 ink(#0B1B2E)): "Monitor 24\""
+            - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8.5 muted(#74849A)): "77564 · Gudang"
+          - **Qty** · `text` · fit×fit · fill: rose(#D93A47)
+            - text ($font-ui 11 700 rose(#D93A47)): "5"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 10.5 600 ink(#0B1B2E)): "Rexus Mouse Vertical"
+            - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8.5 muted(#74849A)): "57170 · Lab. Grafis"
+          - **Qty** · `text` · fit×fit · fill: rose(#D93A47)
+            - text ($font-ui 11 700 rose(#D93A47)): "2"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 10.5 600 ink(#0B1B2E)): "IFP Smart Board 75\""
+            - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8.5 muted(#74849A)): "93714 · Lab. Software 2"
+          - **Qty** · `text` · fit×fit · fill: rose(#D93A47)
+            - text ($font-ui 11 700 rose(#D93A47)): "0"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 10.5 600 ink(#0B1B2E)): "Keyboard"
+            - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8.5 muted(#74849A)): "23643 · Lab. Simdig 1"
+          - **Qty** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - text ($font-ui 11 700 ink(#0B1B2E)): "102"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 10.5 600 ink(#0B1B2E)): "RAM DDR4 8GB"
+            - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8.5 muted(#74849A)): "76108 · Gudang"
+          - **Qty** · `text` · fit×fit · fill: rose(#D93A47)
+            - text ($font-ui 11 700 rose(#D93A47)): "4"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 10.5 600 ink(#0B1B2E)): "Obeng Tekiro"
+            - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8.5 muted(#74849A)): "63376 · Gudang"
+          - **Qty** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - text ($font-ui 11 700 ink(#0B1B2E)): "8"
+      - **Spacer** · `frame` · fill_container×fill_container
+      - **Total Row** · `frame` · fill_container×fit · pad=10/13 justify=space_between align=center · fill: surface-2(#FAFCFE) · stroke=line(#E3EAF3) strokeWidth={"top":1}
+        - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 9.5 700 ink(#0B1B2E)): "Total keseluruhan"
+        - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 10 800 ink(#0B1B2E)): "312 unit"
+    - **Cetak Laporan** · `ref` · fit×fit · ref=YpfPQ descendants={"ebOKU":{"icon":"printer"},"pXxWX":{"content":"Cetak Laporan"}}
+  - **Bottom Nav** · `frame` · fill_container×62 · pad=0/6 align=center · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) strokeWidth={"top":1}
+    - **Tab Dasbor** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · icon=layout-dashboard library=lucide
+        - icon: layout-dashboard [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 9 500 muted(#74849A)): "Dasbor"
+    - **Tab Inventaris** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · icon=boxes library=lucide
+        - icon: boxes [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 9 500 muted(#74849A)): "Inventaris"
+    - **Tab Barcode** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · icon=barcode library=lucide
+        - icon: barcode [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 9 500 muted(#74849A)): "Barcode"
+    - **Tab Pinjam** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · icon=shopping-cart library=lucide
+        - icon: shopping-cart [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 9 500 muted(#74849A)): "Pinjam"
+    - **Tab Laporan** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: brand(#2B4EFF) · icon=chart-column library=lucide
+        - icon: chart-column [lucide] brand(#2B4EFF)
+      - **Label** · `text` · fit×fit · fill: brand(#2B4EFF)
+        - text ($font-ui 9 700 brand(#2B4EFF)): "Laporan"
+
+## Layer tree (dark theme resolved)
+
+- **Mobile Laporan — Dark** · `frame` · 390×844 · layout=vertical · fill: app-bg(#202124) · theme={"mode":"dark"} clip
+  - **App Bar** · `frame` · fill_container×fit · pad=13/16 justify=space_between align=center
+    - **Left** · `frame` · fit×fit · gap=9 align=center
+      - **Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 16 800 ls=-0.4 ink(#E8EAED)): "Laporan"
+        - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 9.5 muted(#9AA0A6)): "Per 4 Nov 2026 · 09.41"
+  - **Chips** · `frame` · fill_container×fit · gap=7 pad=0/16/10/16
+    - **Chip Stok** · `frame` · fit×fit · pad=6/11 · fill: brand(#1A73E8) · r=999
+      - **Label** · `text` · fit×fit · fill: #FFFFFF
+        - text ($font-ui 10.5 600 #FFFFFF): "Stok"
+    - **Chip Peminjam** · `frame` · fit×fit · pad=6/11 · fill: surface(#292A2D) · r=999 stroke=line(#E3EAF3) strokeWidth=1
+      - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+        - text ($font-ui 10.5 600 ink-soft(#BDC1C6)): "Peminjam"
+    - **Chip Gudang** · `frame` · fit×fit · pad=6/11 · fill: surface(#292A2D) · r=999 stroke=line(#E3EAF3) strokeWidth=1
+      - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+        - text ($font-ui 10.5 600 ink-soft(#BDC1C6)): "Gudang"
+    - **Chip Masuk** · `frame` · fit×fit · pad=6/11 · fill: surface(#292A2D) · r=999 stroke=line(#E3EAF3) strokeWidth=1
+      - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+        - text ($font-ui 10.5 600 ink-soft(#BDC1C6)): "Masuk"
+  - **Filters** · `frame` · fill_container×fit · gap=8 pad=0/16/10/16
+    - **Select Semua Lokasi** · `frame` · fill_container×fit · gap=6 pad=8/10 align=center · fill: surface(#292A2D) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+      - **Icon** · `icon` · 12×12 · fill: muted(#9AA0A6) · icon=map-pin library=lucide
+        - icon: map-pin [lucide] muted(#74849A)
+      - **Value** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+        - text ($font-ui 10 600 ink-soft(#BDC1C6)): "Semua Lokasi"
+      - **Chevron** · `icon` · 11×11 · fill: muted(#9AA0A6) · icon=chevron-down library=lucide
+        - icon: chevron-down [lucide] muted(#74849A)
+    - **Select Semua Kategori** · `frame` · fill_container×fit · gap=6 pad=8/10 align=center · fill: surface(#292A2D) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+      - **Icon** · `icon` · 12×12 · fill: muted(#9AA0A6) · icon=tag library=lucide
+        - icon: tag [lucide] muted(#74849A)
+      - **Value** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+        - text ($font-ui 10 600 ink-soft(#BDC1C6)): "Semua Kategori"
+      - **Chevron** · `icon` · 11×11 · fill: muted(#9AA0A6) · icon=chevron-down library=lucide
+        - icon: chevron-down [lucide] muted(#74849A)
+  - **Content** · `frame` · fill_container×fill_container · layout=vertical gap=8 pad=0/16/12/16
+    - **Table Card** · `frame` · fill_container×fill_container · layout=vertical · fill: surface(#292A2D) · clip r=14 stroke=line(#E3EAF3) strokeWidth=1
+      - **Head** · `frame` · fill_container×fit · pad=10/13 justify=space_between align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+        - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 11.5 700 ink(#E8EAED)): "Stok Saat Ini"
+        - **Meta** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 8.5 muted(#9AA0A6)): "40 jenis · 312 unit"
+      - **Rows** · `frame` · fill_container×fit · layout=vertical
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 10.5 600 ink(#E8EAED)): "Mouse Kabel"
+            - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8.5 muted(#9AA0A6)): "45685 · Lab. Software 1"
+          - **Qty** · `text` · fit×fit · fill: ink(#E8EAED)
+            - text ($font-ui 11 700 ink(#E8EAED)): "112"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 10.5 600 ink(#E8EAED)): "Monitor 24\""
+            - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8.5 muted(#9AA0A6)): "77564 · Gudang"
+          - **Qty** · `text` · fit×fit · fill: rose(#F28B82)
+            - text ($font-ui 11 700 rose(#F28B82)): "5"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 10.5 600 ink(#E8EAED)): "Rexus Mouse Vertical"
+            - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8.5 muted(#9AA0A6)): "57170 · Lab. Grafis"
+          - **Qty** · `text` · fit×fit · fill: rose(#F28B82)
+            - text ($font-ui 11 700 rose(#F28B82)): "2"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 10.5 600 ink(#E8EAED)): "IFP Smart Board 75\""
+            - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8.5 muted(#9AA0A6)): "93714 · Lab. Software 2"
+          - **Qty** · `text` · fit×fit · fill: rose(#F28B82)
+            - text ($font-ui 11 700 rose(#F28B82)): "0"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 10.5 600 ink(#E8EAED)): "Keyboard"
+            - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8.5 muted(#9AA0A6)): "23643 · Lab. Simdig 1"
+          - **Qty** · `text` · fit×fit · fill: ink(#E8EAED)
+            - text ($font-ui 11 700 ink(#E8EAED)): "102"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 10.5 600 ink(#E8EAED)): "RAM DDR4 8GB"
+            - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8.5 muted(#9AA0A6)): "76108 · Gudang"
+          - **Qty** · `text` · fit×fit · fill: rose(#F28B82)
+            - text ($font-ui 11 700 rose(#F28B82)): "4"
+        - **Row** · `frame` · fill_container×fit · gap=9 pad=8/13 align=center · stroke=line(#E3EAF3) strokeWidth={"bottom":1}
+          - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+            - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 10.5 600 ink(#E8EAED)): "Obeng Tekiro"
+            - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8.5 muted(#9AA0A6)): "63376 · Gudang"
+          - **Qty** · `text` · fit×fit · fill: ink(#E8EAED)
+            - text ($font-ui 11 700 ink(#E8EAED)): "8"
+      - **Spacer** · `frame` · fill_container×fill_container
+      - **Total Row** · `frame` · fill_container×fit · pad=10/13 justify=space_between align=center · fill: surface-2(#303134) · stroke=line(#E3EAF3) strokeWidth={"top":1}
+        - **Label** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 9.5 700 ink(#E8EAED)): "Total keseluruhan"
+        - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 10 800 ink(#E8EAED)): "312 unit"
+    - **Cetak Laporan** · `ref` · fit×fit · ref=YpfPQ descendants={"ebOKU":{"icon":"printer"},"pXxWX":{"content":"Cetak Laporan"}}
+  - **Bottom Nav** · `frame` · fill_container×62 · pad=0/6 align=center · fill: surface(#292A2D) · stroke=line(#E3EAF3) strokeWidth={"top":1}
+    - **Tab Dasbor** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#9AA0A6) · icon=layout-dashboard library=lucide
+        - icon: layout-dashboard [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 9 500 muted(#9AA0A6)): "Dasbor"
+    - **Tab Inventaris** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#9AA0A6) · icon=boxes library=lucide
+        - icon: boxes [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 9 500 muted(#9AA0A6)): "Inventaris"
+    - **Tab Barcode** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#9AA0A6) · icon=barcode library=lucide
+        - icon: barcode [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 9 500 muted(#9AA0A6)): "Barcode"
+    - **Tab Pinjam** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#9AA0A6) · icon=shopping-cart library=lucide
+        - icon: shopping-cart [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 9 500 muted(#9AA0A6)): "Pinjam"
+    - **Tab Laporan** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: brand(#1A73E8) · icon=chart-column library=lucide
+        - icon: chart-column [lucide] brand(#2B4EFF)
+      - **Label** · `text` · fit×fit · fill: brand(#1A73E8)
+        - text ($font-ui 9 700 brand(#1A73E8)): "Laporan"

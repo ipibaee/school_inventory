@@ -1,0 +1,173 @@
+# Komponen
+
+- canvas id: `C3fMJ`
+- frame: 1440×undefined at (0, 1868)
+- layout: layout=vertical gap=36 pad=56/64
+- clip: true
+- background: light surface(#FFFFFF) · dark surface(#292A2D)
+
+## Layer tree (light theme resolved)
+
+- **Komponen** · `frame` · 1440×fit · layout=vertical gap=36 pad=56/64 · fill: surface(#FFFFFF) · clip
+  - **Header** · `frame` · fill_container×fit · layout=vertical gap=10
+    - **Eyebrow** · `text` · fit×fit · fill: brand(#2B4EFF)
+      - text ($font-mono 12 600 ls=1.4 brand(#2B4EFF)): "KOMPONEN"
+    - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+      - text ($font-ui 32 800 ls=-0.9 ink(#0B1B2E)): "Komponen yang dipakai berulang"
+    - **Desc** · `text` · fill_container×fit · fill: ink-soft(#3B4A5F)
+      - text ($font-ui 14 lh=1.6 ink-soft(#3B4A5F)): "Sidebar item, kartu metrik, badge status, tombol, dan input. Setiap instance bisa diubah isinya tanpa memengaruhi komponen aslinya."
+  - **Section** · `frame` · fill_container×fit · layout=vertical gap=14
+    - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - text ($font-ui 15 700 ink(#0B1B2E)): "Sidebar Navigation"
+      - **Note** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-mono 11 muted(#74849A)): "1 item"
+    - **Stage** · `frame` · fill_container×fit · gap=40 pad=24/28 align=center · fill: navy(#0A1730) · r=16
+      - **Nav Item** · `frame` · 260×fit · gap=12 pad=10/14 align=center · REUSABLE r=10
+        - **Icon** · `icon` · 18×18 · fill: #93A7C4 · icon=layout-dashboard library=lucide
+          - icon: layout-dashboard [lucide] #93A7C4
+        - **Label** · `text` · fit×fit · fill: #93A7C4
+          - text ($font-ui 14 600 #93A7C4): "Dasbor"
+        - **Badge Wrap** · `frame` · fill_container×fit · justify=end
+          - **Count** · `text` · fit×fit · fill: #93A7C4
+            - text ($font-mono 11 #93A7C4): ""
+      - **Nav Item Active** · `ref` · fit×fit · fill: #1B3364 · ref=Z0vAf descendants={"NR61K":{"fill":"#FFFFFF"},"UgURJ":{"content":"Inventaris","fill":"#FFFFFF"}}
+      - **Caption** · `text` · fit×fit · fill: #6C82A3
+        - text ($font-mono 11 #6C82A3): "non-aktif → aktif"
+  - **Section** · `frame` · fill_container×fit · layout=vertical gap=14
+    - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - text ($font-ui 15 700 ink(#0B1B2E)): "Kartu Metrik"
+      - **Note** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-mono 11 muted(#74849A)): "instance × 4"
+    - **Stage** · `frame` · fill_container×fit · gap=16 pad=24/28 · fill: app-bg(#F4F7FB) · r=16
+      - **Metric Card** · `frame` · fill_container×fit · layout=vertical gap=18 pad=22 · fill: surface(#FFFFFF) · REUSABLE r=16 stroke=line(#E3EAF3) strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · justify=space_between align=center
+          - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - text ($font-ui 13 600 ink-soft(#3B4A5F)): "Total Barang"
+          - **Icon Chip** · `frame` · 34×34 · justify=center align=center · fill: brand-soft(#EBEFFF) · r=10
+            - **Icon** · `icon` · 17×17 · fill: brand(#2B4EFF) · icon=boxes library=lucide
+              - icon: boxes [lucide] brand(#2B4EFF)
+        - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 34 800 ls=-1.2 ink(#0B1B2E)): "40"
+        - **Caption** · `text` · fill_container×fit · fill: muted(#74849A)
+          - text ($font-ui 12 lh=1.4 muted(#74849A)): "Di semua laboratorium & ruang"
+      - **Stok Rendah** · `ref` · fill_container×fit · ref=KkQWr descendants={"PSgwu":{"content":"Stok Rendah"},"LQwnV":{"fill":"$rose-soft"},"SY33q":{"icon":"triangle-alert","f
+      - **Peminjaman Aktif** · `ref` · fill_container×fit · ref=KkQWr descendants={"PSgwu":{"content":"Peminjaman Aktif"},"LQwnV":{"fill":"$amber-soft"},"SY33q":{"icon":"clock","fill
+      - **Transaksi Hari Ini** · `ref` · fill_container×fit · ref=KkQWr descendants={"PSgwu":{"content":"Transaksi Hari Ini"},"LQwnV":{"fill":"$mint-soft"},"SY33q":{"icon":"arrow-left-
+  - **Section** · `frame` · fill_container×fit · layout=vertical gap=14
+    - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - text ($font-ui 15 700 ink(#0B1B2E)): "Badge Status"
+      - **Note** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-mono 11 muted(#74849A)): "3 varian"
+    - **Stage** · `frame` · fill_container×fit · gap=14 pad=24/28 align=center · fill: app-bg(#F4F7FB) · r=16
+      - **Badge** · `frame` · fit×fit · gap=7 pad=5/11 align=center · fill: mint-soft(#E4F7F0) · REUSABLE r=999
+        - **Dot** · `ellipse` · 6×6 · fill: mint(#0EA47A)
+        - **Label** · `text` · fit×fit · fill: mint(#0EA47A)
+          - text ($font-ui 11.5 700 mint(#0EA47A)): "Tersedia"
+      - **Stok Rendah** · `ref` · fit×fit · fill: rose-soft(#FDEBEC) · ref=QuGLj descendants={"QlB0F":{"fill":"$rose"},"rOKja":{"content":"Stok Rendah","fill":"$rose"}}
+      - **Sedang Dipinjam** · `ref` · fit×fit · fill: amber-soft(#FDF2DE) · ref=QuGLj descendants={"QlB0F":{"fill":"$amber"},"rOKja":{"content":"Sedang Dipinjam","fill":"$amber"}}
+      - **Pengaturan** · `ref` · fit×fit · fill: brand-soft(#EBEFFF) · ref=QuGLj descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"Pengaturan","fill":"$brand"}}
+  - **Section** · `frame` · fill_container×fit · layout=vertical gap=14
+    - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - text ($font-ui 15 700 ink(#0B1B2E)): "Tombol & Input"
+      - **Note** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-mono 11 muted(#74849A)): "3 varian"
+    - **Stage** · `frame` · fill_container×fit · gap=14 pad=24/28 align=center · fill: app-bg(#F4F7FB) · r=16
+      - **Button Primary** · `frame` · fit×fit · gap=8 pad=11/18 align=center · fill: brand(#2B4EFF) · REUSABLE r=10
+        - **Icon** · `icon` · 16×16 · fill: #FFFFFF · icon=plus library=lucide
+          - icon: plus [lucide] #FFFFFF
+        - **Label** · `text` · fit×fit · fill: #FFFFFF
+          - text ($font-ui 13.5 700 #FFFFFF): "Tambah Barang"
+      - **Button Secondary** · `ref` · fit×fit · fill: surface(#FFFFFF) · ref=YpfPQ stroke=line(#E3EAF3) strokeWidth=1 descendants={"ebOKU":{"icon":"scan-barcode","fill":"$ink-soft"},"pXxWX":{"content":"Scan Barcode","fill":"$ink-s
+      - **Button Danger** · `ref` · fit×fit · fill: rose-soft(#FDEBEC) · ref=YpfPQ descendants={"ebOKU":{"icon":"printer","fill":"$rose"},"pXxWX":{"content":"Cetak Label","fill":"$rose"}}
+      - **Field** · `frame` · 260×fit · gap=10 pad=11/14 align=center · fill: surface(#FFFFFF) · REUSABLE r=10 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 16×16 · fill: muted(#74849A) · icon=search library=lucide
+          - icon: search [lucide] muted(#74849A)
+        - **Placeholder** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 13 muted(#74849A)): "Cari nama atau barcode..."
+
+## Layer tree (dark theme resolved)
+
+- **Komponen** · `frame` · 1440×fit · layout=vertical gap=36 pad=56/64 · fill: surface(#292A2D) · clip
+  - **Header** · `frame` · fill_container×fit · layout=vertical gap=10
+    - **Eyebrow** · `text` · fit×fit · fill: brand(#1A73E8)
+      - text ($font-mono 12 600 ls=1.4 brand(#1A73E8)): "KOMPONEN"
+    - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+      - text ($font-ui 32 800 ls=-0.9 ink(#E8EAED)): "Komponen yang dipakai berulang"
+    - **Desc** · `text` · fill_container×fit · fill: ink-soft(#BDC1C6)
+      - text ($font-ui 14 lh=1.6 ink-soft(#BDC1C6)): "Sidebar item, kartu metrik, badge status, tombol, dan input. Setiap instance bisa diubah isinya tanpa memengaruhi komponen aslinya."
+  - **Section** · `frame` · fill_container×fit · layout=vertical gap=14
+    - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: ink(#E8EAED)
+        - text ($font-ui 15 700 ink(#E8EAED)): "Sidebar Navigation"
+      - **Note** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-mono 11 muted(#9AA0A6)): "1 item"
+    - **Stage** · `frame` · fill_container×fit · gap=40 pad=24/28 align=center · fill: navy(#1B1C1F) · r=16
+      - **Nav Item** · `frame` · 260×fit · gap=12 pad=10/14 align=center · REUSABLE r=10
+        - **Icon** · `icon` · 18×18 · fill: #93A7C4 · icon=layout-dashboard library=lucide
+          - icon: layout-dashboard [lucide] #93A7C4
+        - **Label** · `text` · fit×fit · fill: #93A7C4
+          - text ($font-ui 14 600 #93A7C4): "Dasbor"
+        - **Badge Wrap** · `frame` · fill_container×fit · justify=end
+          - **Count** · `text` · fit×fit · fill: #93A7C4
+            - text ($font-mono 11 #93A7C4): ""
+      - **Nav Item Active** · `ref` · fit×fit · fill: #1B3364 · ref=Z0vAf descendants={"NR61K":{"fill":"#FFFFFF"},"UgURJ":{"content":"Inventaris","fill":"#FFFFFF"}}
+      - **Caption** · `text` · fit×fit · fill: #6C82A3
+        - text ($font-mono 11 #6C82A3): "non-aktif → aktif"
+  - **Section** · `frame` · fill_container×fit · layout=vertical gap=14
+    - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: ink(#E8EAED)
+        - text ($font-ui 15 700 ink(#E8EAED)): "Kartu Metrik"
+      - **Note** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-mono 11 muted(#9AA0A6)): "instance × 4"
+    - **Stage** · `frame` · fill_container×fit · gap=16 pad=24/28 · fill: app-bg(#202124) · r=16
+      - **Metric Card** · `frame` · fill_container×fit · layout=vertical gap=18 pad=22 · fill: surface(#292A2D) · REUSABLE r=16 stroke=line(#E3EAF3) strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · justify=space_between align=center
+          - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+            - text ($font-ui 13 600 ink-soft(#BDC1C6)): "Total Barang"
+          - **Icon Chip** · `frame` · 34×34 · justify=center align=center · fill: brand-soft(#2D3037) · r=10
+            - **Icon** · `icon` · 17×17 · fill: brand(#1A73E8) · icon=boxes library=lucide
+              - icon: boxes [lucide] brand(#2B4EFF)
+        - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 34 800 ls=-1.2 ink(#E8EAED)): "40"
+        - **Caption** · `text` · fill_container×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 12 lh=1.4 muted(#9AA0A6)): "Di semua laboratorium & ruang"
+      - **Stok Rendah** · `ref` · fill_container×fit · ref=KkQWr descendants={"PSgwu":{"content":"Stok Rendah"},"LQwnV":{"fill":"$rose-soft"},"SY33q":{"icon":"triangle-alert","f
+      - **Peminjaman Aktif** · `ref` · fill_container×fit · ref=KkQWr descendants={"PSgwu":{"content":"Peminjaman Aktif"},"LQwnV":{"fill":"$amber-soft"},"SY33q":{"icon":"clock","fill
+      - **Transaksi Hari Ini** · `ref` · fill_container×fit · ref=KkQWr descendants={"PSgwu":{"content":"Transaksi Hari Ini"},"LQwnV":{"fill":"$mint-soft"},"SY33q":{"icon":"arrow-left-
+  - **Section** · `frame` · fill_container×fit · layout=vertical gap=14
+    - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: ink(#E8EAED)
+        - text ($font-ui 15 700 ink(#E8EAED)): "Badge Status"
+      - **Note** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-mono 11 muted(#9AA0A6)): "3 varian"
+    - **Stage** · `frame` · fill_container×fit · gap=14 pad=24/28 align=center · fill: app-bg(#202124) · r=16
+      - **Badge** · `frame` · fit×fit · gap=7 pad=5/11 align=center · fill: mint-soft(#2C3630) · REUSABLE r=999
+        - **Dot** · `ellipse` · 6×6 · fill: mint(#81C995)
+        - **Label** · `text` · fit×fit · fill: mint(#81C995)
+          - text ($font-ui 11.5 700 mint(#81C995)): "Tersedia"
+      - **Stok Rendah** · `ref` · fit×fit · fill: rose-soft(#3A2B2A) · ref=QuGLj descendants={"QlB0F":{"fill":"$rose"},"rOKja":{"content":"Stok Rendah","fill":"$rose"}}
+      - **Sedang Dipinjam** · `ref` · fit×fit · fill: amber-soft(#38321F) · ref=QuGLj descendants={"QlB0F":{"fill":"$amber"},"rOKja":{"content":"Sedang Dipinjam","fill":"$amber"}}
+      - **Pengaturan** · `ref` · fit×fit · fill: brand-soft(#2D3037) · ref=QuGLj descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"Pengaturan","fill":"$brand"}}
+  - **Section** · `frame` · fill_container×fit · layout=vertical gap=14
+    - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: ink(#E8EAED)
+        - text ($font-ui 15 700 ink(#E8EAED)): "Tombol & Input"
+      - **Note** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-mono 11 muted(#9AA0A6)): "3 varian"
+    - **Stage** · `frame` · fill_container×fit · gap=14 pad=24/28 align=center · fill: app-bg(#202124) · r=16
+      - **Button Primary** · `frame` · fit×fit · gap=8 pad=11/18 align=center · fill: brand(#1A73E8) · REUSABLE r=10
+        - **Icon** · `icon` · 16×16 · fill: #FFFFFF · icon=plus library=lucide
+          - icon: plus [lucide] #FFFFFF
+        - **Label** · `text` · fit×fit · fill: #FFFFFF
+          - text ($font-ui 13.5 700 #FFFFFF): "Tambah Barang"
+      - **Button Secondary** · `ref` · fit×fit · fill: surface(#292A2D) · ref=YpfPQ stroke=line(#E3EAF3) strokeWidth=1 descendants={"ebOKU":{"icon":"scan-barcode","fill":"$ink-soft"},"pXxWX":{"content":"Scan Barcode","fill":"$ink-s
+      - **Button Danger** · `ref` · fit×fit · fill: rose-soft(#3A2B2A) · ref=YpfPQ descendants={"ebOKU":{"icon":"printer","fill":"$rose"},"pXxWX":{"content":"Cetak Label","fill":"$rose"}}
+      - **Field** · `frame` · 260×fit · gap=10 pad=11/14 align=center · fill: surface(#292A2D) · REUSABLE r=10 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 16×16 · fill: muted(#9AA0A6) · icon=search library=lucide
+          - icon: search [lucide] muted(#74849A)
+        - **Placeholder** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 13 muted(#9AA0A6)): "Cari nama atau barcode..."

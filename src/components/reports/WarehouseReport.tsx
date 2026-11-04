@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import {
     Table,
     TableBody,
@@ -15,7 +14,7 @@ import { format } from "date-fns"
 import { id } from "date-fns/locale"
 import { getWarehouseReport } from "@/actions/reports"
 import { Button } from "@/components/ui/button"
-import { Printer, ArrowDownLeft, ArrowUpRight } from "lucide-react"
+import { Printer, ArrowDownLeft, ArrowUpRight, Loader2 } from "lucide-react"
 import { ReportHeader } from "./ReportHeader"
 
 export function WarehouseReport() {
@@ -35,78 +34,90 @@ export function WarehouseReport() {
         window.print()
     }
 
-    if (loading) {
-        return <div>Memuat data...</div>
-    }
-
     return (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
             <div className="flex justify-end print:hidden">
-                <Button onClick={handlePrint}>
-                    <Printer className="mr-2 h-4 w-4" /> Cetak Laporan
+                <Button variant="primary" size="sm" onClick={handlePrint} className="gap-1.5">
+                    <Printer className="size-3.5" />
+                    <span>Cetak Laporan</span>
                 </Button>
             </div>
 
-            <div className="print:p-0">
-                <ReportHeader title="Laporan Keluar/Masuk Gudang" />
+            <ReportHeader title="Laporan Keluar/Masuk Gudang" />
 
-                <Card className="print:border-0 print:shadow-none">
-                    <CardHeader className="print:hidden">
-                        <CardTitle>Riwayat Keluar/Masuk Gudang</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-0 print:p-0">
-                        <div className="overflow-x-auto w-full scrollbar-none">
-                            <Table className="border print:border-black">
-                                <TableHeader>
-                                    <TableRow className="print:border-black">
-                                        <TableHead className="print:text-black print:font-bold">Tanggal</TableHead>
-                                        <TableHead className="print:text-black print:font-bold">Tipe</TableHead>
-                                        <TableHead className="print:text-black print:font-bold">Barang</TableHead>
-                                        <TableHead className="print:text-black print:font-bold">Spesifikasi</TableHead>
-                                        <TableHead className="print:text-black print:font-bold">Jumlah</TableHead>
-                                        <TableHead className="print:text-black print:font-bold">Keterangan / Tujuan</TableHead>
+            <div className="panel rounded-2xl flex flex-col overflow-hidden print:border-0 print:shadow-none">
+                <div className="p-4 lg:p-[18px_22px] border-b border-line bg-surface flex items-center justify-between print:hidden">
+                    <div className="flex flex-col">
+                        <h3 className="text-[14.5px] font-bold text-ink">Mutasi Gudang</h3>
+                        <p className="text-xs text-muted-ink mt-0.5">
+                            Riwayat transaksi logistik keluar dan masuk gudang
+                        </p>
+                    </div>
+                    <Badge variant="secondary" className="font-mono text-xs">
+                        {transactions.length} mutasi
+                    </Badge>
+                </div>
+
+                <Table className="print:border print:border-black">
+                    <TableHeader>
+                        <TableRow className="print:border-black">
+                            <TableHead className="print:text-black">WAKTU</TableHead>
+                            <TableHead className="print:text-black">TIPE</TableHead>
+                            <TableHead className="print:text-black">BARANG</TableHead>
+                            <TableHead className="print:text-black">SPESIFIKASI</TableHead>
+                            <TableHead className="text-right print:text-black">JUMLAH</TableHead>
+                            <TableHead className="print:text-black">CATATAN</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                        {loading ? (
+                            <TableRow>
+                                <TableCell colSpan={6} className="text-center py-10 text-muted-ink">
+                                    <Loader2 className="size-5 animate-spin mx-auto mb-2" />
+                                    <span>Memuat riwayat gudang...</span>
+                                </TableCell>
+                            </TableRow>
+                        ) : transactions.length === 0 ? (
+                            <TableRow>
+                                <TableCell colSpan={6} className="text-center py-10 text-muted-ink">
+                                    Belum ada transaksi gudang.
+                                </TableCell>
+                            </TableRow>
+                        ) : (
+                            transactions.map((t) => {
+                                const isIncoming = t.type === "IN"
+                                return (
+                                    <TableRow key={t.id} className="print:border-black">
+                                        <TableCell className="font-mono text-xs text-ink-soft whitespace-nowrap">
+                                            {format(new Date(t.date), "d/MM/yy HH:mm", { locale: id })}
+                                        </TableCell>
+                                        <TableCell>
+                                            <Badge
+                                                variant={isIncoming ? "mint" : "rose"}
+                                                dot
+                                                className="text-[10.5px] uppercase"
+                                            >
+                                                {isIncoming ? "Masuk" : "Keluar"}
+                                            </Badge>
+                                        </TableCell>
+                                        <TableCell className="font-bold text-[13px] text-ink">
+                                            {t.item?.name}
+                                        </TableCell>
+                                        <TableCell className="text-xs text-muted-ink">
+                                            {t.item?.specification || "-"}
+                                        </TableCell>
+                                        <TableCell className="text-right font-mono font-bold text-[13px] tabular-nums text-ink">
+                                            {t.quantity}
+                                        </TableCell>
+                                        <TableCell className="text-xs text-ink-soft">
+                                            {t.note || "-"}
+                                        </TableCell>
                                     </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {transactions.map((t) => (
-                                        <TableRow key={t.id} className="print:border-black">
-                                            <TableCell className="whitespace-nowrap">
-                                                {format(new Date(t.date), "dd/MM/yy HH:mm", { locale: id })}
-                                            </TableCell>
-                                            <TableCell>
-                                                {t.type === "IN" ? (
-                                                    <Badge className="bg-green-100 text-green-800 hover:bg-green-100 print:bg-transparent print:text-black print:border print:border-black">
-                                                        <ArrowDownLeft className="w-3 h-3 mr-1" /> Masuk
-                                                    </Badge>
-                                                ) : (
-                                                    <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-100 print:bg-transparent print:text-black print:border print:border-black">
-                                                        <ArrowUpRight className="w-3 h-3 mr-1" /> Keluar
-                                                    </Badge>
-                                                )}
-                                            </TableCell>
-                                            <TableCell>
-                                                <div className="font-medium">{t.item.name}</div>
-                                                <div className="text-xs text-muted-foreground print:text-black">{t.item.barcode}</div>
-                                            </TableCell>
-                                            <TableCell className="text-sm">{t.item.specification || "-"}</TableCell>
-                                            <TableCell className="font-bold">
-                                                {t.quantity}
-                                            </TableCell>
-                                            <TableCell>{t.note || "-"}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                    {transactions.length === 0 && (
-                                        <TableRow>
-                                            <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                                                Belum ada riwayat transaksi gudang.
-                                            </TableCell>
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
-                        </div>
-                    </CardContent>
-                </Card>
+                                )
+                            })
+                        )}
+                    </TableBody>
+                </Table>
             </div>
         </div>
     )

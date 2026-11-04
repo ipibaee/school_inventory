@@ -5,12 +5,15 @@ import { Button } from "@/components/ui/button"
 import {
     Dialog,
     DialogContent,
+    DialogDescription,
+    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { ScanBarcode, Plus } from "lucide-react"
+import { Label } from "@/components/ui/label"
+import { ScanBarcode, Plus, Search, Loader2 } from "lucide-react"
 import { getItemByBarcode, updateItem } from "@/actions/inventory"
 import { ItemForm } from "./ItemForm"
 import { toast } from "sonner"
@@ -19,9 +22,10 @@ import { useRouter } from "next/navigation"
 interface ScanDialogProps {
     categories: { id: string; name: string }[]
     locations: { id: string; name: string }[]
+    trigger?: React.ReactNode
 }
 
-export function ScanDialog({ categories, locations }: ScanDialogProps) {
+export function ScanDialog({ categories, locations, trigger }: ScanDialogProps) {
     const [open, setOpen] = useState(false)
     const [barcode, setBarcode] = useState("")
     const [loading, setLoading] = useState(false)
@@ -32,7 +36,7 @@ export function ScanDialog({ categories, locations }: ScanDialogProps) {
     const inputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
 
-    const gudangLocation = locations.find(l => l.name === "Gudang")
+    const gudangLocation = locations.find((l) => l.name === "Gudang")
 
     useEffect(() => {
         if (open && mode === "scan") {
@@ -45,12 +49,10 @@ export function ScanDialog({ categories, locations }: ScanDialogProps) {
 
         setLoading(true)
         try {
-            // 1. Try to find in Gudang first
             let item = null
             if (gudangLocation) {
                 item = await getItemByBarcode(codeToScan, gudangLocation.id)
             } else {
-                // Fallback if Gudang not found (shouldn't happen)
                 item = await getItemByBarcode(codeToScan)
             }
 
@@ -58,8 +60,8 @@ export function ScanDialog({ categories, locations }: ScanDialogProps) {
                 setScannedItem(item)
                 setMode("add-stock")
                 setAddStockQty(1)
+                toast.success(`Barang ditemukan: ${item.name}`)
             } else {
-                // 2. If not in Gudang, check globally to pre-fill data
                 const globalItem = await getItemByBarcode(codeToScan)
                 if (globalItem) {
                     setDefaults({
@@ -72,6 +74,7 @@ export function ScanDialog({ categories, locations }: ScanDialogProps) {
                     setDefaults(null)
                 }
                 setMode("new-item")
+                toast.info("Barang belum terdaftar di Gudang. Silakan lengkapi data.")
             }
         } catch (error) {
             toast.error("Terjadi kesalahan saat memindai barcode")
@@ -91,7 +94,7 @@ export function ScanDialog({ categories, locations }: ScanDialogProps) {
         setLoading(true)
         try {
             const result = await updateItem(scannedItem.id, {
-                quantity: scannedItem.quantity + addStockQty
+                quantity: scannedItem.quantity + addStockQty,
             })
 
             if (result.success) {
@@ -112,110 +115,123 @@ export function ScanDialog({ categories, locations }: ScanDialogProps) {
     const resetState = () => {
         setBarcode("")
         setScannedItem(null)
-        setDefaults(null)
         setMode("scan")
         setAddStockQty(1)
-    }
-
-    const onOpenChange = (isOpen: boolean) => {
-        setOpen(isOpen)
-        if (!isOpen) {
-            resetState()
-        }
+        setDefaults(null)
     }
 
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog
+            open={open}
+            onOpenChange={(val) => {
+                setOpen(val)
+                if (!val) resetState()
+            }}
+        >
             <DialogTrigger asChild>
-                <Button variant="outline">
-                    <ScanBarcode className="mr-2 h-4 w-4" /> Scan Barcode
-                </Button>
+                {trigger || (
+                    <Button variant="secondary" className="gap-2">
+                        <ScanBarcode className="size-4" />
+                        <span>Scan Barcode</span>
+                    </Button>
+                )}
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
+            <DialogContent className="sm:max-w-[480px]">
                 <DialogHeader>
                     <DialogTitle>
-                        {mode === "scan" && "Scan Barcode"}
-                        {mode === "add-stock" && "Tambah Stok Barang"}
-                        {mode === "new-item" && "Barang Baru"}
+                        {mode === "scan" && "Scan Cepat Barcode"}
+                        {mode === "add-stock" && "Tambah Stok Gudang"}
+                        {mode === "new-item" && "Registrasi Barang Baru"}
                     </DialogTitle>
+                    <DialogDescription>
+                        {mode === "scan" &&
+                            "Arahkan scanner barcode atau masukkan kode manual untuk mendeteksi barang."}
+                        {mode === "add-stock" &&
+                            "Barang sudah ada di Gudang. Tambahkan jumlah unit yang masuk."}
+                        {mode === "new-item" &&
+                            "Barang belum ada di Gudang. Daftarkan barang baru dengan barcode ini."}
+                    </DialogDescription>
                 </DialogHeader>
 
                 {mode === "scan" && (
-                    <form onSubmit={handleScan} className="space-y-4">
-                        <div className="space-y-2">
-                            <p className="text-sm text-muted-foreground">
-                                Scan barcode atau ketik manual untuk mencari barang.
-                            </p>
-                            <Input
-                                ref={inputRef}
-                                placeholder="Scan barcode..."
-                                value={barcode}
-                                onChange={(e) => {
-                                    const val = e.target.value
-                                    setBarcode(val)
-                                    if (val.length === 5) {
-                                        performScan(val)
-                                    }
-                                }}
-                                disabled={loading}
-                            />
+                    <form onSubmit={handleScan} className="flex flex-col gap-4 py-2">
+                        <div className="flex flex-col gap-1.5">
+                            <Label htmlFor="scanBarcode" className="label-caps">
+                                KODE BARCODE
+                            </Label>
+                            <div className="flex gap-2">
+                                <Input
+                                    id="scanBarcode"
+                                    ref={inputRef}
+                                    placeholder="Tempel atau scan barcode di sini..."
+                                    value={barcode}
+                                    onChange={(e) => setBarcode(e.target.value)}
+                                    className="flex-1"
+                                />
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    disabled={loading || !barcode}
+                                    className="px-4"
+                                >
+                                    {loading ? (
+                                        <Loader2 className="size-4 animate-spin" />
+                                    ) : (
+                                        <Search className="size-4" />
+                                    )}
+                                </Button>
+                            </div>
                         </div>
-                        <Button type="submit" className="w-full" disabled={loading || !barcode}>
-                            {loading ? "Mencari..." : "Cari Barang"}
-                        </Button>
                     </form>
                 )}
 
                 {mode === "add-stock" && scannedItem && (
-                    <div className="space-y-4">
-                        <div className="p-4 border rounded-lg bg-muted/50">
-                            <h3 className="font-semibold">{scannedItem.name}</h3>
-                            <p className="text-sm text-muted-foreground">Barcode: {scannedItem.barcode}</p>
-                            <p className="text-sm text-muted-foreground">Stok Saat Ini: {scannedItem.quantity}</p>
+                    <div className="flex flex-col gap-4 py-2">
+                        <div className="p-3.5 rounded-[12px] bg-brand-soft border border-brand/20 flex flex-col gap-1">
+                            <span className="text-[14px] font-bold text-ink">
+                                {scannedItem.name}
+                            </span>
+                            <span className="text-xs text-muted-ink">
+                                Barcode: {scannedItem.barcode} · Lokasi: {scannedItem.location?.name}
+                            </span>
+                            <span className="text-xs font-bold text-brand mt-1">
+                                Stok Saat Ini: {scannedItem.quantity} unit
+                            </span>
                         </div>
 
-                        <div className="space-y-2">
-                            <p className="text-sm font-medium">Jumlah Tambahan</p>
-                            <div className="flex items-center gap-2">
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={() => setAddStockQty(Math.max(1, addStockQty - 1))}
-                                >
-                                    -
-                                </Button>
-                                <Input
-                                    type="number"
-                                    className="w-24 text-center"
-                                    value={addStockQty}
-                                    onChange={(e) => setAddStockQty(parseInt(e.target.value) || 0)}
-                                />
-                                <Button
-                                    variant="outline"
-                                    size="icon"
-                                    onClick={() => setAddStockQty(addStockQty + 1)}
-                                >
-                                    +
-                                </Button>
-                            </div>
+                        <div className="flex flex-col gap-1.5">
+                            <Label htmlFor="addQty" className="label-caps">
+                                JUMLAH TAMBAHAN
+                            </Label>
+                            <Input
+                                id="addQty"
+                                type="number"
+                                min="1"
+                                value={addStockQty}
+                                onChange={(e) => setAddStockQty(parseInt(e.target.value) || 1)}
+                                className="w-full"
+                            />
                         </div>
 
-                        <div className="flex justify-end gap-2 pt-4">
-                            <Button variant="outline" onClick={resetState}>Batal</Button>
-                            <Button onClick={handleAddStock} disabled={loading}>
-                                {loading ? "Menyimpan..." : "Simpan Stok"}
+                        <DialogFooter className="gap-2 sm:gap-0">
+                            <Button type="button" variant="secondary" onClick={resetState}>
+                                Scan Lain
                             </Button>
-                        </div>
+                            <Button
+                                type="button"
+                                variant="primary"
+                                onClick={handleAddStock}
+                                disabled={loading || addStockQty <= 0}
+                            >
+                                {loading && <Loader2 className="size-4 animate-spin mr-1.5" />}
+                                <span>Simpan Tambahan Stok</span>
+                            </Button>
+                        </DialogFooter>
                     </div>
                 )}
 
                 {mode === "new-item" && (
-                    <div className="space-y-4">
-                        <div className="p-4 border rounded-lg bg-yellow-50 text-yellow-800 mb-4">
-                            <p className="text-sm">
-                                Barcode <strong>{barcode}</strong> belum terdaftar. Silakan lengkapi data barang baru.
-                            </p>
-                        </div>
+                    <div className="py-2">
                         <ItemForm
                             categories={categories}
                             locations={locations}
@@ -225,13 +241,9 @@ export function ScanDialog({ categories, locations }: ScanDialogProps) {
                             onSuccess={() => {
                                 setOpen(false)
                                 resetState()
+                                toast.success("Barang baru berhasil ditambahkan ke Gudang")
                             }}
                         />
-                        <div className="flex justify-start">
-                            <Button variant="ghost" size="sm" onClick={resetState} className="mt-2">
-                                &larr; Kembali ke Scan
-                            </Button>
-                        </div>
                     </div>
                 )}
             </DialogContent>

@@ -1,9 +1,7 @@
 import { BarcodeGenerator } from "@/components/inventory/BarcodeGenerator"
 
+export const dynamic = "force-dynamic"
+
 export default function BarcodePage() {
-    return (
-        <div className="p-8">
-            <BarcodeGenerator />
-        </div>
-    )
+    return <BarcodeGenerator />
 }

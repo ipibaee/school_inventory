@@ -1,0 +1,193 @@
+# Login — Redesign
+
+- canvas id: `FZW0o`
+- frame: 1440×880 at (1540, 2921)
+- layout: absolute children
+- clip: true
+- background: light surface(#FFFFFF) · dark surface(#292A2D)
+
+## Layer tree (light theme resolved)
+
+- **Login — Redesign** · `frame` · 1440×880 · fill: surface(#FFFFFF) · clip
+  - **Brand Panel** · `frame` · 660×fill_container · layout=vertical pad=52 · fill: navy(#0A1730)
+    - **Glow** · `ellipse` · 620×360 · fill: gradient[#2B4EFF66 → #2B4EFF00] · absolute
+    - **Brand** · `frame` · fit×fit · gap=12 align=center
+      - **Mark** · `frame` · 40×40 · justify=center align=center · fill: brand(#2B4EFF) · r=12
+        - **Icon** · `icon` · 21×21 · fill: #FFFFFF · icon=graduation-cap library=lucide
+          - icon: graduation-cap [lucide] #FFFFFF
+      - **Brand Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **School** · `text` · fit×fit · fill: #FFFFFF
+          - text ($font-ui 15 800 #FFFFFF): "SMK HKTI 2"
+        - **Product** · `text` · fit×fit · fill: #8296B4
+          - text ($font-ui 11 #8296B4): "HIKA Inventaris"
+    - **Spacer Top** · `frame` · fill_container×fill_container
+    - **Copy** · `frame` · fill_container×fit · layout=vertical gap=18
+      - **Eyebrow** · `text` · fit×fit · fill: #7FA6FF
+        - text ($font-mono 10.5 ls=1.4 #7FA6FF): "SISTEM MANAJEMEN INVENTARIS & LABORATORIUM"
+      - **Headline** · `text` · fill_container×fit · fill: #FFFFFF
+        - text ($font-ui 42 800 lh=1.12 ls=-1.4 #FFFFFF): "Satu sumber data untuk seluruh perangkat sekolah."
+      - **Sub** · `text` · 460×fit · fill: #A6B7D0
+        - text ($font-ui 14 lh=1.65 #A6B7D0): "Catat barang masuk, keluar, dan peminjaman laboratorium. Stok selalu akurat tanpa rekap manual."
+      - **Stats** · `frame` · fit×fit · gap=12
+        - **Stat** · `frame` · fit×fit · layout=vertical gap=3 pad=13/16 · fill: #FFFFFF0F · r=12 stroke=#FFFFFF1A strokeWidth=1
+          - **Big** · `text` · fit×fit · fill: #FFFFFF
+            - text ($font-ui 20 800 #FFFFFF): "40"
+          - **Lab** · `text` · fit×fit · fill: #8296B4
+            - text ($font-ui 10.5 #8296B4): "Jenis barang"
+        - **Stat** · `frame` · fit×fit · layout=vertical gap=3 pad=13/16 · fill: #FFFFFF0F · r=12 stroke=#FFFFFF1A strokeWidth=1
+          - **Big** · `text` · fit×fit · fill: #FFFFFF
+            - text ($font-ui 20 800 #FFFFFF): "9"
+          - **Lab** · `text` · fit×fit · fill: #8296B4
+            - text ($font-ui 10.5 #8296B4): "Ruang & lab"
+        - **Stat** · `frame` · fit×fit · layout=vertical gap=3 pad=13/16 · fill: #FFFFFF0F · r=12 stroke=#FFFFFF1A strokeWidth=1
+          - **Big** · `text` · fit×fit · fill: #FFFFFF
+            - text ($font-ui 20 800 #FFFFFF): "128"
+          - **Lab** · `text` · fit×fit · fill: #8296B4
+            - text ($font-ui 10.5 #8296B4): "Transaksi"
+    - **Spacer Bottom** · `frame` · fill_container×fill_container
+    - **Footer** · `text` · fit×fit · fill: #6C82A3
+      - text ($font-ui 10.5 #6C82A3): "© 2026 SMK HKTI 2 · Purwareja Klampok"
+  - **Form Panel** · `frame` · fill_container×fill_container · layout=vertical pad=52/48 justify=center align=center · fill: surface(#FFFFFF)
+    - **Form** · `frame` · 380×fit · layout=vertical gap=22
+      - **Eyebrow** · `text` · fit×fit · fill: brand(#2B4EFF)
+        - text ($font-mono 10.5 ls=1.4 brand(#2B4EFF)): "MASUK KE AKUN"
+      - **Heading** · `frame` · fill_container×fit · layout=vertical gap=8
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 28 800 ls=-0.8 ink(#0B1B2E)): "Selamat datang kembali"
+        - **Sub** · `text` · fill_container×fit · fill: muted(#74849A)
+          - text ($font-ui 13 lh=1.55 muted(#74849A)): "Gunakan email sekolah untuk mengakses dashboard inventaris."
+      - **Field EMAIL** · `frame` · fill_container×fit · layout=vertical gap=7
+        - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+          - text ($font-ui 11.5 700 ink-soft(#3B4A5F)): "EMAIL"
+        - **Input** · `frame` · fill_container×fit · gap=10 pad=12/14 align=center · fill: surface(#FFFFFF) · r=10 stroke=line(#E3EAF3) strokeWidth=1
+          - **Icon** · `icon` · 15×15 · fill: muted(#74849A) · icon=mail library=lucide
+            - icon: mail [lucide] muted(#74849A)
+          - **Value** · `text` · fit×fit · fill: muted(#74849A)
+            - text ($font-ui 13 muted(#74849A)): "admin@smkhkti2.sch.id"
+      - **Field PASSWORD** · `frame` · fill_container×fit · layout=vertical gap=7
+        - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+          - text ($font-ui 11.5 700 ink-soft(#3B4A5F)): "PASSWORD"
+        - **Input** · `frame` · fill_container×fit · gap=10 pad=12/14 align=center · fill: surface(#FFFFFF) · r=10 stroke=line(#E3EAF3) strokeWidth=1
+          - **Icon** · `icon` · 15×15 · fill: muted(#74849A) · icon=lock library=lucide
+            - icon: lock [lucide] muted(#74849A)
+          - **Value** · `text` · fit×fit · fill: muted(#74849A)
+            - text ($font-ui 13 muted(#74849A)): "••••••••••"
+          - **Eye** · `icon` · 15×15 · fill: muted(#74849A) · icon=eye library=lucide
+            - icon: eye [lucide] muted(#74849A)
+      - **Options** · `frame` · fill_container×fit · justify=space_between align=center
+        - **Remember** · `frame` · fit×fit · gap=8 align=center
+          - **Check** · `frame` · 15×15 · justify=center align=center · fill: brand(#2B4EFF) · r=4
+          - **Tick** · `icon` · 11×11 · fill: #FFFFFF · icon=check library=lucide
+            - icon: check [lucide] #FFFFFF
+          - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - text ($font-ui 11.5 ink-soft(#3B4A5F)): "Ingat perangkat ini"
+        - **Forgot** · `text` · fit×fit · fill: brand(#2B4EFF)
+          - text ($font-ui 11.5 700 brand(#2B4EFF)): "Lupa password?"
+      - **Submit** · `frame` · fill_container×fit · gap=8 pad=13/0 justify=center align=center · fill: brand(#2B4EFF) · r=10
+        - **Label** · `text` · fit×fit · fill: #FFFFFF
+          - text ($font-ui 13.5 700 #FFFFFF): "Masuk"
+        - **Arrow** · `icon` · 15×15 · fill: #FFFFFF · icon=arrow-right library=lucide
+          - icon: arrow-right [lucide] #FFFFFF
+      - **Divider** · `frame` · fill_container×fit · gap=12 align=center
+        - **Line L** · `frame` · fill_container×1 · fill: line(#E3EAF3)
+        - **Or** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 10.5 muted(#74849A)): "atau"
+        - **Line R** · `frame` · fill_container×1 · fill: line(#E3EAF3)
+      - **Help** · `frame` · fill_container×fit · gap=6 pad=12/0 justify=center align=center · fill: surface-2(#FAFCFE) · r=10 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: muted(#74849A) · icon=life-buoy library=lucide
+          - icon: life-buoy [lucide] muted(#74849A)
+        - **Text** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+          - text ($font-ui 11.5 ink-soft(#3B4A5F)): "Butuh bantuan? Hubungi admin TU"
+
+## Layer tree (dark theme resolved)
+
+- **Login — Redesign** · `frame` · 1440×880 · fill: surface(#292A2D) · clip
+  - **Brand Panel** · `frame` · 660×fill_container · layout=vertical pad=52 · fill: navy(#1B1C1F)
+    - **Glow** · `ellipse` · 620×360 · fill: gradient[#2B4EFF66 → #2B4EFF00] · absolute
+    - **Brand** · `frame` · fit×fit · gap=12 align=center
+      - **Mark** · `frame` · 40×40 · justify=center align=center · fill: brand(#1A73E8) · r=12
+        - **Icon** · `icon` · 21×21 · fill: #FFFFFF · icon=graduation-cap library=lucide
+          - icon: graduation-cap [lucide] #FFFFFF
+      - **Brand Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **School** · `text` · fit×fit · fill: #FFFFFF
+          - text ($font-ui 15 800 #FFFFFF): "SMK HKTI 2"
+        - **Product** · `text` · fit×fit · fill: #8296B4
+          - text ($font-ui 11 #8296B4): "HIKA Inventaris"
+    - **Spacer Top** · `frame` · fill_container×fill_container
+    - **Copy** · `frame` · fill_container×fit · layout=vertical gap=18
+      - **Eyebrow** · `text` · fit×fit · fill: #7FA6FF
+        - text ($font-mono 10.5 ls=1.4 #7FA6FF): "SISTEM MANAJEMEN INVENTARIS & LABORATORIUM"
+      - **Headline** · `text` · fill_container×fit · fill: #FFFFFF
+        - text ($font-ui 42 800 lh=1.12 ls=-1.4 #FFFFFF): "Satu sumber data untuk seluruh perangkat sekolah."
+      - **Sub** · `text` · 460×fit · fill: #A6B7D0
+        - text ($font-ui 14 lh=1.65 #A6B7D0): "Catat barang masuk, keluar, dan peminjaman laboratorium. Stok selalu akurat tanpa rekap manual."
+      - **Stats** · `frame` · fit×fit · gap=12
+        - **Stat** · `frame` · fit×fit · layout=vertical gap=3 pad=13/16 · fill: #FFFFFF0F · r=12 stroke=#FFFFFF1A strokeWidth=1
+          - **Big** · `text` · fit×fit · fill: #FFFFFF
+            - text ($font-ui 20 800 #FFFFFF): "40"
+          - **Lab** · `text` · fit×fit · fill: #8296B4
+            - text ($font-ui 10.5 #8296B4): "Jenis barang"
+        - **Stat** · `frame` · fit×fit · layout=vertical gap=3 pad=13/16 · fill: #FFFFFF0F · r=12 stroke=#FFFFFF1A strokeWidth=1
+          - **Big** · `text` · fit×fit · fill: #FFFFFF
+            - text ($font-ui 20 800 #FFFFFF): "9"
+          - **Lab** · `text` · fit×fit · fill: #8296B4
+            - text ($font-ui 10.5 #8296B4): "Ruang & lab"
+        - **Stat** · `frame` · fit×fit · layout=vertical gap=3 pad=13/16 · fill: #FFFFFF0F · r=12 stroke=#FFFFFF1A strokeWidth=1
+          - **Big** · `text` · fit×fit · fill: #FFFFFF
+            - text ($font-ui 20 800 #FFFFFF): "128"
+          - **Lab** · `text` · fit×fit · fill: #8296B4
+            - text ($font-ui 10.5 #8296B4): "Transaksi"
+    - **Spacer Bottom** · `frame` · fill_container×fill_container
+    - **Footer** · `text` · fit×fit · fill: #6C82A3
+      - text ($font-ui 10.5 #6C82A3): "© 2026 SMK HKTI 2 · Purwareja Klampok"
+  - **Form Panel** · `frame` · fill_container×fill_container · layout=vertical pad=52/48 justify=center align=center · fill: surface(#292A2D)
+    - **Form** · `frame` · 380×fit · layout=vertical gap=22
+      - **Eyebrow** · `text` · fit×fit · fill: brand(#1A73E8)
+        - text ($font-mono 10.5 ls=1.4 brand(#1A73E8)): "MASUK KE AKUN"
+      - **Heading** · `frame` · fill_container×fit · layout=vertical gap=8
+        - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 28 800 ls=-0.8 ink(#E8EAED)): "Selamat datang kembali"
+        - **Sub** · `text` · fill_container×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 13 lh=1.55 muted(#9AA0A6)): "Gunakan email sekolah untuk mengakses dashboard inventaris."
+      - **Field EMAIL** · `frame` · fill_container×fit · layout=vertical gap=7
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - text ($font-ui 11.5 700 ink-soft(#BDC1C6)): "EMAIL"
+        - **Input** · `frame` · fill_container×fit · gap=10 pad=12/14 align=center · fill: surface(#292A2D) · r=10 stroke=line(#E3EAF3) strokeWidth=1
+          - **Icon** · `icon` · 15×15 · fill: muted(#9AA0A6) · icon=mail library=lucide
+            - icon: mail [lucide] muted(#74849A)
+          - **Value** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - text ($font-ui 13 muted(#9AA0A6)): "admin@smkhkti2.sch.id"
+      - **Field PASSWORD** · `frame` · fill_container×fit · layout=vertical gap=7
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - text ($font-ui 11.5 700 ink-soft(#BDC1C6)): "PASSWORD"
+        - **Input** · `frame` · fill_container×fit · gap=10 pad=12/14 align=center · fill: surface(#292A2D) · r=10 stroke=line(#E3EAF3) strokeWidth=1
+          - **Icon** · `icon` · 15×15 · fill: muted(#9AA0A6) · icon=lock library=lucide
+            - icon: lock [lucide] muted(#74849A)
+          - **Value** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - text ($font-ui 13 muted(#9AA0A6)): "••••••••••"
+          - **Eye** · `icon` · 15×15 · fill: muted(#9AA0A6) · icon=eye library=lucide
+            - icon: eye [lucide] muted(#74849A)
+      - **Options** · `frame` · fill_container×fit · justify=space_between align=center
+        - **Remember** · `frame` · fit×fit · gap=8 align=center
+          - **Check** · `frame` · 15×15 · justify=center align=center · fill: brand(#1A73E8) · r=4
+          - **Tick** · `icon` · 11×11 · fill: #FFFFFF · icon=check library=lucide
+            - icon: check [lucide] #FFFFFF
+          - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+            - text ($font-ui 11.5 ink-soft(#BDC1C6)): "Ingat perangkat ini"
+        - **Forgot** · `text` · fit×fit · fill: brand(#1A73E8)
+          - text ($font-ui 11.5 700 brand(#1A73E8)): "Lupa password?"
+      - **Submit** · `frame` · fill_container×fit · gap=8 pad=13/0 justify=center align=center · fill: brand(#1A73E8) · r=10
+        - **Label** · `text` · fit×fit · fill: #FFFFFF
+          - text ($font-ui 13.5 700 #FFFFFF): "Masuk"
+        - **Arrow** · `icon` · 15×15 · fill: #FFFFFF · icon=arrow-right library=lucide
+          - icon: arrow-right [lucide] #FFFFFF
+      - **Divider** · `frame` · fill_container×fit · gap=12 align=center
+        - **Line L** · `frame` · fill_container×1 · fill: line(#3C4043)
+        - **Or** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 10.5 muted(#9AA0A6)): "atau"
+        - **Line R** · `frame` · fill_container×1 · fill: line(#3C4043)
+      - **Help** · `frame` · fill_container×fit · gap=6 pad=12/0 justify=center align=center · fill: surface-2(#303134) · r=10 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: muted(#9AA0A6) · icon=life-buoy library=lucide
+          - icon: life-buoy [lucide] muted(#74849A)
+        - **Text** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - text ($font-ui 11.5 ink-soft(#BDC1C6)): "Butuh bantuan? Hubungi admin TU"

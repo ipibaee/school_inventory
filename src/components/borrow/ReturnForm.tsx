@@ -3,10 +3,10 @@
 import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
 import { getActiveBorrowing, returnItem } from "@/actions/borrow"
 import { toast } from "sonner"
-import { CheckCircle2, AlertCircle } from "lucide-react"
+import { CheckCircle2, AlertCircle, ScanBarcode, Search, Loader2 } from "lucide-react"
 import {
     Select,
     SelectContent,
@@ -16,8 +16,14 @@ import {
 } from "@/components/ui/select"
 import { BarcodeScanner } from "@/components/scanning/BarcodeScanner"
 import { useScanListener } from "@/hooks/use-scan-listener"
+import { format } from "date-fns"
+import { id } from "date-fns/locale"
 
-export function ReturnForm() {
+interface ReturnFormProps {
+    onSuccess?: () => void
+}
+
+export function ReturnForm({ onSuccess }: ReturnFormProps) {
     const [barcode, setBarcode] = useState("")
     const [borrowing, setBorrowing] = useState<any>(null)
     const [condition, setCondition] = useState("Good")
@@ -56,97 +62,102 @@ export function ReturnForm() {
         setLoading(false)
 
         if (result.success) {
-            toast.success("Barang berhasil dikembalikan")
+            toast.success("Barang berhasil dikembalikan ke inventaris!")
             setBorrowing(null)
             setCondition("Good")
             setBarcode("")
             barcodeInputRef.current?.focus()
+            onSuccess?.()
         } else {
             toast.error(result.error || "Gagal mengembalikan barang")
         }
     }
 
     return (
-        <div className="max-w-2xl mx-auto space-y-8">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Scan Barang untuk Dikembalikan</CardTitle>
-                </CardHeader>
-                <CardContent>
+        <div className="panel rounded-2xl flex flex-col overflow-hidden max-w-2xl mx-auto">
+            <div className="p-4 lg:p-[18px_20px] border-b border-line bg-surface">
+                <h3 className="text-[14.5px] font-bold text-ink">
+                    Pengembalian Barang
+                </h3>
+                <p className="text-xs text-muted-ink mt-0.5">
+                    Scan barcode barang yang dipinjam untuk memproses pengembalian ke sistem.
+                </p>
+            </div>
+
+            <div className="p-4 lg:p-[20px] flex flex-col gap-4">
+                <form onSubmit={handleSearch} className="flex flex-col gap-1.5">
+                    <Label htmlFor="scanBarcodeReturn" className="label-caps">
+                        SCAN / KETIK BARCODE BARANG
+                    </Label>
                     <div className="flex gap-2">
-                        <Input
-                            ref={barcodeInputRef}
-                            value={barcode}
-                            onChange={(e) => setBarcode(e.target.value)}
-                            placeholder="Scan Barcode..."
-                            autoFocus
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    handleSearch(e)
-                                }
-                            }}
-                        />
+                        <div className="relative flex-1">
+                            <ScanBarcode className="absolute left-3.5 top-3 size-4 text-muted-ink pointer-events-none" />
+                            <Input
+                                id="scanBarcodeReturn"
+                                ref={barcodeInputRef}
+                                value={barcode}
+                                onChange={(e) => setBarcode(e.target.value)}
+                                placeholder="Scan barcode barang yang dikembalikan..."
+                                className="pl-10"
+                                autoFocus
+                            />
+                        </div>
                         <BarcodeScanner onScan={handleScan} />
-                        <Button onClick={handleSearch} disabled={loading}>
-                            {loading ? "Mencari..." : "Cari"}
+                        <Button type="submit" variant="secondary" disabled={loading || !barcode}>
+                            {loading ? <Loader2 className="size-4 animate-spin" /> : "Cari"}
                         </Button>
                     </div>
-                </CardContent>
-            </Card>
+                </form>
 
-            {borrowing && (
-                <Card className="border-green-500/50 bg-green-50/10">
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-green-600">
-                            <CheckCircle2 className="h-5 w-5" /> Peminjaman Aktif Ditemukan
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="text-sm font-medium text-muted-foreground">Nama Barang</label>
-                                <p className="text-lg font-semibold">{borrowing.item.name}</p>
+                {borrowing && (
+                    <div className="p-4 rounded-[12px] bg-surface-2 border border-line flex flex-col gap-4 animate-fade-in mt-2">
+                        <div className="flex items-start justify-between">
+                            <div className="flex flex-col gap-1">
+                                <span className="text-xs font-bold uppercase tracking-wider text-muted-ink">
+                                    DATA PEMINJAMAN
+                                </span>
+                                <span className="text-[15px] font-bold text-ink">
+                                    {borrowing.item?.name}
+                                </span>
+                                <span className="text-xs text-muted-ink">
+                                    Peminjam: <strong className="text-ink">{borrowing.studentName}</strong>
+                                </span>
+                                <span className="text-xs text-muted-ink">
+                                    Tenggat: {format(new Date(borrowing.dueDate), "PPP", { locale: id })}
+                                </span>
                             </div>
-                            <div>
-                                <label className="text-sm font-medium text-muted-foreground">Barcode</label>
-                                <p className="font-mono">{borrowing.item.barcode}</p>
-                            </div>
-                            <div>
-                                <label className="text-sm font-medium text-muted-foreground">Dipinjam Oleh</label>
-                                <p className="font-medium">{borrowing.studentName}</p>
-                            </div>
-                            <div>
-                                <label className="text-sm font-medium text-muted-foreground">Tanggal Kembali</label>
-                                <p>{new Date(borrowing.dueDate).toLocaleDateString()}</p>
-                            </div>
+                            <span className="font-mono text-xs font-bold text-amber px-2.5 py-1 rounded-full bg-amber-soft">
+                                Aktif Dipinjam
+                            </span>
                         </div>
 
-                        <div className="pt-4 border-t space-y-4">
-                            <div>
-                                <label className="text-sm font-medium mb-2 block">Kondisi Barang</label>
-                                <Select value={condition} onValueChange={setCondition}>
-                                    <SelectTrigger>
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="Good">Baik</SelectItem>
-                                        <SelectItem value="Damaged">Rusak</SelectItem>
-                                        <SelectItem value="Lost">Hilang</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <Button
-                                className="w-full h-12 text-lg bg-green-600 hover:bg-green-700"
-                                onClick={handleReturn}
-                                disabled={loading}
-                            >
-                                {loading ? "Memproses..." : "Konfirmasi Pengembalian"}
-                            </Button>
+                        <div className="flex flex-col gap-1.5 pt-2 border-t border-line">
+                            <Label className="label-caps">KONDISI SAAT DIKEMBALIKAN</Label>
+                            <Select value={condition} onValueChange={setCondition}>
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Good">Baik / Lengkap</SelectItem>
+                                    <SelectItem value="Damaged">Rusak Sebagian</SelectItem>
+                                    <SelectItem value="Lost">Hilang / Tidak Lengkap</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
-                    </CardContent>
-                </Card>
-            )}
+
+                        <Button
+                            type="button"
+                            variant="primary"
+                            onClick={handleReturn}
+                            disabled={loading}
+                            className="mt-2"
+                        >
+                            {loading && <Loader2 className="size-4 animate-spin mr-1.5" />}
+                            <span>Konfirmasi Pengembalian</span>
+                        </Button>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }

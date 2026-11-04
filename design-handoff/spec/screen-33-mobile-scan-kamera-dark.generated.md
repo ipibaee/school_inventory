@@ -1,0 +1,239 @@
+# Mobile Scan Kamera — Dark
+
+- canvas id: `SfANR`
+- frame: 390×844 at (2970, 8740)
+- layout: layout=vertical
+- clip: true
+- background: light #0B0F16 · dark #0B0F16
+
+## Layer tree (light theme resolved)
+
+- **Mobile Scan Kamera — Dark** · `frame` · 390×844 · layout=vertical · fill: #0B0F16 · theme={"mode":"dark"} clip
+  - **Camera Feed** · `frame` · 390×844 · layout=none · fill: gradient[#1C2431 → #0A0E14] · absolute
+    - **Blur A** · `ellipse` · 340×340 · fill: gradient[#2E3B4E90 → #2E3B4E00]
+    - **Blur B** · `ellipse` · 320×320 · fill: gradient[#3A4A6040 → #3A4A6000]
+  - **Camera Top** · `frame` · fill_container×fit · gap=10 pad=16 align=center
+    - **Close** · `frame` · 34×34 · justify=center align=center · fill: #FFFFFF1F · r=999
+      - **Icon** · `icon` · 16×16 · fill: #FFFFFF · icon=x library=lucide
+        - icon: x [lucide] #FFFFFF
+    - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+      - **Title** · `text` · fit×fit · fill: #FFFFFF
+        - text ($font-ui 13.5 700 #FFFFFF): "Scan Barcode"
+      - **Sub** · `text` · fit×fit · fill: #FFFFFF99
+        - text ($font-ui 9.5 #FFFFFF99): "Arahkan kamera ke barcode barang"
+    - **Camera Btn flashlight** · `frame` · 34×34 · justify=center align=center · fill: #FFFFFF1F · r=999
+      - **Icon** · `icon` · 15×15 · fill: #FFFFFF · icon=flashlight library=lucide
+        - icon: flashlight [lucide] #FFFFFF
+    - **Camera Btn image** · `frame` · 34×34 · justify=center align=center · fill: #FFFFFF1F · r=999
+      - **Icon** · `icon` · 15×15 · fill: #FFFFFF · icon=image library=lucide
+        - icon: image [lucide] #FFFFFF
+  - **Scan Area** · `frame` · fill_container×fill_container · layout=vertical gap=14 justify=center align=center
+    - **Auto Pill** · `frame` · fit×fit · gap=6 pad=5/10 align=center · fill: #FFFFFF1F · r=999
+      - **Dot** · `ellipse` · 5×5 · fill: #81C995
+      - **Label** · `text` · fit×fit · fill: #FFFFFF
+        - text ($font-ui 9 600 #FFFFFF): "Deteksi otomatis aktif"
+    - **Viewfinder** · `frame` · 254×152 · justify=center align=center
+      - **Corner** · `path` · 26×26 · absolute geometry=M0 26l0-26 26 0 viewBox=[0,0,26,26] stroke=#8AB4F8 strokeWidth=3 strokeLinecap=round
+      - **Corner** · `path` · 26×26 · absolute geometry=M0 0l26 0 0 26 viewBox=[0,0,26,26] stroke=#8AB4F8 strokeWidth=3 strokeLinecap=round
+      - **Corner** · `path` · 26×26 · absolute geometry=M26 0l0 26-26 0 viewBox=[0,0,26,26] stroke=#8AB4F8 strokeWidth=3 strokeLinecap=round
+      - **Corner** · `path` · 26×26 · absolute geometry=M0 0l0 26 26 0 viewBox=[0,0,26,26] stroke=#8AB4F8 strokeWidth=3 strokeLinecap=round
+      - **Detected Barcode** · `frame` · fit×fit · layout=vertical gap=4 pad=9/12 align=center · fill: #FFFFFFF2 · r=7
+        - **Bars** · `frame` · fit×38 · gap=1.2 align=center
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 3×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 3×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 3×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 3×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+        - **Code** · `text` · fit×fit · fill: #17181A
+          - text ($font-ui 9 700 #17181A): "77564"
+      - **Scan Line** · `rectangle` · 254×2 · fill: #8AB4F8 · absolute
+    - **Hint** · `text` · fit×fit · fill: #FFFFFFB3
+      - text ($font-ui 10 #FFFFFFB3): "Posisikan barcode di dalam kotak"
+  - **Result Sheet** · `frame` · fill_container×fit · layout=vertical gap=8 pad=8/14/14/14 · fill: surface(#FFFFFF) · r=[22,22,0,0]
+    - **Handle** · `frame` · 34×4 · fill: line(#E3EAF3) · r=999
+    - **Detected** · `frame` · fill_container×fit · gap=9 align=center
+      - **Thumb** · `frame` · 30×30 · justify=center align=center · fill: brand-soft(#EBEFFF) · r=8
+        - **Icon** · `icon` · 14×14 · fill: brand(#2B4EFF) · icon=monitor library=lucide
+          - icon: monitor [lucide] brand(#2B4EFF)
+      - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 11.5 700 ink(#0B1B2E)): "Monitor 24\""
+        - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 8.5 muted(#74849A)): "77564 · Lenovo L24i-40 · Gudang"
+      - **Status** · `ref` · fit×fit · fill: rose-soft(#FDEBEC) · ref=QuGLj descendants={"QlB0F":{"fill":"$rose"},"rOKja":{"content":"Stok Rendah","fill":"$rose"}}
+    - **Jenis Row** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 8 700 ls=0.8 muted(#74849A)): "JENIS MUTASI"
+      - **StockNow** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 8 muted(#74849A)): "Stok saat ini 5 unit"
+    - **Mutasi Switch** · `frame` · fill_container×fit · gap=8
+      - **Mode masuk** · `frame` · fill_container×fit · gap=7 pad=7/9 align=center · fill: surface(#FFFFFF) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: muted(#74849A) · icon=package-plus library=lucide
+          - icon: package-plus [lucide] muted(#74849A)
+        - **Name** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+          - text ($font-ui 9.5 700 ink-soft(#3B4A5F)): "Barang Masuk"
+        - **Radio** · `frame` · 12×12 · justify=center align=center · fill: #00000000 · r=999 stroke=line(#E3EAF3) strokeWidth=1.2
+      - **Mode keluar** · `frame` · fill_container×fit · gap=7 pad=7/9 align=center · fill: rose-soft(#FDEBEC) · r=9 stroke=#D93A4766 strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: rose(#D93A47) · icon=package-minus library=lucide
+          - icon: package-minus [lucide] rose(#D93A47)
+        - **Name** · `text` · fit×fit · fill: rose(#D93A47)
+          - text ($font-ui 9.5 700 rose(#D93A47)): "Barang Keluar"
+        - **Radio** · `frame` · 12×12 · justify=center align=center · fill: rose(#D93A47) · r=999
+          - **Dot** · `ellipse` · 3.5×3.5 · fill: #FFFFFF
+    - **Qty Row** · `frame` · fill_container×fit · gap=10 justify=space_between align=center
+      - **Left** · `frame` · fit×fit · gap=8 align=center
+        - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 10 700 ink(#0B1B2E)): "Jumlah"
+        - **Stepper** · `frame` · fit×fit · pad=3 align=center · fill: surface-2(#FAFCFE) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+          - **Minus** · `frame` · 24×24 · justify=center align=center · fill: surface(#FFFFFF) · r=6
+            - **Icon** · `icon` · 12×12 · fill: ink-soft(#3B4A5F) · icon=minus library=lucide
+              - icon: minus [lucide] ink-soft(#3B4A5F)
+          - **Qty** · `text` · 28×fit · fill: ink(#0B1B2E)
+            - text ($font-ui 11.5 800 align=center ink(#0B1B2E)): "5"
+          - **Plus** · `frame` · 24×24 · justify=center align=center · fill: rose-soft(#FDEBEC) · r=6
+            - **Icon** · `icon` · 12×12 · fill: rose(#D93A47) · icon=plus library=lucide
+              - icon: plus [lucide] rose(#D93A47)
+      - **After** · `frame` · fit×fit · gap=4 align=center
+        - **From** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 9.5 muted(#74849A)): "5"
+        - **Arrow** · `icon` · 10×10 · fill: muted(#74849A) · icon=arrow-right library=lucide
+          - icon: arrow-right [lucide] muted(#74849A)
+        - **To** · `text` · fit×fit · fill: rose(#D93A47)
+          - text ($font-ui 10.5 800 rose(#D93A47)): "0"
+    - **Actions** · `frame` · fill_container×fit · gap=8 align=center
+      - **Simpan** · `ref` · fill_container×fit · ref=YpfPQ descendants={"ebOKU":{"icon":"check"},"pXxWX":{"content":"Simpan Barang Keluar"}}
+      - **Manual** · `frame` · 38×38 · justify=center align=center · fill: surface(#FFFFFF) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: ink-soft(#3B4A5F) · icon=keyboard library=lucide
+          - icon: keyboard [lucide] ink-soft(#3B4A5F)
+
+## Layer tree (dark theme resolved)
+
+- **Mobile Scan Kamera — Dark** · `frame` · 390×844 · layout=vertical · fill: #0B0F16 · theme={"mode":"dark"} clip
+  - **Camera Feed** · `frame` · 390×844 · layout=none · fill: gradient[#1C2431 → #0A0E14] · absolute
+    - **Blur A** · `ellipse` · 340×340 · fill: gradient[#2E3B4E90 → #2E3B4E00]
+    - **Blur B** · `ellipse` · 320×320 · fill: gradient[#3A4A6040 → #3A4A6000]
+  - **Camera Top** · `frame` · fill_container×fit · gap=10 pad=16 align=center
+    - **Close** · `frame` · 34×34 · justify=center align=center · fill: #FFFFFF1F · r=999
+      - **Icon** · `icon` · 16×16 · fill: #FFFFFF · icon=x library=lucide
+        - icon: x [lucide] #FFFFFF
+    - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+      - **Title** · `text` · fit×fit · fill: #FFFFFF
+        - text ($font-ui 13.5 700 #FFFFFF): "Scan Barcode"
+      - **Sub** · `text` · fit×fit · fill: #FFFFFF99
+        - text ($font-ui 9.5 #FFFFFF99): "Arahkan kamera ke barcode barang"
+    - **Camera Btn flashlight** · `frame` · 34×34 · justify=center align=center · fill: #FFFFFF1F · r=999
+      - **Icon** · `icon` · 15×15 · fill: #FFFFFF · icon=flashlight library=lucide
+        - icon: flashlight [lucide] #FFFFFF
+    - **Camera Btn image** · `frame` · 34×34 · justify=center align=center · fill: #FFFFFF1F · r=999
+      - **Icon** · `icon` · 15×15 · fill: #FFFFFF · icon=image library=lucide
+        - icon: image [lucide] #FFFFFF
+  - **Scan Area** · `frame` · fill_container×fill_container · layout=vertical gap=14 justify=center align=center
+    - **Auto Pill** · `frame` · fit×fit · gap=6 pad=5/10 align=center · fill: #FFFFFF1F · r=999
+      - **Dot** · `ellipse` · 5×5 · fill: #81C995
+      - **Label** · `text` · fit×fit · fill: #FFFFFF
+        - text ($font-ui 9 600 #FFFFFF): "Deteksi otomatis aktif"
+    - **Viewfinder** · `frame` · 254×152 · justify=center align=center
+      - **Corner** · `path` · 26×26 · absolute geometry=M0 26l0-26 26 0 viewBox=[0,0,26,26] stroke=#8AB4F8 strokeWidth=3 strokeLinecap=round
+      - **Corner** · `path` · 26×26 · absolute geometry=M0 0l26 0 0 26 viewBox=[0,0,26,26] stroke=#8AB4F8 strokeWidth=3 strokeLinecap=round
+      - **Corner** · `path` · 26×26 · absolute geometry=M26 0l0 26-26 0 viewBox=[0,0,26,26] stroke=#8AB4F8 strokeWidth=3 strokeLinecap=round
+      - **Corner** · `path` · 26×26 · absolute geometry=M0 0l0 26 26 0 viewBox=[0,0,26,26] stroke=#8AB4F8 strokeWidth=3 strokeLinecap=round
+      - **Detected Barcode** · `frame` · fit×fit · layout=vertical gap=4 pad=9/12 align=center · fill: #FFFFFFF2 · r=7
+        - **Bars** · `frame` · fit×38 · gap=1.2 align=center
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 3×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 3×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 3×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 3×38 · fill: #17181A
+          - **Bar** · `rectangle` · 1×38 · fill: #17181A
+          - **Bar** · `rectangle` · 2×38 · fill: #17181A
+        - **Code** · `text` · fit×fit · fill: #17181A
+          - text ($font-ui 9 700 #17181A): "77564"
+      - **Scan Line** · `rectangle` · 254×2 · fill: #8AB4F8 · absolute
+    - **Hint** · `text` · fit×fit · fill: #FFFFFFB3
+      - text ($font-ui 10 #FFFFFFB3): "Posisikan barcode di dalam kotak"
+  - **Result Sheet** · `frame` · fill_container×fit · layout=vertical gap=8 pad=8/14/14/14 · fill: surface(#292A2D) · r=[22,22,0,0]
+    - **Handle** · `frame` · 34×4 · fill: line(#3C4043) · r=999
+    - **Detected** · `frame` · fill_container×fit · gap=9 align=center
+      - **Thumb** · `frame` · 30×30 · justify=center align=center · fill: brand-soft(#2D3037) · r=8
+        - **Icon** · `icon` · 14×14 · fill: brand(#1A73E8) · icon=monitor library=lucide
+          - icon: monitor [lucide] brand(#2B4EFF)
+      - **Text** · `frame` · fill_container×fit · layout=vertical gap=1
+        - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 11.5 700 ink(#E8EAED)): "Monitor 24\""
+        - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 8.5 muted(#9AA0A6)): "77564 · Lenovo L24i-40 · Gudang"
+      - **Status** · `ref` · fit×fit · fill: rose-soft(#3A2B2A) · ref=QuGLj descendants={"QlB0F":{"fill":"$rose"},"rOKja":{"content":"Stok Rendah","fill":"$rose"}}
+    - **Jenis Row** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 8 700 ls=0.8 muted(#9AA0A6)): "JENIS MUTASI"
+      - **StockNow** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 8 muted(#9AA0A6)): "Stok saat ini 5 unit"
+    - **Mutasi Switch** · `frame` · fill_container×fit · gap=8
+      - **Mode masuk** · `frame` · fill_container×fit · gap=7 pad=7/9 align=center · fill: surface(#292A2D) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: muted(#9AA0A6) · icon=package-plus library=lucide
+          - icon: package-plus [lucide] muted(#74849A)
+        - **Name** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - text ($font-ui 9.5 700 ink-soft(#BDC1C6)): "Barang Masuk"
+        - **Radio** · `frame` · 12×12 · justify=center align=center · fill: #00000000 · r=999 stroke=line(#E3EAF3) strokeWidth=1.2
+      - **Mode keluar** · `frame` · fill_container×fit · gap=7 pad=7/9 align=center · fill: rose-soft(#3A2B2A) · r=9 stroke=#D93A4766 strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: rose(#F28B82) · icon=package-minus library=lucide
+          - icon: package-minus [lucide] rose(#D93A47)
+        - **Name** · `text` · fit×fit · fill: rose(#F28B82)
+          - text ($font-ui 9.5 700 rose(#F28B82)): "Barang Keluar"
+        - **Radio** · `frame` · 12×12 · justify=center align=center · fill: rose(#F28B82) · r=999
+          - **Dot** · `ellipse` · 3.5×3.5 · fill: #FFFFFF
+    - **Qty Row** · `frame` · fill_container×fit · gap=10 justify=space_between align=center
+      - **Left** · `frame` · fit×fit · gap=8 align=center
+        - **Label** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 10 700 ink(#E8EAED)): "Jumlah"
+        - **Stepper** · `frame` · fit×fit · pad=3 align=center · fill: surface-2(#303134) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+          - **Minus** · `frame` · 24×24 · justify=center align=center · fill: surface(#292A2D) · r=6
+            - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · icon=minus library=lucide
+              - icon: minus [lucide] ink-soft(#3B4A5F)
+          - **Qty** · `text` · 28×fit · fill: ink(#E8EAED)
+            - text ($font-ui 11.5 800 align=center ink(#E8EAED)): "5"
+          - **Plus** · `frame` · 24×24 · justify=center align=center · fill: rose-soft(#3A2B2A) · r=6
+            - **Icon** · `icon` · 12×12 · fill: rose(#F28B82) · icon=plus library=lucide
+              - icon: plus [lucide] rose(#D93A47)
+      - **After** · `frame` · fit×fit · gap=4 align=center
+        - **From** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 9.5 muted(#9AA0A6)): "5"
+        - **Arrow** · `icon` · 10×10 · fill: muted(#9AA0A6) · icon=arrow-right library=lucide
+          - icon: arrow-right [lucide] muted(#74849A)
+        - **To** · `text` · fit×fit · fill: rose(#F28B82)
+          - text ($font-ui 10.5 800 rose(#F28B82)): "0"
+    - **Actions** · `frame` · fill_container×fit · gap=8 align=center
+      - **Simpan** · `ref` · fill_container×fit · ref=YpfPQ descendants={"ebOKU":{"icon":"check"},"pXxWX":{"content":"Simpan Barang Keluar"}}
+      - **Manual** · `frame` · 38×38 · justify=center align=center · fill: surface(#292A2D) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: ink-soft(#BDC1C6) · icon=keyboard library=lucide
+          - icon: keyboard [lucide] ink-soft(#3B4A5F)

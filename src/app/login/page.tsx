@@ -1,74 +1,86 @@
 import { getSchoolSettings } from "@/actions/settings"
 import { LoginForm } from "@/components/auth/LoginForm"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
+import { GraduationCap } from "lucide-react"
 
 export const dynamic = "force-dynamic"
 
 export default async function LoginPage() {
     const settings = await getSchoolSettings()
+    const schoolName = settings?.schoolName || "SMK HKTI 2"
 
     return (
-        <div className="relative min-h-screen w-full flex items-center justify-center px-4 overflow-hidden bg-gradient-to-br from-[#004e92] via-[#0066d6] to-[#021b44] select-none">
-            {/* Vignette overlay */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.3)_100%)] pointer-events-none z-0" />
-
-            {/* Floating Top Right Theme Toggle */}
-            <div className="absolute top-6 right-6 z-20 animate-fade-in">
+        <div className="min-h-screen w-full flex bg-surface relative overflow-hidden">
+            {/* Theme Toggle Top Right */}
+            <div className="absolute top-5 right-5 z-20">
                 <ThemeToggle />
             </div>
 
-            {/* Abstract 3D Shapes / Waves / Blobs (plek ketiplek from reference image) */}
-            
-            {/* Shape 1: Top Left Ring (Torus) */}
-            <div className="absolute top-[8%] left-[28%] w-36 h-36 rounded-full border-[22px] border-sky-400/25 border-t-white/50 border-r-white/50 rotate-45 blur-[1px] filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.2)] animate-float pointer-events-none" />
+            {/* Left Brand Panel (Desktop only: 660px, bg-navy) */}
+            <div className="hidden lg:flex w-[660px] bg-navy text-white p-[52px] flex-col justify-between relative overflow-hidden shrink-0 select-none">
+                {/* Subtle Glow at bottom */}
+                <div
+                    className="absolute -bottom-20 -left-20 w-[620px] h-[360px] rounded-full pointer-events-none opacity-40"
+                    style={{
+                        background: "radial-gradient(circle, #2B4EFF 0%, rgba(43, 78, 255, 0) 70%)",
+                    }}
+                />
 
-            {/* Shape 2: Large Right Glossy 3D Wave Spiral */}
-            <svg className="absolute right-[12%] top-[12%] w-[380px] h-[380px] opacity-70 blur-[1px] filter drop-shadow-[0_20px_35px_rgba(0,0,0,0.3)] animate-float-reverse pointer-events-none z-0" viewBox="0 0 240 240" fill="none">
-                <path d="M30,210 C100,210 70,30 140,30 C210,30 180,210 250,210" stroke="url(#glossyGrad1)" strokeWidth="24" strokeLinecap="round" />
-                <defs>
-                    <linearGradient id="glossyGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#87CEEB" stopOpacity="0.8" />
-                        <stop offset="25%" stopColor="#FFFFFF" stopOpacity="0.95" />
-                        <stop offset="55%" stopColor="#0077ff" stopOpacity="0.85" />
-                        <stop offset="100%" stopColor="#001f4d" stopOpacity="0.7" />
-                    </linearGradient>
-                </defs>
-            </svg>
+                {/* Brand */}
+                <div className="flex items-center gap-3 relative z-10">
+                    <div className="size-10 rounded-[12px] bg-brand grid place-items-center shrink-0">
+                        {settings?.logoUrl ? (
+                            <img src={settings.logoUrl} alt="Logo" className="size-6 object-contain" />
+                        ) : (
+                            <GraduationCap className="size-[21px] text-white" />
+                        )}
+                    </div>
+                    <div className="flex flex-col gap-px">
+                        <span className="text-[15px] font-extrabold text-white tracking-[-0.2px] leading-tight">
+                            {schoolName}
+                        </span>
+                        <span className="text-[11px] text-[#8296B4] font-medium leading-tight">
+                            HIKA Inventaris
+                        </span>
+                    </div>
+                </div>
 
-            {/* Shape 3: Left Bottom 3D Spiral Tube */}
-            <svg className="absolute left-[8%] bottom-[8%] w-[300px] h-[300px] opacity-65 blur-[1px] filter drop-shadow-[0_15px_30px_rgba(0,0,0,0.25)] animate-float pointer-events-none z-0" viewBox="0 0 200 200" fill="none">
-                <path d="M20,20 C20,130 180,70 180,180" stroke="url(#glossyGrad2)" strokeWidth="20" strokeLinecap="round" />
-                <defs>
-                    <linearGradient id="glossyGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#002244" stopOpacity="0.8" />
-                        <stop offset="40%" stopColor="#0099ff" stopOpacity="0.8" />
-                        <stop offset="70%" stopColor="#FFFFFF" stopOpacity="0.95" />
-                        <stop offset="100%" stopColor="#33ccff" stopOpacity="0.8" />
-                    </linearGradient>
-                </defs>
-            </svg>
+                {/* Copy & Stats */}
+                <div className="flex flex-col gap-[18px] relative z-10 max-w-[500px]">
+                    <span className="font-mono text-[10.5px] uppercase tracking-[1.4px] text-[#7FA6FF] font-semibold">
+                        SISTEM MANAJEMEN INVENTARIS & LABORATORIUM
+                    </span>
+                    <h1 className="text-[42px] font-extrabold leading-[1.12] tracking-[-1.4px] text-white">
+                        Satu sumber data untuk seluruh perangkat sekolah.
+                    </h1>
+                    <p className="text-[14px] leading-[1.65] text-[#A6B7D0] max-w-[460px]">
+                        Catat barang masuk, keluar, dan peminjaman laboratorium. Stok selalu akurat tanpa rekap manual.
+                    </p>
 
-            {/* Shape 4: Giant Bottom Right Torus */}
-            <div className="absolute -right-16 -bottom-16 w-64 h-64 rounded-full border-[48px] border-sky-400/20 border-t-sky-300/40 border-l-sky-300/40 rotate-[35deg] blur-[2px] filter drop-shadow-[0_25px_40px_rgba(0,0,0,0.3)] animate-float pointer-events-none" />
+                    <div className="flex items-center gap-3 pt-2">
+                        <div className="flex flex-col gap-[3px] py-[13px] px-4 rounded-[12px] bg-white/[0.06] border border-white/10 min-w-[100px]">
+                            <span className="text-[20px] font-extrabold text-white leading-none">40</span>
+                            <span className="text-[10.5px] text-[#8296B4]">Jenis barang</span>
+                        </div>
+                        <div className="flex flex-col gap-[3px] py-[13px] px-4 rounded-[12px] bg-white/[0.06] border border-white/10 min-w-[100px]">
+                            <span className="text-[20px] font-extrabold text-white leading-none">9</span>
+                            <span className="text-[10.5px] text-[#8296B4]">Ruang & lab</span>
+                        </div>
+                        <div className="flex flex-col gap-[3px] py-[13px] px-4 rounded-[12px] bg-white/[0.06] border border-white/10 min-w-[100px]">
+                            <span className="text-[20px] font-extrabold text-white leading-none">128</span>
+                            <span className="text-[10.5px] text-[#8296B4]">Transaksi</span>
+                        </div>
+                    </div>
+                </div>
 
-            {/* Shape 5: Center Left 3D Zigzag Wave */}
-            <svg className="absolute left-[15%] top-[30%] w-[180px] h-[180px] opacity-75 blur-[0.5px] filter drop-shadow-[0_8px_15px_rgba(0,0,0,0.15)] animate-float-reverse pointer-events-none" viewBox="0 0 100 100" fill="none">
-                <path d="M10,20 L30,50 L50,20 L70,50 L90,20" stroke="url(#glossyGrad3)" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" />
-                <defs>
-                    <linearGradient id="glossyGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" />
-                        <stop offset="50%" stopColor="#00aaff" stopOpacity="0.8" />
-                        <stop offset="100%" stopColor="#003366" stopOpacity="0.6" />
-                    </linearGradient>
-                </defs>
-            </svg>
+                {/* Footer */}
+                <div className="text-[10.5px] text-[#6C82A3] relative z-10">
+                    © 2026 {schoolName} · Purwareja Klampok
+                </div>
+            </div>
 
-            {/* Shape 6: Small floating double waves on right */}
-            <div className="absolute right-[24%] bottom-[35%] w-14 h-7 rounded-full border-4 border-sky-300/40 border-b-transparent rotate-[20deg] blur-[0.5px] animate-float pointer-events-none" />
-            <div className="absolute right-[25%] bottom-[32%] w-14 h-7 rounded-full border-4 border-sky-300/40 border-b-transparent rotate-[20deg] blur-[0.5px] animate-float pointer-events-none" />
-
-            {/* LoginForm Client Form Component */}
-            <div className="relative z-10 w-full max-w-md mx-auto">
+            {/* Right Form Panel */}
+            <div className="flex-1 flex flex-col justify-center items-center p-6 sm:p-12 lg:p-[52px_48px] overflow-y-auto">
                 <LoginForm settings={settings} />
             </div>
         </div>

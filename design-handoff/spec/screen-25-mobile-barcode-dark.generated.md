@@ -1,0 +1,385 @@
+# Mobile Barcode — Dark
+
+- canvas id: `I0dpbj`
+- frame: 390×844 at (1290, 8740)
+- layout: layout=vertical
+- clip: true
+- background: light app-bg(#F4F7FB) · dark app-bg(#202124)
+
+## Layer tree (light theme resolved)
+
+- **Mobile Barcode — Dark** · `frame` · 390×844 · layout=vertical · fill: app-bg(#F4F7FB) · theme={"mode":"dark"} clip
+  - **App Bar** · `frame` · fill_container×fit · pad=13/16 justify=space_between align=center
+    - **Left** · `frame` · fit×fit · gap=9 align=center
+      - **Back** · `frame` · 30×30 · justify=center align=center · fill: surface(#FFFFFF) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 15×15 · fill: ink-soft(#3B4A5F) · icon=arrow-left library=lucide
+          - icon: arrow-left [lucide] ink-soft(#3B4A5F)
+      - **Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 16 800 ls=-0.4 ink(#0B1B2E)): "Cetak Barcode"
+        - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 9.5 muted(#74849A)): "Label 33 × 15 mm"
+    - **Right** · `frame` · fit×fit · gap=7 align=center
+      - **Count** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 10 700 muted(#74849A)): "40"
+  - **Content** · `frame` · fill_container×fill_container · layout=vertical gap=10 pad=0/16/12/16
+    - **Settings** · `frame` · fill_container×fit · layout=vertical gap=9 pad=13 · fill: surface(#FFFFFF) · r=14 stroke=line(#E3EAF3) strokeWidth=1
+      - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 11.5 700 ink(#0B1B2E)): "Pengaturan Printer"
+        - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 9 muted(#74849A)): "mm"
+      - **Row** · `frame` · fill_container×fit · gap=8
+        - **Field Lebar Label** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - text ($font-ui 8.5 600 muted(#74849A)): "Lebar Label"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#FFFFFF) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 11 700 ink(#0B1B2E)): "33"
+            - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8 muted(#74849A)): "mm"
+        - **Field Tinggi Label** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - text ($font-ui 8.5 600 muted(#74849A)): "Tinggi Label"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#FFFFFF) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 11 700 ink(#0B1B2E)): "15"
+            - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8 muted(#74849A)): "mm"
+      - **Row** · `frame` · fill_container×fit · gap=8
+        - **Field Mode** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - text ($font-ui 8.5 600 muted(#74849A)): "Mode"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#FFFFFF) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 11 700 ink(#0B1B2E)): "2 Kolom"
+            - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8 muted(#74849A)): "mm"
+        - **Field Jarak** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - text ($font-ui 8.5 600 muted(#74849A)): "Jarak"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#FFFFFF) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 11 700 ink(#0B1B2E)): "2"
+            - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8 muted(#74849A)): "mm"
+      - **Row** · `frame` · fill_container×fit · gap=8
+        - **Field Skala** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - text ($font-ui 8.5 600 muted(#74849A)): "Skala"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#FFFFFF) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 11 700 ink(#0B1B2E)): "1×"
+            - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8 muted(#74849A)): "mm"
+        - **Field Orientasi** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - text ($font-ui 8.5 600 muted(#74849A)): "Orientasi"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#FFFFFF) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+              - text ($font-ui 11 700 ink(#0B1B2E)): "Portrait"
+            - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+              - text ($font-ui 8 muted(#74849A)): "mm"
+    - **Preview** · `frame` · fill_container×fill_container · layout=vertical gap=9 pad=13 · fill: surface(#FFFFFF) · r=14 stroke=line(#E3EAF3) strokeWidth=1
+      - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - text ($font-ui 11.5 700 ink(#0B1B2E)): "Pratinjau Label"
+        - **Count** · `text` · fit×fit · fill: muted(#74849A)
+          - text ($font-ui 9 muted(#74849A)): "8 dipilih"
+      - **Sheet** · `frame` · fill_container×fill_container · layout=vertical gap=10 pad=10 · fill: #EEF3F9 · r=10
+        - **Label Mouse Kabel** · `frame` · fill_container×104 · layout=vertical gap=3 pad=8/10 · fill: #FFFFFF · r=6 stroke=#C9D6E5 strokeWidth=1
+          - **Top** · `frame` · fill_container×fit · justify=space_between
+            - **School** · `text` · fit×fit · fill: #6C7C90
+              - text ($font-ui 6.5 #6C7C90): "SMK HKTI 2"
+            - **Code** · `text` · fit×fit · fill: #6C7C90
+              - text ($font-ui 6.5 #6C7C90): "45685"
+          - **Name** · `text` · fit×fit · fill: #17181A
+            - text ($font-ui 9 700 #17181A): "Mouse Kabel"
+          - **Barcode** · `frame` · fill_container×fit · justify=space_between align=center
+            - **Bars** · `frame` · fit×22 · gap=1.2 align=center
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+            - **Num** · `text` · fit×fit · fill: #17181A
+              - text ($font-ui 8 700 #17181A): "45685"
+          - **Loc** · `text` · fit×fit · fill: #6C7C90
+            - text ($font-ui 6.5 #6C7C90): "Lab. Software 1"
+        - **Label Monitor 24"** · `frame` · fill_container×104 · layout=vertical gap=3 pad=8/10 · fill: #FFFFFF · r=6 stroke=#C9D6E5 strokeWidth=1
+          - **Top** · `frame` · fill_container×fit · justify=space_between
+            - **School** · `text` · fit×fit · fill: #6C7C90
+              - text ($font-ui 6.5 #6C7C90): "SMK HKTI 2"
+            - **Code** · `text` · fit×fit · fill: #6C7C90
+              - text ($font-ui 6.5 #6C7C90): "77564"
+          - **Name** · `text` · fit×fit · fill: #17181A
+            - text ($font-ui 9 700 #17181A): "Monitor 24\""
+          - **Barcode** · `frame` · fill_container×fit · justify=space_between align=center
+            - **Bars** · `frame` · fit×22 · gap=1.2 align=center
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+            - **Num** · `text` · fit×fit · fill: #17181A
+              - text ($font-ui 8 700 #17181A): "77564"
+          - **Loc** · `text` · fit×fit · fill: #6C7C90
+            - text ($font-ui 6.5 #6C7C90): "Lab. Software 1"
+    - **Cetak Label** · `ref` · fit×fit · ref=YpfPQ descendants={"ebOKU":{"icon":"printer"},"pXxWX":{"content":"Cetak Label"}}
+  - **Bottom Nav** · `frame` · fill_container×62 · pad=0/6 align=center · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) strokeWidth={"top":1}
+    - **Tab Dasbor** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · icon=layout-dashboard library=lucide
+        - icon: layout-dashboard [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 9 500 muted(#74849A)): "Dasbor"
+    - **Tab Inventaris** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · icon=boxes library=lucide
+        - icon: boxes [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 9 500 muted(#74849A)): "Inventaris"
+    - **Tab Barcode** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: brand(#2B4EFF) · icon=barcode library=lucide
+        - icon: barcode [lucide] brand(#2B4EFF)
+      - **Label** · `text` · fit×fit · fill: brand(#2B4EFF)
+        - text ($font-ui 9 700 brand(#2B4EFF)): "Barcode"
+    - **Tab Pinjam** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · icon=shopping-cart library=lucide
+        - icon: shopping-cart [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 9 500 muted(#74849A)): "Pinjam"
+    - **Tab Laporan** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · icon=chart-column library=lucide
+        - icon: chart-column [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - text ($font-ui 9 500 muted(#74849A)): "Laporan"
+
+## Layer tree (dark theme resolved)
+
+- **Mobile Barcode — Dark** · `frame` · 390×844 · layout=vertical · fill: app-bg(#202124) · theme={"mode":"dark"} clip
+  - **App Bar** · `frame` · fill_container×fit · pad=13/16 justify=space_between align=center
+    - **Left** · `frame` · fit×fit · gap=9 align=center
+      - **Back** · `frame` · 30×30 · justify=center align=center · fill: surface(#292A2D) · r=9 stroke=line(#E3EAF3) strokeWidth=1
+        - **Icon** · `icon` · 15×15 · fill: ink-soft(#BDC1C6) · icon=arrow-left library=lucide
+          - icon: arrow-left [lucide] ink-soft(#3B4A5F)
+      - **Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 16 800 ls=-0.4 ink(#E8EAED)): "Cetak Barcode"
+        - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 9.5 muted(#9AA0A6)): "Label 33 × 15 mm"
+    - **Right** · `frame` · fit×fit · gap=7 align=center
+      - **Count** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 10 700 muted(#9AA0A6)): "40"
+  - **Content** · `frame` · fill_container×fill_container · layout=vertical gap=10 pad=0/16/12/16
+    - **Settings** · `frame` · fill_container×fit · layout=vertical gap=9 pad=13 · fill: surface(#292A2D) · r=14 stroke=line(#E3EAF3) strokeWidth=1
+      - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+        - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 11.5 700 ink(#E8EAED)): "Pengaturan Printer"
+        - **Unit** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 9 muted(#9AA0A6)): "mm"
+      - **Row** · `frame` · fill_container×fit · gap=8
+        - **Field Lebar Label** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - text ($font-ui 8.5 600 muted(#9AA0A6)): "Lebar Label"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#292A2D) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 11 700 ink(#E8EAED)): "33"
+            - **Unit** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8 muted(#9AA0A6)): "mm"
+        - **Field Tinggi Label** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - text ($font-ui 8.5 600 muted(#9AA0A6)): "Tinggi Label"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#292A2D) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 11 700 ink(#E8EAED)): "15"
+            - **Unit** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8 muted(#9AA0A6)): "mm"
+      - **Row** · `frame` · fill_container×fit · gap=8
+        - **Field Mode** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - text ($font-ui 8.5 600 muted(#9AA0A6)): "Mode"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#292A2D) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 11 700 ink(#E8EAED)): "2 Kolom"
+            - **Unit** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8 muted(#9AA0A6)): "mm"
+        - **Field Jarak** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - text ($font-ui 8.5 600 muted(#9AA0A6)): "Jarak"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#292A2D) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 11 700 ink(#E8EAED)): "2"
+            - **Unit** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8 muted(#9AA0A6)): "mm"
+      - **Row** · `frame` · fill_container×fit · gap=8
+        - **Field Skala** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - text ($font-ui 8.5 600 muted(#9AA0A6)): "Skala"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#292A2D) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 11 700 ink(#E8EAED)): "1×"
+            - **Unit** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8 muted(#9AA0A6)): "mm"
+        - **Field Orientasi** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - text ($font-ui 8.5 600 muted(#9AA0A6)): "Orientasi"
+          - **Input** · `frame` · fill_container×fit · pad=8/10 justify=space_between · fill: surface(#292A2D) · r=8 stroke=line(#E3EAF3) strokeWidth=1
+            - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+              - text ($font-ui 11 700 ink(#E8EAED)): "Portrait"
+            - **Unit** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - text ($font-ui 8 muted(#9AA0A6)): "mm"
+    - **Preview** · `frame` · fill_container×fill_container · layout=vertical gap=9 pad=13 · fill: surface(#292A2D) · r=14 stroke=line(#E3EAF3) strokeWidth=1
+      - **Head** · `frame` · fill_container×fit · justify=space_between align=center
+        - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - text ($font-ui 11.5 700 ink(#E8EAED)): "Pratinjau Label"
+        - **Count** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - text ($font-ui 9 muted(#9AA0A6)): "8 dipilih"
+      - **Sheet** · `frame` · fill_container×fill_container · layout=vertical gap=10 pad=10 · fill: #EEF3F9 · r=10
+        - **Label Mouse Kabel** · `frame` · fill_container×104 · layout=vertical gap=3 pad=8/10 · fill: #FFFFFF · r=6 stroke=#C9D6E5 strokeWidth=1
+          - **Top** · `frame` · fill_container×fit · justify=space_between
+            - **School** · `text` · fit×fit · fill: #6C7C90
+              - text ($font-ui 6.5 #6C7C90): "SMK HKTI 2"
+            - **Code** · `text` · fit×fit · fill: #6C7C90
+              - text ($font-ui 6.5 #6C7C90): "45685"
+          - **Name** · `text` · fit×fit · fill: #17181A
+            - text ($font-ui 9 700 #17181A): "Mouse Kabel"
+          - **Barcode** · `frame` · fill_container×fit · justify=space_between align=center
+            - **Bars** · `frame` · fit×22 · gap=1.2 align=center
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+            - **Num** · `text` · fit×fit · fill: #17181A
+              - text ($font-ui 8 700 #17181A): "45685"
+          - **Loc** · `text` · fit×fit · fill: #6C7C90
+            - text ($font-ui 6.5 #6C7C90): "Lab. Software 1"
+        - **Label Monitor 24"** · `frame` · fill_container×104 · layout=vertical gap=3 pad=8/10 · fill: #FFFFFF · r=6 stroke=#C9D6E5 strokeWidth=1
+          - **Top** · `frame` · fill_container×fit · justify=space_between
+            - **School** · `text` · fit×fit · fill: #6C7C90
+              - text ($font-ui 6.5 #6C7C90): "SMK HKTI 2"
+            - **Code** · `text` · fit×fit · fill: #6C7C90
+              - text ($font-ui 6.5 #6C7C90): "77564"
+          - **Name** · `text` · fit×fit · fill: #17181A
+            - text ($font-ui 9 700 #17181A): "Monitor 24\""
+          - **Barcode** · `frame` · fill_container×fit · justify=space_between align=center
+            - **Bars** · `frame` · fit×22 · gap=1.2 align=center
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 3×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 1×22 · fill: #17181A
+              - **Bar** · `rectangle` · 2×22 · fill: #17181A
+            - **Num** · `text` · fit×fit · fill: #17181A
+              - text ($font-ui 8 700 #17181A): "77564"
+          - **Loc** · `text` · fit×fit · fill: #6C7C90
+            - text ($font-ui 6.5 #6C7C90): "Lab. Software 1"
+    - **Cetak Label** · `ref` · fit×fit · ref=YpfPQ descendants={"ebOKU":{"icon":"printer"},"pXxWX":{"content":"Cetak Label"}}
+  - **Bottom Nav** · `frame` · fill_container×62 · pad=0/6 align=center · fill: surface(#292A2D) · stroke=line(#E3EAF3) strokeWidth={"top":1}
+    - **Tab Dasbor** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#9AA0A6) · icon=layout-dashboard library=lucide
+        - icon: layout-dashboard [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 9 500 muted(#9AA0A6)): "Dasbor"
+    - **Tab Inventaris** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#9AA0A6) · icon=boxes library=lucide
+        - icon: boxes [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 9 500 muted(#9AA0A6)): "Inventaris"
+    - **Tab Barcode** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: brand(#1A73E8) · icon=barcode library=lucide
+        - icon: barcode [lucide] brand(#2B4EFF)
+      - **Label** · `text` · fit×fit · fill: brand(#1A73E8)
+        - text ($font-ui 9 700 brand(#1A73E8)): "Barcode"
+    - **Tab Pinjam** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#9AA0A6) · icon=shopping-cart library=lucide
+        - icon: shopping-cart [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 9 500 muted(#9AA0A6)): "Pinjam"
+    - **Tab Laporan** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#9AA0A6) · icon=chart-column library=lucide
+        - icon: chart-column [lucide] muted(#74849A)
+      - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+        - text ($font-ui 9 500 muted(#9AA0A6)): "Laporan"

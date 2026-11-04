@@ -1,29 +1,42 @@
 "use client"
 
+import { useState } from "react"
 import { useFormState, useFormStatus } from "react-dom"
 import { authenticate } from "@/actions/auth"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import { Loader2, School, KeyRound, Mail } from "lucide-react"
+import {
+    Loader2,
+    Mail,
+    Lock,
+    Eye,
+    EyeOff,
+    ArrowRight,
+    LifeBuoy,
+    GraduationCap,
+    Check,
+} from "lucide-react"
 
 function LoginButton() {
     const { pending } = useFormStatus()
 
     return (
-        <Button 
+        <Button
             type="submit"
-            className="w-full h-11 bg-gradient-to-r from-blue-600 to-cyan-600 dark:from-blue-500 dark:to-cyan-500 text-white font-medium shadow-md shadow-blue-500/10 hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-200 active:scale-97 text-sm rounded-xl cursor-pointer" 
+            className="w-full h-11 bg-brand text-white font-bold rounded-[10px] text-[13.5px] hover:bg-brand/90 transition-colors flex items-center justify-center gap-2 cursor-pointer"
             disabled={pending}
         >
             {pending ? (
                 <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Memproses...
+                    <Loader2 className="size-4 animate-spin" />
+                    <span>Memproses...</span>
                 </>
             ) : (
-                "Sign in"
+                <>
+                    <span>Masuk</span>
+                    <ArrowRight className="size-[15px]" />
+                </>
             )}
         </Button>
     )
@@ -35,76 +48,142 @@ interface LoginFormProps {
 
 export function LoginForm({ settings }: LoginFormProps) {
     const [errorMessage, dispatch] = useFormState(authenticate, undefined)
+    const [showPassword, setShowPassword] = useState(false)
+    const [rememberMe, setRememberMe] = useState(true)
+
+    const schoolName = settings?.schoolName || "SMK HKTI 2"
 
     return (
-        <Card className="w-full max-w-md border border-white/20 bg-white/10 dark:bg-zinc-950/15 backdrop-blur-xl shadow-2xl relative z-10 animate-fade-in overflow-hidden p-2">
-            <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-blue-400 via-cyan-400 to-sky-400" />
-            <CardHeader className="text-center pt-8 pb-4">
-                {/* Logo display using base64 or default icon */}
-                <div className="mx-auto h-16 w-16 rounded-2xl bg-white/15 dark:bg-white/5 flex items-center justify-center border border-white/20 mb-4 animate-float shadow-lg relative overflow-hidden">
-                    {settings?.logoUrl ? (
-                        <img
-                            src={settings.logoUrl}
-                            alt="Logo"
-                            className="w-12 h-12 object-contain"
-                        />
-                    ) : (
-                        <School className="h-7 w-7 text-white" />
-                    )}
+        <div className="w-full max-w-[380px] flex flex-col gap-[22px]">
+            {/* Mobile-only brand header */}
+            <div className="lg:hidden flex items-center gap-2.5 mb-2">
+                <div className="size-[34px] rounded-[10px] bg-brand grid place-items-center shrink-0">
+                    <GraduationCap className="size-[18px] text-white" />
                 </div>
-                <CardTitle className="text-2xl font-bold tracking-tight text-white">
-                    {settings?.schoolName || "Inventaris SMK HKTI 2"}
-                </CardTitle>
-                <CardDescription className="text-sm text-blue-100/70 mt-1">
-                    Sistem Manajemen Inventaris & Laboratorium
-                </CardDescription>
-            </CardHeader>
-            <CardContent className="px-6 pb-6">
-                <form action={dispatch} className="grid gap-5">
-                    <div className="grid gap-2">
-                        <Label htmlFor="email" className="text-blue-100/80 text-xs font-semibold uppercase tracking-wider pl-1">
-                            Email
-                        </Label>
-                        <div className="relative">
-                            <Mail className="absolute left-3.5 top-3.5 h-4.5 w-4.5 text-blue-100/60 pointer-events-none" />
-                            <Input
-                                id="email"
-                                name="email"
-                                type="email"
-                                placeholder="admin@smkhkti2.sch.id"
-                                required
-                                className="pl-10 h-11 border-white/15 bg-white/10 text-white placeholder:text-blue-100/40 focus:bg-white/20 transition-all rounded-xl focus:border-white/30 focus:ring-0"
-                            />
-                        </div>
+                <div className="flex flex-col gap-px">
+                    <span className="text-[13.5px] font-extrabold text-ink leading-tight">
+                        {schoolName}
+                    </span>
+                    <span className="text-[9.5px] text-muted-ink leading-tight">
+                        HIKA Inventaris
+                    </span>
+                </div>
+            </div>
+
+            {/* Heading */}
+            <div className="flex flex-col gap-2">
+                <span className="font-mono text-[10.5px] uppercase tracking-[1.4px] text-brand font-bold">
+                    MASUK KE AKUN
+                </span>
+                <h2 className="text-[28px] font-extrabold tracking-[-0.8px] text-ink leading-tight">
+                    Selamat datang kembali
+                </h2>
+                <p className="text-[13px] leading-[1.55] text-muted-ink">
+                    Gunakan email sekolah untuk mengakses dashboard inventaris.
+                </p>
+            </div>
+
+            {/* Error Message */}
+            {errorMessage && (
+                <div className="p-3 rounded-[10px] bg-rose-soft border border-rose/20 text-rose text-xs font-semibold">
+                    {errorMessage}
+                </div>
+            )}
+
+            {/* Form */}
+            <form action={dispatch} className="flex flex-col gap-[18px]">
+                {/* Email Field */}
+                <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="email" className="label-caps">
+                        EMAIL
+                    </Label>
+                    <div className="relative flex items-center">
+                        <Mail className="absolute left-3.5 size-4 text-muted-ink pointer-events-none" />
+                        <Input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="admin@smkhkti2.sch.id"
+                            required
+                            className="pl-10 h-11 rounded-[10px]"
+                        />
                     </div>
-                    <div className="grid gap-2">
-                        <Label htmlFor="password" className="text-blue-100/80 text-xs font-semibold uppercase tracking-wider pl-1">
-                            Password
-                        </Label>
-                        <div className="relative">
-                            <KeyRound className="absolute left-3.5 top-3.5 h-4.5 w-4.5 text-blue-100/60 pointer-events-none" />
-                            <Input 
-                                id="password" 
-                                name="password" 
-                                type="password" 
-                                placeholder="••••••••"
-                                required 
-                                className="pl-10 h-11 border-white/15 bg-white/10 text-white placeholder:text-blue-100/40 focus:bg-white/20 transition-all rounded-xl focus:border-white/30 focus:ring-0"
-                            />
-                        </div>
+                </div>
+
+                {/* Password Field */}
+                <div className="flex flex-col gap-1.5">
+                    <Label htmlFor="password" className="label-caps">
+                        PASSWORD
+                    </Label>
+                    <div className="relative flex items-center">
+                        <Lock className="absolute left-3.5 size-4 text-muted-ink pointer-events-none" />
+                        <Input
+                            id="password"
+                            name="password"
+                            type={showPassword ? "text" : "password"}
+                            placeholder="••••••••••"
+                            required
+                            className="pl-10 pr-10 h-11 rounded-[10px]"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3.5 size-4 text-muted-ink hover:text-ink transition-colors cursor-pointer"
+                            title={showPassword ? "Sembunyikan password" : "Tampilkan password"}
+                        >
+                            {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                        </button>
                     </div>
-                    
-                    {errorMessage && (
-                        <div className="p-3 rounded-xl bg-red-500/20 border border-red-500/30 text-center">
-                            <p className="text-xs font-medium text-red-200">{errorMessage}</p>
+                </div>
+
+                {/* Remember & Forgot Password */}
+                <div className="flex items-center justify-between text-[11.5px] pt-1">
+                    <label
+                        className="flex items-center gap-2 text-ink-soft cursor-pointer select-none"
+                        onClick={() => setRememberMe(!rememberMe)}
+                    >
+                        <div
+                            className={`size-[15px] rounded-[4px] grid place-items-center transition-colors ${
+                                rememberMe ? "bg-brand text-white" : "border border-line bg-surface"
+                            }`}
+                        >
+                            {rememberMe && <Check className="size-3 stroke-[2.5]" />}
                         </div>
-                    )}
-                    
-                    <div className="pt-2">
-                        <LoginButton />
-                    </div>
-                </form>
-            </CardContent>
-        </Card>
+                        <span>Ingat perangkat ini</span>
+                    </label>
+
+                    <button
+                        type="button"
+                        onClick={() => alert("Silakan hubungi administrator sekolah untuk reset password.")}
+                        className="font-bold text-brand hover:underline cursor-pointer"
+                    >
+                        Lupa password?
+                    </button>
+                </div>
+
+                {/* Submit */}
+                <div className="pt-2">
+                    <LoginButton />
+                </div>
+            </form>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3 my-1">
+                <div className="flex-1 h-px bg-line" />
+                <span className="text-[10.5px] text-muted-ink uppercase">atau</span>
+                <div className="flex-1 h-px bg-line" />
+            </div>
+
+            {/* Help */}
+            <div className="flex items-center justify-center gap-2 py-3 px-4 rounded-[10px] bg-surface-2 border border-line text-ink-soft text-[11.5px] font-medium">
+                <LifeBuoy className="size-3.5 text-muted-ink" />
+                <span>Butuh bantuan? Hubungi admin TU</span>
+            </div>
+
+            {/* Mobile-only footer */}
+            <div className="lg:hidden text-center text-[9.5px] text-muted-ink mt-4">
+                © 2026 {schoolName} · Purwareja Klampok
+            </div>
+        </div>
     )
 }
