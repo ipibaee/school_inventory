@@ -5,14 +5,16 @@ import {
     Boxes,
     TriangleAlert,
     Clock,
-    ArrowLeftRight,
+    ShoppingCart,
     Search,
     Bell,
     Plus,
     PackagePlus,
-    ShoppingCart,
     CheckCircle2,
     ArrowRight,
+    ClipboardList,
+    FileText,
+    UserCheck,
 } from "lucide-react"
 
 import { getDashboardStats, getRecentActivity, getLowStockItems } from "@/actions/dashboard"
@@ -20,12 +22,19 @@ import { PageHeader } from "@/components/layout/PageHeader"
 import { MobileAppBar } from "@/components/layout/MobileAppBar"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
+import { MONTH_NAMES_ID, formatDateId } from "@/lib/format"
+
+export const dynamic = "force-dynamic"
 
 export default async function DashboardPage() {
     const stats = await getDashboardStats()
     const recentActivity = await getRecentActivity()
     const lowStockItems = await getLowStockItems()
+
+    const monthName = MONTH_NAMES_ID[stats.currentMonth - 1] || "Bulan Ini"
+    const monthShort = formatDateId(new Date(), "MMM yyyy")
 
     const kpis = [
         {
@@ -34,7 +43,6 @@ export default async function DashboardPage() {
             caption: "Di semua laboratorium & ruang",
             mobileCaption: "Semua lab & ruang",
             icon: Boxes,
-            color: "brand",
             chipBg: "bg-brand-soft",
             iconColor: "text-brand",
         },
@@ -44,7 +52,6 @@ export default async function DashboardPage() {
             caption: "Barang perlu segera diisi",
             mobileCaption: "Perlu pengisian",
             icon: TriangleAlert,
-            color: "rose",
             chipBg: "bg-rose-soft",
             iconColor: "text-rose",
         },
@@ -54,24 +61,23 @@ export default async function DashboardPage() {
             caption: "Masih dipinjam pengguna",
             mobileCaption: "Sedang dipakai",
             icon: Clock,
-            color: "amber",
             chipBg: "bg-amber-soft",
             iconColor: "text-amber",
         },
         {
-            label: "Transaksi Hari Ini",
-            value: stats.todayTransactions,
-            caption: "Mutasi masuk & keluar",
-            mobileCaption: "Mutasi masuk/keluar",
-            icon: ArrowLeftRight,
-            color: "mint",
+            label: "Pengadaan BOS",
+            mobileLabel: "Belanja BOS",
+            value: stats.bosUnits,
+            caption: `Unit masuk · ${monthShort}`,
+            mobileCaption: `Unit masuk · ${monthShort}`,
+            icon: ShoppingCart,
             chipBg: "bg-mint-soft",
             iconColor: "text-mint",
         },
     ]
 
     return (
-        <div className="flex flex-col gap-4 lg:gap-[22px]">
+        <div className="flex flex-col gap-4 lg:gap-[20px]">
             {/* Mobile App Bar */}
             <MobileAppBar
                 title="Dasbor"
@@ -118,11 +124,12 @@ export default async function DashboardPage() {
                     return (
                         <div
                             key={kpi.label}
-                            className="panel rounded-[14px] lg:rounded-2xl p-3.5 lg:p-[22px] flex flex-col justify-between gap-1.5 lg:gap-[18px]"
+                            className="panel rounded-[14px] lg:rounded-2xl p-3.5 lg:p-[20px] flex flex-col justify-between gap-1.5 lg:gap-[16px]"
                         >
                             <div className="flex items-center justify-between">
                                 <span className="text-[9.5px] lg:text-[13px] font-semibold text-muted-ink lg:text-ink-soft">
-                                    {kpi.label}
+                                    <span className="lg:hidden">{kpi.mobileLabel || kpi.label}</span>
+                                    <span className="hidden lg:inline">{kpi.label}</span>
                                 </span>
                                 <span
                                     className={cn(
@@ -146,11 +153,95 @@ export default async function DashboardPage() {
                 })}
             </div>
 
+            {/* ── BOS Strip: Full Width Card between KPIs and Body ── */}
+            {stats.currentBap ? (
+                <div className="panel rounded-[14px] lg:rounded-2xl p-3 lg:p-[14px_18px] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3.5 border border-line">
+                    <Link
+                        href={`/procurement/${stats.currentBap.id}`}
+                        className="flex items-center gap-3 min-w-0 flex-1 hover:opacity-90 transition-opacity"
+                    >
+                        <div className="size-[32px] lg:size-[38px] rounded-[10px] bg-mint-soft text-mint grid place-items-center shrink-0">
+                            <ClipboardList className="size-4 lg:size-[18px]" />
+                        </div>
+                        <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                            <div className="flex items-center gap-2 flex-wrap">
+                                <span className="text-xs lg:text-[13px] font-bold text-ink">
+                                    Pengadaan BOS · {monthName} {stats.currentYear}
+                                </span>
+                                {stats.currentBap.status === "VERIFIED" ? (
+                                    <Badge variant="mint" className="text-[9px] lg:text-[10px] py-0 px-2">
+                                        Sah &amp; Lengkap
+                                    </Badge>
+                                ) : stats.currentBap.status === "SUBMITTED" ? (
+                                    <Badge variant="amber" className="text-[9px] lg:text-[10px] py-0 px-2">
+                                        Menunggu Guru
+                                    </Badge>
+                                ) : (
+                                    <Badge variant="secondary" className="text-[9px] lg:text-[10px] py-0 px-2">
+                                        Draft
+                                    </Badge>
+                                )}
+                            </div>
+                            <div className="flex items-center gap-2 text-[10px] lg:text-[11px] text-muted-ink flex-wrap">
+                                {stats.currentBap.bapNumber && (
+                                    <span className="font-mono text-ink-soft font-semibold">
+                                        {stats.currentBap.bapNumber}
+                                    </span>
+                                )}
+                                <span>
+                                    {stats.currentBap._count?.items || 0} jenis · {stats.currentBap.totalUnits || 0} unit
+                                </span>
+                                {stats.currentBap.inspector?.name && (
+                                    <>
+                                        <span className="text-line">•</span>
+                                        <span className="flex items-center gap-1 text-ink-soft">
+                                            <UserCheck className="size-3 text-muted-ink" />
+                                            {stats.currentBap.inspector.name}
+                                        </span>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </Link>
+
+                    <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                        <Button asChild variant="secondary" size="sm" className="gap-1.5 text-xs h-8">
+                            <Link href={`/procurement/${stats.currentBap.id}`}>
+                                <FileText className="size-3.5" />
+                                <span>Lihat BAP</span>
+                            </Link>
+                        </Button>
+                    </div>
+                </div>
+            ) : (
+                <div className="panel rounded-[14px] lg:rounded-2xl p-3 lg:p-[14px_18px] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3.5 border border-line">
+                    <div className="flex items-center gap-3">
+                        <div className="size-[32px] lg:size-[38px] rounded-[10px] bg-brand-soft text-brand grid place-items-center shrink-0">
+                            <ClipboardList className="size-4 lg:size-[18px]" />
+                        </div>
+                        <div className="flex flex-col gap-0.5">
+                            <span className="text-xs lg:text-[13px] font-bold text-ink">
+                                Pengadaan BOS · {monthName} {stats.currentYear}
+                            </span>
+                            <span className="text-[10px] lg:text-[11px] text-muted-ink">
+                                Belum ada pengajuan belanja BOS bulan ini.
+                            </span>
+                        </div>
+                    </div>
+                    <Button asChild variant="secondary" size="sm" className="gap-1.5 text-xs h-8 shrink-0 self-end sm:self-auto">
+                        <Link href="/procurement">
+                            <Plus className="size-3.5" />
+                            <span>Buat Pengadaan</span>
+                        </Link>
+                    </Button>
+                </div>
+            )}
+
             {/* Body Section: Aktivitas Terbaru (left) + Stok Hampir Habis (right) */}
             <div className="flex flex-col lg:flex-row gap-3.5 lg:gap-4 items-start">
                 {/* Aktivitas Terbaru */}
                 <div className="panel w-full lg:flex-1 rounded-[14px] lg:rounded-2xl flex flex-col">
-                    <div className="flex items-center justify-between p-3.5 lg:p-[22px] border-b border-line">
+                    <div className="flex items-center justify-between p-3.5 lg:p-[20px] border-b border-line">
                         <div className="flex flex-col gap-0.5">
                             <h2 className="text-[12.5px] lg:text-[15.5px] font-bold text-ink">
                                 Aktivitas Terbaru
@@ -172,7 +263,7 @@ export default async function DashboardPage() {
                         </div>
                     </div>
 
-                    <div className="p-3.5 lg:p-[22px] flex flex-col gap-3 lg:gap-4">
+                    <div className="p-3.5 lg:p-[20px] flex flex-col gap-3 lg:gap-3.5">
                         {recentActivity.length === 0 ? (
                             <div className="flex flex-col items-center justify-center py-10 text-center">
                                 <p className="text-sm font-semibold text-ink">Belum ada aktivitas</p>
@@ -181,7 +272,7 @@ export default async function DashboardPage() {
                                 </p>
                             </div>
                         ) : (
-                            recentActivity.slice(0, 6).map((tx) => {
+                            recentActivity.slice(0, 5).map((tx) => {
                                 const isIncoming = tx.type === "IN"
                                 return (
                                     <div
@@ -233,8 +324,8 @@ export default async function DashboardPage() {
                         )}
                     </div>
 
-                    <div className="mt-auto px-3.5 lg:px-[22px] py-3 border-t border-line bg-surface-2 rounded-b-[14px] lg:rounded-b-2xl flex items-center justify-between text-[10.5px] lg:text-xs text-muted-ink">
-                        <span>Menampilkan {Math.min(recentActivity.length, 6)} aktivitas terbaru</span>
+                    <div className="mt-auto px-3.5 lg:px-[20px] py-3 border-t border-line bg-surface-2 rounded-b-[14px] lg:rounded-b-2xl flex items-center justify-between text-[10.5px] lg:text-xs text-muted-ink">
+                        <span>Menampilkan {Math.min(recentActivity.length, 5)} aktivitas terbaru</span>
                         <Link
                             href="/reports"
                             className="font-bold text-brand hover:underline inline-flex items-center gap-1"
@@ -245,9 +336,9 @@ export default async function DashboardPage() {
                     </div>
                 </div>
 
-                {/* Stok Hampir Habis */}
+                {/* Stok Hampir Habis (3 items per spec) */}
                 <div className="panel w-full lg:w-[322px] rounded-[14px] lg:rounded-2xl flex flex-col shrink-0">
-                    <div className="flex items-center justify-between p-3.5 lg:p-[22px] border-b border-line">
+                    <div className="flex items-center justify-between p-3.5 lg:p-[20px] border-b border-line">
                         <div className="flex items-center gap-2">
                             <span className="size-7 rounded-[8px] bg-rose-soft grid place-items-center text-rose shrink-0">
                                 <TriangleAlert className="size-3.5" />
@@ -266,7 +357,7 @@ export default async function DashboardPage() {
                         </span>
                     </div>
 
-                    <div className="p-3.5 lg:p-[22px] flex flex-col gap-3">
+                    <div className="p-3.5 lg:p-[20px] flex flex-col gap-3">
                         {lowStockItems.length === 0 ? (
                             <div className="flex flex-col items-center justify-center py-8 text-center">
                                 <div className="size-10 rounded-full bg-mint-soft text-mint grid place-items-center mb-2">
@@ -278,7 +369,7 @@ export default async function DashboardPage() {
                                 </p>
                             </div>
                         ) : (
-                            lowStockItems.slice(0, 5).map((item) => {
+                            lowStockItems.slice(0, 3).map((item) => {
                                 const percent = Math.min(
                                     100,
                                     Math.round((item.quantity / (item.minStock || 5)) * 100)
@@ -319,12 +410,12 @@ export default async function DashboardPage() {
                         )}
                     </div>
 
-                    <div className="mt-auto px-3.5 lg:px-[22px] py-3 border-t border-line bg-surface-2 rounded-b-[14px] lg:rounded-b-2xl">
+                    <div className="mt-auto px-3.5 lg:px-[20px] py-3 border-t border-line bg-surface-2 rounded-b-[14px] lg:rounded-b-2xl">
                         <Link
-                            href="/inventory"
+                            href="/procurement"
                             className="text-xs font-bold text-brand hover:underline flex items-center justify-between"
                         >
-                            <span>Buka inventaris</span>
+                            <span>Buat Daftar Pengadaan</span>
                             <ArrowRight className="size-3" />
                         </Link>
                     </div>

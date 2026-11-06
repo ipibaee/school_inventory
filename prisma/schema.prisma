@@ -98,7 +98,7 @@ model User {
   email     String   @unique
   password  String?  // For email login
   image     String?
-  role      String   @default("TEACHER") // ADMIN, TECHNICIAN, TEACHER, HEADMASTER
+  role      String   @default("TEACHER") // ADMIN, TECHNICIAN, TEACHER
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

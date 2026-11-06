@@ -34,7 +34,7 @@ const formSchema = z.object({
     name: z.string().min(2, "Nama minimal 2 karakter"),
     email: z.string().email("Email tidak valid"),
     password: z.string().optional(),
-    role: z.enum(["ADMIN", "TEACHER", "TECHNICIAN", "HEADMASTER"]),
+    role: z.enum(["ADMIN", "TEACHER", "TECHNICIAN"]),
 })
 
 interface UserFormProps {
@@ -147,7 +147,6 @@ export function UserForm({ open, onOpenChange, initialData, onSuccess }: UserFor
                                             <SelectItem value="ADMIN">Admin</SelectItem>
                                             <SelectItem value="TECHNICIAN">Teknisi Gudang</SelectItem>
                                             <SelectItem value="TEACHER">Guru Pengawas</SelectItem>
-                                            <SelectItem value="HEADMASTER">Kepala Sekolah</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />

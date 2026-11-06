@@ -9,7 +9,7 @@ const userSchema = z.object({
     name: z.string().min(2),
     email: z.string().email(),
     password: z.string().min(6).optional(),
-    role: z.enum(["ADMIN", "TEACHER", "TECHNICIAN", "HEADMASTER"]),
+    role: z.enum(["ADMIN", "TEACHER", "TECHNICIAN"]),
 })
 
 export async function getUsers() {

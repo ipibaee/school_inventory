@@ -7,8 +7,9 @@ sebelum lanjut.
 
 ## Aturan umum
 
-- Modul lama **tidak diubah** selain: entri menu "Pengadaan BOS", role `HEADMASTER`,
-  relasi balik di `Item`/`User`, dan pengecualian `/verify` di middleware.
+- Modul lama **tidak diubah** selain: entri menu "Pengadaan BOS", blok BOS di `/dashboard`,
+  tab Arsip BAP di `/reports`, relasi balik di `Item`/`User`, dan pengecualian `/verify` di middleware.
+- **Tidak ada role Kepala Sekolah** dan **tidak ada `/executive`** — jangan membuatnya.
 - Semua teks UI bahasa Indonesia, format tanggal `id-ID`, mata uang tidak ditampilkan di modul ini.
 - Warna & ukuran mengikuti `tokens.css` + spesifikasi di `01-screens.md`.
 - Jangan menambah library chart; grafik realisasi dibuat dengan flex (lihat `06-components.md`).
@@ -28,11 +29,9 @@ sebelum lanjut.
 
 ## Fase 2 — Navigasi & peran (½ hari)
 
-1. `src/auth.config.ts`: tambah `/procurement` & `/executive` ke daftar protected,
-   redirect `/executive` untuk non-HEADMASTER, biarkan `/verify` publik.
-2. `src/components/layout/Sidebar.tsx`: item "Pengadaan BOS" (`clipboard-list`) setelah Inventaris;
-   bila role `HEADMASTER`, "Dasbor" mengarah ke `/executive` dan tampilkan "Arsip BAP".
-3. Mobile: tautan Pengadaan di sheet menu avatar + akses arsip dari dasbor eksekutif.
+1. `src/auth.config.ts`: tambah `/procurement` ke daftar protected, biarkan `/verify` publik.
+2. `src/components/layout/Sidebar.tsx`: item "Pengadaan BOS" (`clipboard-list`) setelah Inventaris.
+3. Mobile: tautan Pengadaan di sheet menu avatar.
 4. Cek: menu tampil sesuai role; user lama tidak terganggu.
 
 ## Fase 3 — Server action & query (1 hari)
@@ -61,14 +60,15 @@ sebelum lanjut.
 4. Tampilkan nomor BAP preview dari `peekNextBapNumber` selama `DRAFT`.
 5. Cek: form kosong, validasi, submit ganda, periode sudah ada.
 
-## Fase 6 — Arsip (1 hari)
+## Fase 6 — Tab Arsip BAP di Laporan (1 hari)
 
-1. `/procurement/archive/page.tsx`: `MonthTabs`, `FilterSummary`, `ArchiveTable`,
-   pagination, filter via `searchParams` (`?year=&month=&q=&page=`).
-2. Aksi per baris: `Cetak BAP` → `/procurement/[id]` (auto-open print), `Detail` → dokumen draft.
-3. `Ekspor Rekap`: unduh CSV/XLSX sederhana (boleh CSV dulu) — atau nonaktifkan tombolnya
-   bila belum siap, jangan dibiarkan mati.
+1. `/reports/page.tsx`: tambah tab ke-5 "Arsip BAP" (`?tab=bap`) di desktop (underline tabs)
+   dan mobile (chips); tambahkan juga tab non-aktif itu di keempat tab lain.
+2. Komponen `ArchiveTab`: `MonthTabs`, `FilterSummary`, `ArchiveTable`, pagination,
+   filter via `searchParams` (`?tab=bap&year=&month=&q=&page=`).
+3. Aksi per baris: `Cetak BAP` → `/procurement/[id]` (auto-open print), `Detail` → dokumen draft.
 4. Mobile: `BapArchiveCard` list.
+5. Jangan membuat route/menu `/procurement/archive`.
 
 ## Fase 7 — Pemeriksaan guru (1 hari)
 
@@ -79,13 +79,14 @@ sebelum lanjut.
 4. `PublishSuccessDialog` (QR, detail verifikasi, 2 tombol) → redirect ke dokumen.
 5. Cek: refresh di tengah jalan (state tersimpan), double-tap tombol (tidak dobel publish).
 
-## Fase 8 — Dasbor eksekutif (1 hari)
+## Fase 8 — Blok BOS di Dasbor (½ hari)
 
-1. `/executive/page.tsx` (guard `HEADMASTER`): 4 `ExecutiveKpiCard`,
-   `MonthlyRealizationChart`, `PendingBatchList`, `Cetak Laporan Semester`.
-2. Mobile: KPI 2×2, kartu BAP terakhir, `BatchArchiveCard`, bottom nav 3 tab.
-3. "Cetak Laporan Semester" → halaman cetak ringkas (A4 landscape/portrait) memakai pola print
-   yang sama dengan BAP (kop + tabel realisasi + tanda tangan Kepala Sekolah).
+1. `/dashboard/page.tsx`: ganti KPI ke-4 menjadi "Pengadaan BOS" (nilai + caption dari DB).
+2. Tambah `DashboardBosStrip` di antara KPI Row dan Body (desktop), dan versi ringkas
+   setelah KPI 2×2 (mobile). Body dasbor menyusut — pastikan Aktivitas 5 baris / Stok 3 item
+   agar tidak overflow.
+3. Kosong: "Belum ada BAP · Buat Pengajuan".
+4. **Jangan** membuat halaman/route dasbor kedua.
 
 ## Fase 9 — Verifikasi publik (½ hari)
 
@@ -116,14 +117,14 @@ src/lib/guard.ts                                      (baru)
 src/lib/queries/procurement.ts                        (baru)
 src/actions/procurement.ts                            (baru)
 src/app/(authenticated)/procurement/page.tsx          (baru)
-src/app/(authenticated)/procurement/archive/page.tsx  (baru)
 src/app/(authenticated)/procurement/[id]/page.tsx     (baru)
 src/app/(authenticated)/procurement/[id]/check/page.tsx (baru)
-src/app/(authenticated)/executive/page.tsx            (baru)
 src/app/verify/[token]/page.tsx                       (baru, publik)
 src/app/api/verify/[token]/visit/route.ts             (baru)
 src/components/procurement/*                          (14 komponen, lihat 05 & 06)
-src/components/layout/Sidebar.tsx                     (edit: menu + role)
+src/app/(authenticated)/reports/page.tsx              (edit: tab Arsip BAP)
+src/app/(authenticated)/dashboard/page.tsx            (edit: KPI BOS + strip)
+src/components/layout/Sidebar.tsx                     (edit: menu Pengadaan)
 src/auth.config.ts                                    (edit: proteksi route)
 src/app/globals.css                                   (edit: @page + .sheet print)
 ```
@@ -145,8 +146,9 @@ src/app/globals.css                                   (edit: @page + .sheet prin
       menampilkan QR yang bisa discan.
 - [ ] Scan QR → `/verify/{token}` menampilkan data benar tanpa login; token salah →
       "Dokumen tidak ditemukan"; kunjungan tercatat.
-- [ ] Kepala Sekolah melihat dasbor eksekutif (KPI, realisasi 11 bulan, batch menunggu),
-      bisa membuka pratinjau BAP, dan mencetak rekap semester.
+- [ ] Arsip BAP muncul sebagai tab di halaman Laporan (desktop & mobile), filter bulan/tahun jalan.
+- [ ] Blok BOS muncul di Dasbor: badge sah, nomor BAP, jumlah unit, tombol "Lihat BAP".
+- [ ] Tidak ada menu/halaman/role Kepala Sekolah di aplikasi.
 - [ ] Periode ganda ditolak; user tanpa role ditolak di server (bukan hanya UI).
 
 ### Visual
@@ -180,5 +182,5 @@ src/app/globals.css                                   (edit: @page + .sheet prin
 | 6 | Scan QR BAP SUBMITTED | halaman "Dokumen tidak ditemukan" |
 | 7 | Buka `/verify` di mode gelap | halaman publik tetap terbaca (token tema) |
 | 8 | Hapus item inventaris yang dipakai BAP lama | dokumen lama tetap utuh (snapshot nama/spesifikasi) |
-| 9 | Buka `/executive` sebagai ADMIN | redirect ke `/dashboard` |
+| 9 | Buka `/reports?tab=bap` (Arsip BAP) | tab aktif, filter & tabel berjalan, tidak ada route `/procurement/archive` |
 | 10 | Refresh di tengah checklist | centang & catatan tetap tersimpan |

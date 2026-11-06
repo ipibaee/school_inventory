@@ -28,7 +28,6 @@ import {
 
 function roleBadge(role: string) {
     if (role === "ADMIN") return <Badge variant="brand">Admin</Badge>
-    if (role === "HEADMASTER") return <Badge variant="amber">Kepala Sekolah</Badge>
     if (role === "TEACHER") return <Badge variant="mint">Guru Pengawas</Badge>
     return <Badge variant="secondary">Teknisi Gudang</Badge>
 }

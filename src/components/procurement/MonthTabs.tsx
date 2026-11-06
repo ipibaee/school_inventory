@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 const MONTHS_SHORT = [
   { label: "Semua", value: 0 },
@@ -18,11 +18,22 @@ const MONTHS_SHORT = [
   { label: "Des", value: 12 },
 ]
 
-export function MonthTabs({ selectedMonth }: { selectedMonth: number }) {
+interface MonthTabsProps {
+  selectedMonth: number
+  onSelect?: (monthVal: number) => void
+}
+
+export function MonthTabs({ selectedMonth, onSelect }: MonthTabsProps) {
   const router = useRouter()
+  const pathname = usePathname()
   const searchParams = useSearchParams()
 
   const handleSelect = (monthVal: number) => {
+    if (onSelect) {
+      onSelect(monthVal)
+      return
+    }
+
     const params = new URLSearchParams(searchParams.toString())
     if (monthVal > 0) {
       params.set("month", monthVal.toString())
@@ -30,7 +41,7 @@ export function MonthTabs({ selectedMonth }: { selectedMonth: number }) {
       params.delete("month")
     }
     params.set("page", "1")
-    router.push(`/procurement/archive?${params.toString()}`)
+    router.push(`${pathname}?${params.toString()}`)
   }
 
   return (

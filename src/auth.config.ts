@@ -20,26 +20,14 @@ export const authConfig = {
                 nextUrl.pathname.startsWith("/borrow") ||
                 nextUrl.pathname.startsWith("/reports") ||
                 nextUrl.pathname.startsWith("/settings") ||
-                nextUrl.pathname.startsWith("/procurement") ||
-                nextUrl.pathname.startsWith("/executive")
+                nextUrl.pathname.startsWith("/procurement")
 
             if (isProtected) {
                 if (!isLoggedIn) return false // Redirect unauthenticated users to login page
-
-                // Executive dashboard guard
-                if (nextUrl.pathname.startsWith("/executive")) {
-                    if (userRole && userRole !== "HEADMASTER" && userRole !== "ADMIN") {
-                        return Response.redirect(new URL("/dashboard", nextUrl))
-                    }
-                }
-
                 return true
             } else if (isLoggedIn) {
                 // Redirect logged-in users away from login page
                 if (nextUrl.pathname === "/login") {
-                    if (userRole === "HEADMASTER") {
-                        return Response.redirect(new URL("/executive", nextUrl))
-                    }
                     return Response.redirect(new URL("/dashboard", nextUrl))
                 }
                 return true

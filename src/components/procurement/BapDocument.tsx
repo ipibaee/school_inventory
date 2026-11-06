@@ -256,19 +256,6 @@ export function BapDocument({
             </span>
           </div>
         </div>
-
-        {/* Mengetahui: Kepala Sekolah */}
-        <div className="flex flex-col items-center text-center mt-5 text-[8pt]">
-          <span className="text-black/80">Mengetahui,</span>
-          <span className="font-bold text-black">Kepala Sekolah</span>
-          <div className="h-[14mm]" />
-          <span className="font-bold text-[8.5pt] underline text-black">
-            Drs. H. Sutarjo, M.Pd.
-          </span>
-          <span className="text-[7pt] text-black/70">
-            NIP. 19720408 199803 1 004
-          </span>
-        </div>
       </div>
 
       {/* ── DOKUMEN FOOTER ── */}

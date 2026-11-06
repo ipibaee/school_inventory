@@ -1,4 +1,4 @@
-# V2 · Modul Pengadaan BOS + BAP + Dasbor Eksekutif
+# V2 · Modul Pengadaan BOS + BAP
 
 Paket handoff untuk **fitur baru** (bukan redesign halaman lama). Berisi 8 layar desain
 (7 dengan varian gelap) beserta model data, alur, dan rencana implementasi untuk repo
@@ -14,29 +14,43 @@ Perbedaan dengan paket v1 (`design-handoff/`): v1 = *restyling* halaman yang sud
 | # | File | Isi |
 | --- | --- | --- |
 | 1 | [`ANTIGRAVITY-V2.md`](./ANTIGRAVITY-V2.md) | **instruksi utama** untuk AI agent |
-| 2 | [`01-screens.md`](./01-screens.md) | 8 layar: route, struktur, isi, state, versi gelap |
-| 3 | [`02-data-model.md`](./02-data-model.md) | model Prisma baru + relasi ke model lama + counter nomor BAP |
+| 2 | [`01-screens.md`](./01-screens.md) | layar: route, struktur, isi, state, versi gelap |
+| 3 | [`02-data-model.md`](./02-data-model.md) | model Prisma baru + relasi + counter nomor BAP |
 | 4 | [`03-roles-flows.md`](./03-roles-flows.md) | peran, matriks izin, state machine, alur QR |
-| 5 | [`04-server-actions.md`](./04-server-actions.md) | daftar server action, validasi, transaksi stok |
+| 5 | [`04-server-actions.md`](./04-server-actions.md) | server action, validasi, transaksi stok |
 | 6 | [`05-print-and-qr.md`](./05-print-and-qr.md) | layout A4 (mm/pt), kop, tanda tangan, QR & verifikasi publik |
 | 7 | [`06-components.md`](./06-components.md) | komponen baru + yang bisa dipakai ulang dari v1 |
 | 8 | [`07-implementation-plan.md`](./07-implementation-plan.md) | urutan kerja + checklist acceptance |
 
-**Referensi visual:** `reference/png/` (15 gambar) · markup acuan: `reference/html/` ·
+**Referensi visual:** `reference/png/` (19 gambar) · markup acuan: `reference/html/` ·
 layer tree lengkap: `spec/`.
+
+> Aturan tanda tangan (final): dokumen BAP **hanya** Penyimpan/Teknisi + Guru Pengawas (+QR);
+> laporan cetak **hanya** "Dibuat oleh, Admin TU" + "Diperiksa oleh, Guru Pengawas".
+> Tidak ada Kepala Sekolah di dokumen mana pun.
+
+## Keputusan desain (revisi)
+
+1. **Tidak ada dasbor kedua.** Dasbor tetap satu: `/dashboard` (milik v1), ditambah satu blok
+   **BOS Strip** + KPI "Pengadaan BOS". Tidak ada role `HEADMASTER` dan tidak ada `/executive`.
+2. **Arsip BAP bukan menu baru.** Arsip menjadi **tab ke-5 di halaman Laporan** (`/reports`)
+   bersama Laporan Stok, Riwayat Peminjam, Riwayat Gudang, Barang Masuk.
+3. **Kepala Sekolah bukan role sistem.** Tanda tangan "Mengetahui, Kepala Sekolah" pada dokumen
+   BAP tetap ada (dokumen resmi) dan diambil dari `SchoolSettings`.
 
 ## Layar → route
 
 | Layar | Route | Peran | File desain |
 | --- | --- | --- | --- |
 | Pengajuan Pengadaan BOS | `/procurement` | Admin TU / Teknisi | `01-pengadaan-bos-light.png`, `09-…-dark.png` |
-| Arsip BAP Pengadaan | `/procurement/archive` | Admin, Guru, Kepala Sekolah | `02-…`, `10-…` |
-| Dokumen BAP (A4, siap cetak) | `/procurement/[id]` | semua peran terkait | `03-bap-dokumen-a4.png` |
+| Dokumen BAP (A4, siap cetak) | `/procurement/[id]` | Admin, Teknisi, Guru | `03-bap-dokumen-a4.png` |
 | Pemeriksaan Barang (mobile) | `/procurement/[id]/check` | Guru Pengawas | `05-…`, `12-…` |
 | Modal pengesahan berhasil | komponen di `/check` | Guru Pengawas | `06-…`, `13-…` |
-| Dasbor Monitoring Eksekutif | `/executive` | Kepala Sekolah | `04-…`, `11-…` |
-| Dasbor Eksekutif (mobile) | `/executive` | Kepala Sekolah | `07-…`, `14-…` |
+| **Arsip BAP** | `/reports` → tab "Arsip BAP" | semua user login | `02-laporan-arsip-bap-light.png`, `10-…-dark.png` |
+| **Dasbor + BOS** | `/dashboard` (v1, ditambah blok BOS) | Adm/Tehn/Guru | `04-dasbor-bos-light.png`, `11-…-dark.png` |
+| Dasbor mobile + BOS | `/dashboard` | Adm/Tehn/Guru | `07-mobile-dasbor-bos-light.png`, `14-…-dark.png` |
 | Verifikasi publik via QR | `/verify/[token]` | publik (tanpa login) | `08-…`, `15-…` |
+| Cetak laporan (4 varian) | `/reports` → tombol Cetak | semua user login | `16-cetak-laporan-stok.png` … `19-…-mutasi.png` |
 
 ## Prinsip
 

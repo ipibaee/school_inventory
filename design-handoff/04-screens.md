@@ -66,6 +66,12 @@ default · loading (tombol `disabled` + spinner) · invalid (border `rose` + pes
 **File:** `src/app/(authenticated)/dashboard/page.tsx`
 **Layar:** `Dasbor — Redesign/Dark`, `Mobile Dasbor — Redesign/Dark`
 
+> **Revisi (v2):** dasbor tetap **satu-satunya** dasbor. KPI ke-4 diganti menjadi
+> "Pengadaan BOS" (18 Unit) dan ditambahkan **BOS Strip** penuh lebar di antara KPI Row dan Body
+> (nomor BAP + badge "Sah & Lengkap" + jumlah jenis/unit + pemeriksa + tombol "Lihat BAP").
+> Detail: `v2-pengadaan-bos/01-screens.md` bagian Dasbor. Aktivitas jadi 5 baris,
+> Stok Hampir Habis 3 item agar tetap muat.
+
 ### Desktop
 
 1. **Topbar**: judul "Dasbor Inventaris", sub "Status stok barang dan ringkasan aktivitas sekolah terkini."
@@ -208,6 +214,13 @@ loading simpan.
 
 **File:** `src/app/(authenticated)/reports/page.tsx` + `src/components/reports/*`
 **Layar:** `Laporan — Redesign/Dark`, `Mobile Laporan — Redesign/Dark`
+
+> **Revisi (v2):** format **cetak laporan diganti** dengan template A4 resmi (KOP + judul +
+> ringkasan + tabel bergaris + 2 tanda tangan: Admin TU & Guru Pengawas, tanpa Kepala Sekolah)
+> — lihat `v2-pengadaan-bos/01-screens.md` §9.
+> Ada juga **tab ke-5 "Arsip BAP"** (setelah Barang Masuk) di desktop & mobile.
+> Isinya daftar Berita Acara Penerimaan Barang per bulan + filter tahun/bulan + cetak.
+> Tab ini menggantikan rencana halaman arsip terpisah. Detail: `v2-pengadaan-bos/01-screens.md`.
 
 ### Desktop
 

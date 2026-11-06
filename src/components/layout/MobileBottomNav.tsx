@@ -15,21 +15,14 @@ import {
 
 export function MobileBottomNav({ user }: { user?: any }) {
     const pathname = usePathname()
-    const isHeadmaster = user?.role === "HEADMASTER"
 
-    const navItems = isHeadmaster
-        ? [
-              { label: "Dasbor", icon: LayoutDashboard, href: "/executive" },
-              { label: "Arsip BAP", icon: Archive, href: "/procurement/archive" },
-              { label: "Laporan", icon: ChartColumn, href: "/reports" },
-          ]
-        : [
-              { label: "Dasbor", icon: LayoutDashboard, href: "/dashboard" },
-              { label: "Inventaris", icon: Boxes, href: "/inventory" },
-              { label: "BOS", icon: ClipboardList, href: "/procurement" },
-              { label: "Pinjam", icon: ShoppingCart, href: "/borrow" },
-              { label: "Laporan", icon: ChartColumn, href: "/reports" },
-          ]
+    const navItems = [
+        { label: "Dasbor", icon: LayoutDashboard, href: "/dashboard" },
+        { label: "Inventaris", icon: Boxes, href: "/inventory" },
+        { label: "BOS", icon: ClipboardList, href: "/procurement" },
+        { label: "Pinjam", icon: ShoppingCart, href: "/borrow" },
+        { label: "Laporan", icon: ChartColumn, href: "/reports" },
+    ]
 
     return (
         <nav className="fixed bottom-0 inset-x-0 h-[62px] bg-surface border-t border-line z-40 flex items-center justify-around px-1.5 lg:hidden print:hidden select-none">

@@ -27,7 +27,7 @@ gradient dekoratif, animasi float.
 6. `design-handoff/05-implementation-plan.md` — urutan kerja + checklist
 7. Referensi visual: `design-handoff/reference/png/*.png`
    Markup acuan: `design-handoff/reference/html/*.html`
-   Angka detail per layer: `design-handoff/spec/*.md`
+   Angka detail per layer (layar baru): `v2-pengadaan-bos/spec/*.md`
 
 ## Token wajib (ringkas)
 

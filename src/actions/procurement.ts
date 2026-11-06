@@ -6,6 +6,7 @@ import { z } from "zod"
 import { assertRole, assertAuthenticated } from "@/lib/guard"
 import { takeNextBapNumber } from "@/lib/bap-number"
 import { generateQrToken } from "@/lib/qr"
+import { listBaps, getBapSummary } from "@/lib/queries/procurement"
 
 export type ActionResult<T = any> =
   | { ok: true; data?: T }
@@ -82,7 +83,7 @@ export async function createProcurement(input: z.infer<typeof procurementMetaSch
     })
 
     revalidatePath("/procurement")
-    revalidatePath("/procurement/archive")
+    revalidatePath("/reports")
     return { ok: true, data: { id: created.id } }
   } catch (error: any) {
     console.error("Error createProcurement:", error)
@@ -355,7 +356,7 @@ export async function submitProcurement(id: string): Promise<ActionResult<{ bapN
     })
 
     revalidatePath("/procurement")
-    revalidatePath("/procurement/archive")
+    revalidatePath("/reports")
     revalidatePath(`/procurement/${id}`)
     return { ok: true, data: { bapNumber: result.bapNumber! } }
   } catch (error: any) {
@@ -538,10 +539,9 @@ export async function publishBap(id: string): Promise<ActionResult<{ bapNumber: 
 
     const pathsToRevalidate = [
       "/procurement",
-      "/procurement/archive",
+      "/reports",
       `/procurement/${id}`,
       `/procurement/${id}/check`,
-      "/executive",
       "/inventory",
       "/dashboard",
     ]
@@ -592,7 +592,7 @@ export async function rejectBap(id: string, reason: string): Promise<ActionResul
     })
 
     revalidatePath("/procurement")
-    revalidatePath("/procurement/archive")
+    revalidatePath("/reports")
     revalidatePath(`/procurement/${id}`)
     revalidatePath(`/procurement/${id}/check`)
     return { ok: true }
@@ -634,5 +634,51 @@ export async function reopenToDraft(id: string): Promise<ActionResult> {
   } catch (error: any) {
     console.error("Error reopenToDraft:", error)
     return { ok: false, error: error.message || "Gagal membuka kembali draft" }
+  }
+}
+
+export async function getBapArchiveData({
+  year,
+  month = 0,
+  q,
+  page = 1,
+}: {
+  year?: number
+  month?: number
+  q?: string
+  page?: number
+} = {}) {
+  try {
+    const targetYear = year ?? new Date().getFullYear()
+    const [bapResult, summary] = await Promise.all([
+      listBaps({
+        year: targetYear,
+        month,
+        q,
+        page,
+        perPage: 15,
+      }),
+      getBapSummary({ year: targetYear }),
+    ])
+
+    return {
+      ...bapResult,
+      summary,
+    }
+  } catch (error) {
+    console.error("Error getBapArchiveData:", error)
+    return {
+      total: 0,
+      page: 1,
+      perPage: 15,
+      totalPages: 1,
+      data: [],
+      summary: {
+        year: new Date().getFullYear(),
+        totalBap: 0,
+        totalUnits: 0,
+        totalItems: 0,
+      },
+    }
   }
 }

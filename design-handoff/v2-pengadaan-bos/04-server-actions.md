@@ -113,7 +113,7 @@ export async function submitProcurement(id: string) {
     });
     await tx.procurementLog.create({ data: { procurementId: id, action: "SUBMITTED", actorId: user.id } });
     return { ok: true, data: { bapNumber: updated.bapNumber } };
-  }).then((r) => { revalidatePath("/procurement"); revalidatePath("/procurement/archive"); return r; });
+  }).then((r) => { revalidatePath("/procurement"); revalidatePath("/reports"); return r; });
 }
 ```
 
@@ -193,7 +193,7 @@ export async function publishBap(id: string) {
     return updated;
   });
 
-  ["/procurement", "/procurement/archive", `/procurement/${id}`, "/executive", "/inventory", "/dashboard"]
+  ["/procurement", `/procurement/${id}`, "/reports", "/dashboard", "/inventory"]
     .forEach((p) => revalidatePath(p));
   return { ok: true, data: { bapNumber: result.bapNumber, qrToken: result.qrToken } };
 }
@@ -211,9 +211,8 @@ export async function listBaps({ year, month, q, page = 1, perPage = 10 }) { ...
 export async function getBapSummary({ year }) { ... }
 export async function getProcurementDetail(id) { ... }   // items + users + logs
 export async function getBapByToken(token) { ... }        // hanya status VERIFIED
-export async function getExecutiveOverview({ year, month }) { ... }
-export async function getMonthlyRealization({ year }) { ... }
-export async function getPendingBatches({ limit = 4 }) { ... }
+// Untuk blok BOS di /dashboard (bukan dasbor terpisah):
+export async function getDashboardBosSummary({ year, month }) { ... }  // BAP terakhir + total unit
 export async function getWarehouseSuggestions({ limit = 3 }) { ... }
 ```
 
@@ -235,10 +234,10 @@ export const formatTimeID = (d: Date) => formatInTimeZone(d, "Asia/Jakarta", "HH
 | Halaman | Jenis | Catatan |
 | --- | --- | --- |
 | `/procurement` | server (fetch data) + client form | form pakai `react-hook-form` + `zodResolver` (sudah ada) |
-| `/procurement/archive` | server | filter lewat `searchParams`, tabel server-rendered |
+| `/reports` (tab Arsip BAP) | server | filter lewat `searchParams` (`?tab=bap&year=&month=&q=&page=`), tabel server-rendered |
+| `/dashboard` (blok BOS) | server | satu query ringkas, tidak memblok render KPI lain |
 | `/procurement/[id]` | server | tombol cetak = client (`react-to-print`) |
 | `/procurement/[id]/check` | server + client checklist | toggle optimistis (`useOptimistic`/`useTransition`) |
-| `/executive` | server | chart dari data agregat |
 | `/verify/[token]` | server, **tanpa auth** | `dynamic = "force-dynamic"` |
 
 ## 6. Error & pesan

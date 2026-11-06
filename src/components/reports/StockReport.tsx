@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Printer, MapPin, Tag, Search, Loader2 } from "lucide-react"
 import { getStockReport } from "@/actions/reports"
-import { ReportHeader } from "./ReportHeader"
+import { ReportA4Sheet } from "./ReportA4Sheet"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import {
@@ -46,20 +46,24 @@ export function StockReport() {
 
     const locations = useMemo(() => {
         const map = new Map<string, string>()
-        items.forEach((i) => map.set(i.location.id, i.location.name))
+        items.forEach((i) => {
+            if (i.location) map.set(i.location.id, i.location.name)
+        })
         return Array.from(map.entries()).map(([id, name]) => ({ id, name }))
     }, [items])
 
     const categories = useMemo(() => {
         const map = new Map<string, string>()
-        items.forEach((i) => map.set(i.category.id, i.category.name))
+        items.forEach((i) => {
+            if (i.category) map.set(i.category.id, i.category.name)
+        })
         return Array.from(map.entries()).map(([id, name]) => ({ id, name }))
     }, [items])
 
     const filteredItems = useMemo(() => {
         return items.filter((item) => {
-            const matchLoc = selectedLocation === "all" || item.location.id === selectedLocation
-            const matchCat = selectedCategory === "all" || item.category.id === selectedCategory
+            const matchLoc = selectedLocation === "all" || item.location?.id === selectedLocation
+            const matchCat = selectedCategory === "all" || item.category?.id === selectedCategory
             const matchSearch =
                 !searchQuery ||
                 item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -69,16 +73,16 @@ export function StockReport() {
     }, [items, selectedLocation, selectedCategory, searchQuery])
 
     const totalUnits = useMemo(() => {
-        return filteredItems.reduce((sum, item) => sum + item.quantity, 0)
+        return filteredItems.reduce((sum, item) => sum + (item.quantity || 0), 0)
     }, [filteredItems])
 
     const lowStockCount = useMemo(() => {
-        return filteredItems.filter((i) => i.quantity <= i.minStock).length
+        return filteredItems.filter((i) => (i.quantity || 0) <= (i.minStock || 5)).length
     }, [filteredItems])
 
     return (
         <div className="flex flex-col gap-4">
-            {/* Filter bar */}
+            {/* Filter bar - Screen only */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 print:hidden">
                 <div className="flex flex-wrap items-center gap-2.5">
                     <div className="w-[180px]">
@@ -126,19 +130,84 @@ export function StockReport() {
                             className="h-8 pl-8 text-xs"
                         />
                     </div>
-                    <Button variant="primary" size="sm" onClick={handlePrint} className="gap-1.5">
+                    <Button variant="primary" size="sm" onClick={handlePrint} className="gap-1.5 cursor-pointer">
                         <Printer className="size-3.5" />
                         <span>Cetak</span>
                     </Button>
                 </div>
             </div>
 
-            {/* Print Header */}
-            <ReportHeader title="Laporan Stok Barang" />
+            {/* ── Official A4 Document Sheet for Print ── */}
+            <div className="hidden print:block">
+                <ReportA4Sheet
+                    title="LAPORAN STOK BARANG"
+                    subtitle="Rekapitulasi Inventaris Sarana dan Prasarana Sekolah"
+                    metrics={[
+                        { label: "JENIS BARANG", value: filteredItems.length },
+                        { label: "TOTAL UNIT", value: totalUnits },
+                        { label: "STOK RENDAH", value: lowStockCount },
+                    ]}
+                    columns={[
+                        { header: "No", width: "24px", align: "center" },
+                        { header: "Nama & Spesifikasi", align: "left" },
+                        { header: "Barcode", width: "65px", align: "left" },
+                        { header: "Lokasi", width: "80px", align: "left" },
+                        { header: "Kategori", width: "65px", align: "left" },
+                        { header: "Stok", width: "35px", align: "right" },
+                        { header: "Status", width: "45px", align: "right" },
+                    ]}
+                    totalLabel={`Total Keseluruhan · ${filteredItems.length} jenis barang`}
+                    totalValue={`${totalUnits} Unit`}
+                    notes="Status Stok: Baik (> Stok Minimum), Rendah (≤ Stok Minimum), Habis (0 Unit)."
+                >
+                    {filteredItems.map((item, idx) => {
+                        const isLow = item.quantity <= item.minStock
+                        const isOut = item.quantity === 0
+                        return (
+                            <tr key={item.id} className="border-b border-black/60">
+                                <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black/60">
+                                    {idx + 1}
+                                </td>
+                                <td className="py-1 px-1.5 border-r border-black/60">
+                                    <span className="font-bold text-black">{item.name}</span>
+                                    {item.specification && (
+                                        <span className="block text-[6.5pt] text-black/60">
+                                            {item.specification}
+                                        </span>
+                                    )}
+                                </td>
+                                <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black/60">
+                                    {item.barcode}
+                                </td>
+                                <td className="py-1 px-1.5 text-[7pt] border-r border-black/60">
+                                    {item.location?.name || "-"}
+                                </td>
+                                <td className="py-1 px-1.5 text-[7pt] border-r border-black/60">
+                                    {item.category?.name || "-"}
+                                </td>
+                                <td className="py-1 px-1.5 font-mono font-bold text-right border-r border-black/60">
+                                    {item.quantity}
+                                </td>
+                                <td
+                                    className={`py-1 px-1.5 font-bold text-right ${
+                                        isOut
+                                            ? "text-[#D93A47]"
+                                            : isLow
+                                            ? "text-[#C77605]"
+                                            : "text-[#0EA47A]"
+                                    }`}
+                                >
+                                    {isOut ? "Habis" : isLow ? "Rendah" : "Baik"}
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </ReportA4Sheet>
+            </div>
 
-            {/* Report Table Card */}
-            <div className="panel rounded-2xl flex flex-col overflow-hidden print:border-0 print:shadow-none">
-                <div className="p-4 lg:p-[18px_22px] border-b border-line bg-surface flex items-center justify-between print:hidden">
+            {/* Report Table Card - Screen only */}
+            <div className="panel rounded-2xl flex flex-col overflow-hidden print:hidden">
+                <div className="p-4 lg:p-[18px_22px] border-b border-line bg-surface flex items-center justify-between">
                     <div className="flex flex-col">
                         <h3 className="text-[14.5px] font-bold text-ink">Laporan Rekapitulasi Stok</h3>
                         <p className="text-xs text-muted-ink mt-0.5">
@@ -161,15 +230,15 @@ export function StockReport() {
                     </div>
                 </div>
 
-                <Table className="print:border print:border-black">
+                <Table>
                     <TableHeader>
-                        <TableRow className="print:border-black">
-                            <TableHead className="print:text-black">LOKASI</TableHead>
-                            <TableHead className="print:text-black">KATEGORI</TableHead>
-                            <TableHead className="print:text-black">NAMA BARANG</TableHead>
-                            <TableHead className="print:text-black">SPESIFIKASI</TableHead>
-                            <TableHead className="print:text-black">BARCODE</TableHead>
-                            <TableHead className="text-right print:text-black">JUMLAH</TableHead>
+                        <TableRow>
+                            <TableHead>LOKASI</TableHead>
+                            <TableHead>KATEGORI</TableHead>
+                            <TableHead>NAMA BARANG</TableHead>
+                            <TableHead>SPESIFIKASI</TableHead>
+                            <TableHead>BARCODE</TableHead>
+                            <TableHead className="text-right">JUMLAH</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -190,7 +259,7 @@ export function StockReport() {
                             filteredItems.map((item) => {
                                 const isLow = item.quantity <= item.minStock
                                 return (
-                                    <TableRow key={item.id} className="print:border-black">
+                                    <TableRow key={item.id}>
                                         <TableCell className="text-xs text-ink-soft">{item.location?.name}</TableCell>
                                         <TableCell className="text-xs text-ink-soft">{item.category?.name}</TableCell>
                                         <TableCell className="font-bold text-[13px] text-ink">{item.name}</TableCell>
@@ -199,7 +268,7 @@ export function StockReport() {
                                         <TableCell
                                             className={cn(
                                                 "text-right font-mono font-bold text-[13px] tabular-nums",
-                                                isLow ? "text-rose print:text-black" : "text-ink"
+                                                isLow ? "text-rose" : "text-ink"
                                             )}
                                         >
                                             {item.quantity}
@@ -212,7 +281,7 @@ export function StockReport() {
                 </Table>
 
                 {/* Table Footer with Summary */}
-                <div className="px-5 py-3 border-t border-line bg-surface-2 flex items-center justify-between text-xs text-ink-soft font-medium print:border-black">
+                <div className="px-5 py-3 border-t border-line bg-surface-2 flex items-center justify-between text-xs text-ink-soft font-medium">
                     <span>Total Keseluruhan · {filteredItems.length} jenis barang</span>
                     <span className="font-mono font-extrabold text-[13.5px] text-ink">
                         {totalUnits} unit

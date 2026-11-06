@@ -105,64 +105,56 @@ Baris info di bawah kartu: ikon `info` 13 + 10.5 `muted`
 
 ---
 
-## 2. `/procurement/archive` — Arsip BAP Pengadaan
+## 2. Tab "Arsip BAP" di `/reports` — Arsip BAP Pengadaan
 
-Ref: `02-arsip-bap-light.png` · `10-arsip-bap-dark.png`
+Ref: `reference/png/02-laporan-arsip-bap-light.png` · `10-laporan-arsip-bap-dark.png`
 
-### Topbar
+Arsip BAP **bukan halaman/menu terpisah** — ia tab ke-5 di halaman Laporan yang sudah ada.
 
-- Judul "Arsip BAP Pengadaan" 27/800, sub 13.5 `muted`
-  ("Riwayat Berita Acara Penerimaan barang inventaris sekolah per bulan.").
-- Aksi: select tahun (`calendar` 14 + "2026" mono 12/600 + `chevron-down`, padding 9/12,
-  radius 9) · `Ekspor Rekap` (secondary, `download`, 12.5).
+### Shell Laporan (sama seperti tab lain)
 
-### Tab bulan
+- Topbar: judul **"Laporan"** 27/800, sub
+  "Rekap stok, peminjaman, mutasi gudang, dan arsip BAP siap cetak."
+- Aksi kanan (gap 9): select tahun (`calendar` 14 + "2026" mono 12/600 + `chevron-down`,
+  padding 9/12, radius 9) · `Export Excel` (secondary, `download`, 12.5) ·
+  `Cetak Laporan` (primary, `printer`, 12.5).
+- **Tabs** (gap 22, border-bottom `line`, padding tiap tab `8/1/6/1`):
+  `Laporan Stok` · `Riwayat Peminjam` · `Riwayat Gudang` · `Barang Masuk` · **`Arsip BAP`**.
+  Aktif: label `brand` 700. Non-aktif: `muted` 600. Semua 12.5px.
+  Di halaman Laporan lain, tab "Arsip BAP" tampil non-aktif (jangan lupa menambahkannya
+  ke keempat tab lain agar konsisten).
 
-13 pill, gap 6, padding **6/13**, radius 999, teks **10.5/700**:
-`Semua` · `Jan` `Feb` `Mar` `Apr` `Mei` `Jun` `Jul` `Agu` `Sep` `Okt` `Nov` `Des`.
-Aktif: `bg brand` + putih. Non-aktif: `surface` + border `line` + `ink-soft`.
+### Isi tab Arsip BAP
 
-### Bar ringkasan filter
-
-Kartu radius 12, padding 12/18, `surface`, border, `justify-between`:
-
-- Kiri (gap 18): **Total 11 Berita Acara** · **420 Unit Barang Diterima**
-  (chip 28 brand-soft + label 11 `muted` + nilai 12/800).
-- Kanan: search 236px, `surface-2`, radius 9, ikon `search` 13,
-  placeholder "Cari nomor BAP atau nama guru…" 10.5.
-
-### Tabel
-
-Header: `surface-2`, padding 9/18, gap **14**, th 10/700 caps ls .5 `muted`.
-Kolom & lebar: `NO. BAP` 150 · `PERIODE` 104 · `TANGGAL SAH` 112 · `GURU PEMERIKSA` flex ·
-`TOTAL UNIT` 78 (kanan) · `STATUS DOKUMEN` 158 · `AKSI` 122 (kanan).
-
-> **Penting:** setiap sel harus `frame` ber-lebar tetap (bukan `text` dengan `width`).
-> Kalau memakai `<table>`, pakai `table-fixed` + `<colgroup>` dengan lebar yang sama
-> agar header & isi rata. Kolom teks pakai `truncate`.
-
-Baris: padding **13/18**, border bawah.
-
-- **No. BAP**: nomor mono 11.5/700 + baris kedua 9.5 — "Dokumen sah" (`muted`) atau
-  "Draft pengajuan" (`$amber` untuk yang belum sah).
-- **Periode**: 11 `ink-soft` ("Nov 2026").
-- **Tanggal Sah**: 11 mono; `—` (muted) bila belum disahkan.
-- **Guru Pemeriksa**: 11.5 `ink`; "Belum diverifikasi" (muted) bila belum.
-- **Total Unit**: mono 11.5/700 rata kanan ("18 Unit").
-- **Status Dokumen**: badge 10 — `Terverifikasi Sah` (mint) / `Menunggu Guru` (amber).
-- **Aksi**: tombol kecil padding 7/12, teks 10.5, radius 8, ikon 12 —
-  `Cetak BAP` (secondary, `printer`) untuk yang sah, `Detail` (soft, `eye`) untuk draft.
-
-Footer: `surface-2`, padding 12/18: "Menampilkan 9 dari 11 berita acara" 11 `muted`;
-pagination kotak 26×26 radius 8 (aktif `brand` + putih, pasif `surface` + border).
+1. **Month tabs** — 13 pill (gap 6, padding 6/13, radius 999, teks 10.5/700):
+   `Semua` · `Jan` … `Des`. Aktif `bg brand` + putih; non-aktif `surface` + border `line` + `ink-soft`.
+2. **Bar ringkasan filter** — kartu radius 12, padding 12/18, `justify-between`:
+   kiri (gap 18) **Total 11 Berita Acara** · **420 Unit Barang Diterima**
+   (chip 28 brand-soft + label 11 `muted` + nilai 12/800); kanan search 236px
+   (`surface-2`, radius 9, ikon `search` 13, placeholder "Cari nomor BAP atau nama guru…" 10.5).
+3. **Tabel** (kartu `panel`, clip, tinggi `fill`):
+   header `surface-2` padding 9/18 gap 14, th 10/700 caps ls .5 `muted`.
+   Kolom: `NO. BAP` 150 · `PERIODE` 104 · `TANGGAL SAH` 112 · `GURU PEMERIKSA` flex ·
+   `TOTAL UNIT` 78 (kanan) · `STATUS DOKUMEN` 158 · `AKSI` 122 (kanan).
+   > Setiap sel harus `frame`/`<td>` ber-lebar tetap (`table-fixed` + `<colgroup>`) — jangan
+   > `text` dengan `width`, judul & isi akan bergeser.
+   Baris padding 13/18, border bawah:
+   - No. BAP: nomor mono 11.5/700 + baris 9.5 "Dokumen sah" (`muted`) / "Draft pengajuan" (`amber`)
+   - Periode 11 `ink-soft` · Tanggal Sah 11 mono (`—` bila draft) · Guru Pemeriksa 11.5
+     ("Belum diverifikasi" muted)
+   - Total Unit mono 11.5/700 rata kanan · Status badge 10 (`Terverifikasi Sah` mint /
+     `Menunggu Guru` amber) · Aksi tombol kecil pad 7/12, 10.5, radius 8 (`Cetak BAP` secondary
+     `printer` / `Detail` soft `eye`).
+   Footer `surface-2`: "Menampilkan 9 dari 11 berita acara" + pagination 26×26 radius 8.
+4. Aksi tab lain tidak berubah (Laporan Stok, Peminjaman, Gudang, Barang Masuk memakai
+   komponen report yang sudah ada).
 
 ### State
 
-- Filter tahun/bulan mengubah query (`?year=&month=`); default tahun berjalan, tab "Semua".
-- Baris kosong → empty state (ikon `file-search`, "Belum ada BAP pada periode ini").
-- Mobile: tabel → list kartu (nomor + badge, periode/tanggal, guru, unit, tombol).
-
----
+- Filter tahun/bulan disimpan di URL (`?tab=bap&year=2026&month=11&q=&page=`), default tahun berjalan.
+- Kosong → empty state di dalam kartu tabel (ikon `file-search`, "Belum ada BAP pada periode ini").
+- Mobile: tab "Arsip BAP" jadi chip ke-5; tabel → list kartu (nomor + badge, periode/tanggal,
+  guru, unit, tombol Cetak/Detail).
 
 ## 3. `/procurement/[id]` — Dokumen BAP (A4)
 
@@ -194,8 +186,8 @@ Struktur:
      `NIP. …` 8 `muted`.
    - Kanan 236px: `Guru Pengawas / Pemeriksa` → **kotak QR 86×86** (border 1px ink, padding 6,
      QR 74px) → caption `QR Verifikasi Sah Sistem HIKA` 6.5/700 → 8px → nama + NIP.
-   - Tengah bawah (padding atas 22): `Mengetahui,` + `Kepala Sekolah` 9 → ruang 46 →
-     nama 9.5 underline + NIP 8.
+   - **Tidak ada** blok "Mengetahui, Kepala Sekolah" — dokumen hanya ditandatangani
+     Penyimpan/Teknisi dan Guru Pengawas (role sistem: ADMIN/TECHNICIAN dan TEACHER).
 9. **Footer** — padding atas 18, garis 1px `line`, dua baris 7px `muted` centered.
 
 Toolbar halaman (di luar kertas, tidak ikut tercetak): breadcrumb + tombol `Cetak BAP`
@@ -259,80 +251,86 @@ Ref: `06-mobile-modal-pengesahan-light.png` · `13-…-dark.png`
 
 ---
 
-## 6. `/executive` — Dasbor Monitoring Eksekutif (desktop)
+## 6. Dasbor (`/dashboard`) + blok BOS — desktop
 
-Ref: `04-dasbor-eksekutif-light.png` · `11-…-dark.png`
+Ref: `reference/png/04-dasbor-bos-light.png` · `11-dasbor-bos-dark.png`
 
-Sidebar sama, item `Dasbor` aktif, user card "Drs. H. Sutarjo · Kepala Sekolah" (initial `S`).
+**Tidak ada dasbor kedua.** Dasbor yang sudah ada (v1) ditambah dua elemen BOS:
 
-**Topbar**
+1. **KPI ke-4** diganti: label `Pengadaan BOS`, nilai **18**, satuan `Unit`,
+   caption "Unit masuk · Nov 2026", ikon `shopping-cart`, chip `mint-soft` / ikon `mint`.
+   (KPI 1–3 tetap: Total Barang 40, Stok Rendah 18, Peminjaman Aktif 10.)
+2. **BOS Strip** — kartu penuh lebar, **di antara KPI Row dan Body** (gap 16), padding **14/18**,
+   radius 16, `surface` + border, `items-center`, gap 14:
+   - chip ikon 38 (`mint-soft`, `clipboard-list` 18 `mint`)
+   - blok teks (flex-1, vertical gap 3):
+     baris 1: "Pengadaan BOS · November 2026" 13/700 + badge `Sah & Lengkap` (mint, 10);
+     baris 2 (gap 10): nomor BAP mono 10.5/600 `ink-soft` · "4 jenis · 18 unit" 10.5 `muted` ·
+       dot 3px `line` · ikon `user-check` 11 + "Budi Santoso" 10.5 `ink-soft`
+   - kanan: tombol `Lihat BAP` (secondary, `file-text`, padding 9/14, 12) → `/procurement/[id]`
+   Tinggi ±67px. Body (Aktivitas + Stok) otomatis menyusut; stok tinggal 3 item,
+   aktivitas 5 baris agar muat tanpa overflow.
 
-- Eyebrow: `shield-check` 11 `brand` + "MODE KEPALA SEKOLAH" 10/700 ls 1.1.
-- Judul "Dasbor Monitoring Eksekutif" 27/800; sub 13.5 `muted`.
-- Aksi: select tahun (`2026`) + primary `Cetak Laporan Semester` (`printer`).
+3. Kolom kanan Body tetap: kartu **Stok Hampir Habis** (3 item + tombol "Buat Daftar Pengadaan").
 
-**KPI row** — 4 kartu, gap 14, padding **22**, radius 16, gap isi 18:
+Data: KPI dari `Procurement` bulan berjalan (`VERIFIED`) + `Item` + `Borrowing` aktif;
+strip menampilkan BAP terakhir yang sah pada bulan berjalan (atau "Belum ada BAP" + tombol
+"Buat Pengajuan" bila kosong).
 
-| # | Label | Nilai | Caption | Ikon / warna |
-| --- | --- | --- | --- | --- |
-| 1 | Total Aset Terdata | **1.428** + "Unit" | 40 kategori inventaris | `boxes` · brand |
-| 2 | Pengadaan BOS Bulan Ini | **18** + "Unit" | Periode November 2026 | `shopping-cart` · brand |
-| 3 | Status BAP Bulan Ini | **badge `Sah & Lengkap`** (mint) | Diverifikasi: Budi Santoso | `shield-check` · mint |
-| 4 | Barang Sedang Dipinjam | **9** + "Unit" | 2 laboratorium praktik | `arrow-right-left` · amber |
+### Versi mobile
 
-Tipografi kartu: label 13/600 `ink-soft`, value 34/800 ls −1.2 mono, unit 12/600 `muted`,
-caption 12 `muted`, chip ikon 34 radius 10 (`*-soft`).
+Ref: `07-mobile-dasbor-bos-light.png` · `14-…-dark.png`
 
-**Body** — 2 kolom (kiri 656px, kanan flex, gap 16, tinggi penuh).
+- KPI ke-4: label `Belanja BOS`, nilai **18**, caption `Nov 2026`, ikon `shopping-cart`.
+- **BOS Strip** setelah dua baris KPI (padding 11/12, radius 14, gap 10):
+  chip 30 (`mint-soft`, `clipboard-list` 14 mint) · teks vertical gap 2:
+  "Pengadaan BOS · Nov 2026" 10/700 + "027/BAP-BOS/XI/2026 · 18 unit" 8.5 `muted` ·
+  badge `Sah` (mint, 8). Tinggi ±52px, bisa di-tap → dokumen BAP.
+- Aktivitas 4 baris, Stok 3 item (agar konten tidak terpotong di 844px).
 
-**Kiri — "Realisasi Pengadaan Barang Bulanan"**
+## 7. Ringkasan perubahan layar yang dihapus
 
-- Header padding 16/20: judul 15.5/700 + sub 11.5 `muted`
-  ("Jumlah unit barang yang diterima per bulan · Dana BOS 2026") + badge `Total 159 Unit`.
-- Chart body padding 14/16, gap 2. Tiap bulan satu baris (padding 5/8, radius 8;
-  baris aktif `brand-soft`): bulan 10.5/600 lebar 26 · track `fill` tinggi **8** radius 999
-  `#EDF2F8` · bar `brand` (aktif) / `#2B4EFF59` (lain) dengan lebar proporsional
-  `nilai/max × lebarTrack` · nilai mono 10.5/700 lebar 28 rata kanan · link `Lihat BAP`
-  9.5/700 `brand` lebar 52.
-- Footer `surface-2` padding 11/20: "Rata-rata 14,5 unit per bulan · tertinggi Oktober (24 unit)"
-  + "Unduh rekap →".
-- Implementasi: **bukan** library chart — `flex` bar seperti resep di atas.
+Layar berikut **dihapus** dari desain dan tidak boleh diimplementasikan:
 
-**Kanan — "Pengadaan Terbaru"**
+- `Dasbor Eksekutif — Redesign/Dark` (desktop) → digabung ke `/dashboard` (bagian 6).
+- `Mobile Dasbor Eksekutif — Redesign/Dark` → digabung ke `/dashboard` versi mobile.
+- Role `HEADMASTER` beserta menu/guard-nya.
+- Route `/procurement/archive` → menjadi tab "Arsip BAP" di `/reports` (bagian 2).
 
-- Header padding 16/20: judul 15.5/700 + sub 11.5 `muted` + badge `4 batch` (amber).
-- Item (padding 13/20, border bawah), 3 baris:
-  1. nomor BAP mono 11/700 + badge status (Menunggu Evaluasi amber / Draft neutral / Sah mint).
-  2. meta `package` 11 + "18 Unit · Nov 2026" 10 `muted` — dan `user-check` 11 + nama 10 `ink-soft`.
-  3. tombol kanan `Pratinjau Berita Acara` (soft, `file-text`, padding 6/11, 10, radius 8).
-- Footer `surface-2` padding 12/20: "38 unit menunggu evaluasi · 1 batch sah" + "Buka arsip BAP →".
+## 9. Template cetak laporan (A4) — pengganti format lama
 
----
+Ref: `reference/png/16-cetak-laporan-stok.png`, `17-…-peminjaman`, `18-…-mutasi`, `19-…-barang-masuk`
+Empat dokumen A4 (794×1123, padding 48/52) yang **memakai template yang sama dengan BAP**:
+KOP resmi → garis ganda → judul + periode → strip ringkasan 3 sel → tabel bergaris → catatan →
+baris total → tanggal → 2 blok tanda tangan → footer.
 
-## 7. `/executive` versi mobile
+Perbedaan antar laporan hanya judul, ringkasan, dan kolom tabel (sesuai data yang sudah ada di
+`src/components/reports/*`):
 
-Ref: `07-mobile-dasbor-eksekutif-light.png` · `14-…-dark.png`
+| Laporan | Judul | Kolom tabel |
+| --- | --- | --- |
+| Stok | `LAPORAN STOK BARANG` | No 22 · Nama & Spesifikasi flex · Barcode 56 · Lokasi 86 · Kategori 66 · Stok 30 (kanan) · Status 58 (kanan) |
+| Peminjaman | `LAPORAN RIWAYAT PEMINJAMAN` | No 22 · Tgl Pinjam 56 · Peminjam 104 · Barang & Spesifikasi flex · Tgl Kembali 56 · Status 50 · Kondisi 44 (kanan) |
+| Mutasi Gudang | `LAPORAN MUTASI GUDANG` | No 22 · Waktu 62 · Tipe 36 · Barang & Spesifikasi flex · Jumlah 36 (kanan) · Catatan 112 |
+| Barang Masuk | `LAPORAN BARANG MASUK` | No 22 · Tanggal 54 · Barang 122 · Spesifikasi flex · Lokasi 70 · Jumlah 30 (kanan) · Keterangan 84 |
 
-- App bar: mark 30 + judul 16/800 "Dasbor Eksekutif" + sub 9.5 "Monitoring Aset & BOS";
-  kanan: icon `bell` 32 + avatar 32 `brand-soft` berisi inisial sekolah **"HK"** (10.5/800 `brand`).
-- Konten padding 0/16/12/16 gap 12:
-  1. **KPI 2×2** (gap 10, padding 13, radius 14): label 9.5/600 `muted` · chip 22 radius 7 ·
-     value 23/800 ls −0.8 + "Unit" 8.5/600 · caption 9. Kartu "Status BAP" memakai badge
-     `Sah Terverifikasi` (8) di slot nilai.
-  2. **Section "Status Pengadaan BOS Terakhir"** (11/700) + link "Lihat arsip" 9/700 `brand`.
-     Kartu (radius 14, padding 13, gap 9): nomor 10.5/700 mono + periode 8.5 `muted` + badge 8;
-     meta (border atas, padding atas 8, dua baris stacked gap 5): `user-check` "Budi Santoso, S.Kom"
-     dan `package` "18 Unit · 4 jenis barang" (8.5 `ink-soft`); tombol secondary full width
-     `Buka BAP` (9/14, 10.5, radius 9).
-  3. **Section "Arsip BAP Cepat"** + link "Semua dokumen". 3 kartu (flex-1, gap 8, padding 11,
-     radius 12): chip PDF 24 (`file-text` 12 rose pada `rose-soft`) + tombol unduh 22
-     (`download` 11 pada `surface-2`), bulan 10/700, meta 8 `muted` "2026 · 24 Unit",
-     link "Unduh PDF" 8/700 `brand`.
-  4. Strip "Data diperbarui 06 Nov 2026 · 14:32 WIB" (`refresh-cw` 10 + 8 `muted`, centered).
-- Bottom nav **62px, 3 tab**: `Dasbor` (`layout-dashboard`), `Arsip BAP` (`archive`), `Akun`
-  (`user-round`).
+Ketentuan:
 
----
+- **Strip ringkasan** (di bawah judul): 3 sel bergaris, tiap sel label 7/700 caps `muted` +
+  nilai 11/800 mono (mis. `JENIS BARANG 40` · `TOTAL UNIT 312` · `STOK RENDAH 18`).
+- **Tabel**: border 1px `ink`, header `surface-2`, tinggi baris seragam, kolom angka rata kanan,
+  status ditulis sebagai **teks berwarna** (bukan badge) agar tidak terpotong saat dicetak:
+  `Baik` mint · `Rendah` amber · `Habis`/`Rusak` rose · `Aktif` brand · `Kembali` mint.
+- **Catatan** kecil 7.5 `muted` di bawah tabel (definisi status/urutan data).
+- **Baris total** `surface-2` bergaris: kiri "Total … · N jenis/transaksi", kanan jumlah unit.
+- **Tanggal** rata kanan: "Purwareja Klampok, 06 November 2026".
+- **Tanda tangan 2 kolom** (padding kiri-kanan 60): kiri `Dibuat oleh, Admin TU` — kanan
+  `Diperiksa oleh, Guru Pengawas`; masing-masing role 9/600, ruang 52px, nama 9.5/700 underline,
+  NIP 8 `muted`.
+- **Footer** 2 baris 7 `muted`: sumber data + "Dicetak … · Halaman 1 dari N".
+- **Tanpa** blok Kepala Sekolah di laporan mana pun.
+- Saat dicetak: pakai aturan `.sheet` yang sama (lihat `05-print-and-qr.md`), font dalam pt
+  (body 9.5pt, tabel 7.5–8pt, judul 10.5pt), dan `@page { size: A4; margin: 0 }`.
 
 ## 8. `/verify/[token]` — Verifikasi Publik (mobile web)
 
@@ -365,7 +363,7 @@ Tanpa shell aplikasi; `bg-app`, konten padding **26/20/20**, gap 14, centered. B
 
 ## Catatan tema gelap
 
-- Layar 1, 2, 4, 6, 7, 8 punya varian gelap dengan struktur **identik**; bedanya hanya token.
+- Layar 1, 2, 4 (dasbor), 5, 6, 8 punya varian gelap dengan struktur **identik**; bedanya hanya token.
 - Yang berubah nilai (lihat `reference/png/09…15`):
   app bg `#202124`, surface `#292A2D`, surface-2 `#303134`, line `#3C4043`,
   ink `#E8EAED`, muted `#9AA0A6`, brand `#1A73E8`, brand-soft `#2D3037`,

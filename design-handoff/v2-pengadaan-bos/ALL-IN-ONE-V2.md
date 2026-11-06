@@ -1,7 +1,7 @@
 # HIKA Inventaris — V2 Handoff (all-in-one)
 
 > Gabungan: ANTIGRAVITY-V2.md · 01-screens.md · 02-data-model.md · 03-roles-flows.md · 04-server-actions.md · 05-print-and-qr.md · 06-components.md · 07-implementation-plan.md
-> Referensi visual: folder `reference/png/` (15 gambar), `reference/html/`, `spec/`.
+> Referensi visual: `reference/png/` (19 gambar), `reference/html/`, `spec/`.
 
 
 ---
@@ -16,12 +16,27 @@
 ## Tugas
 
 Implementasikan **modul baru**: pengajuan pengadaan barang Dana BOS → pemeriksaan fisik oleh
-Guru Pengawas → Berita Acara Penerimaan Barang (BAP) sah ber-QR → arsip BAP → dasbor monitoring
-untuk Kepala Sekolah → halaman verifikasi publik.
+Guru Pengawas → Berita Acara Penerimaan Barang (BAP) sah ber-QR → arsip BAP di halaman Laporan →
+halaman verifikasi publik, **plus** blok informasi BOS di dasbor yang sudah ada.
 
 Desain (PNG + layer tree + HTML) ada di `design-handoff/v2-pengadaan-bos/`.
-Gaya visual **wajib mengikuti design system v1** yang sudah dipakai aplikasi
-(token di `design-handoff/tokens.css`, komponen di `design-handoff/03-components.md`).
+Gaya visual **wajib mengikuti design system v1** (token di `design-handoff/tokens.css`,
+komponen di `design-handoff/03-components.md`).
+
+## Keputusan yang sudah final — jangan diubah
+
+1. **Hanya satu dasbor.** `/dashboard` tetap satu-satunya dasbor. Tambahkan di dalamnya:
+   KPI "Pengadaan BOS" (menggantikan "Transaksi Hari Ini") dan satu blok **BOS Strip**
+   (nomor BAP, badge status, jumlah jenis/unit, pemeriksa, tombol "Lihat BAP").
+   **Jangan** membuat `/executive` atau dasbor kedua (layar eksekutif sudah dihapus).
+2. **Arsip BAP = tab di `/reports`**, bukan menu/route sendiri. Tambah tab ke-5 `Arsip BAP`
+   di halaman Laporan (desktop & mobile), lalu isi tab itu dengan filter tahun/bulan,
+   ringkasan, dan tabel BAP. Hapus rencana route `/procurement/archive`.
+3. **Tidak ada role Kepala Sekolah.** Role tetap `ADMIN`, `TECHNICIAN`, `TEACHER`.
+   Jangan menambah `HEADMASTER`, jangan membuat guard/menu khusus kepala sekolah.
+   Dokumen BAP **tidak** memuat tanda tangan Kepala Sekolah: hanya Penyimpan/Teknisi Barang
+   dan Guru Pengawas (+ QR). Laporan cetak memakai 2 tanda tangan: "Dibuat oleh, Admin TU" dan
+   "Diperiksa oleh, Guru Pengawas".
 
 ## Baca dulu
 
@@ -35,49 +50,46 @@ Gaya visual **wajib mengikuti design system v1** yang sudah dipakai aplikasi
 8. Referensi: `reference/png/*.png` (light + dark), `reference/html/*.html` (ukuran/markup),
    `spec/*.md` (angka per layer)
 
-## Route yang harus dibuat
+## Route yang harus dibuat / diubah
 
-| Route | Halaman |
-| --- | --- |
-| `/procurement` | form pengajuan + tabel barang belanjaan |
-| `/procurement/archive` | arsip BAP: filter tahun/bulan, tabel, cetak |
-| `/procurement/[id]` | dokumen BAP A4 (preview + cetak), detail & riwayat |
-| `/procurement/[id]/check` | checklist pemeriksaan fisik (mobile), aksi sahkan |
-| `/executive` | dasbor monitoring Kepala Sekolah |
-| `/verify/[token]` | **publik, tanpa login** — hasil scan QR dokumen |
+| Route | Status | Halaman |
+| --- | --- | --- |
+| `/procurement` | **baru** | form pengajuan + tabel barang belanjaan |
+| `/procurement/[id]` | **baru** | dokumen BAP A4 (preview + cetak), riwayat |
+| `/procurement/[id]/check` | **baru** | checklist pemeriksaan fisik (mobile), aksi sahkan |
+| `/reports` | **ubah** | tambah tab "Arsip BAP" + **ganti format cetak laporan** (template A4 resmi, lihat `01-screens.md` §9) |
+| `/dashboard` | **ubah** | KPI "Pengadaan BOS" + blok BOS Strip |
+| `/verify/[token]` | **baru** | **publik, tanpa login** — hasil scan QR dokumen |
 
 ## Aturan
 
-- **Jangan** mengubah modul lama (inventaris, peminjaman, barcode, laporan) selain:
-  menambah entri menu "Pengadaan BOS" di sidebar, menambah role, dan menambah model Prisma.
-- Peran: `ADMIN` (admin TU), `TECHNICIAN` (teknisi gudang), `TEACHER` (guru pengawas),
-  **`HEADMASTER`** (kepala sekolah, role baru). Lihat matriks izin di `03-roles-flows.md`.
+- **Jangan** mengubah modul lain (inventaris, peminjaman, barcode) selain menambah entri menu
+  "Pengadaan BOS" di sidebar.
 - Semua nomor/statistik dari DB. Jangan hardcode "18 Unit" atau "027/BAP-BOS/XI/2026".
 - Nomor BAP dibentuk `{seq:3digit}/BAP-BOS/{bulan romawi}/{tahun}` dan **hanya** diberikan
   saat pengajuan dikirim (status `SUBMITTED`), memakai counter atomik per tahun.
-- QR **wajib** mengarah ke `/verify/{qrToken}` dengan `qrToken` acak 32 hex, unik, dan
-  tidak bisa ditebak (jangan pakai id/cuid dokumen).
+- QR **wajib** mengarah ke `/verify/{qrToken}` dengan `qrToken` acak 32 hex, unik, tidak bisa ditebak.
 - Halaman `/verify/[token]` harus bisa diakses tanpa login (longgarkan `middleware`/`authConfig`)
   dan mencatat kunjungan verifikasi.
 - Cetak BAP wajib A4, ukuran font memakai **pt** (lihat `05-print-and-qr.md`), bukan px desain.
 - Pengesahan (publish) harus atomik: tandai barang terverifikasi + buat `Transaction` stok masuk
-  + daftarkan barang baru di Inventaris, semua dalam satu `$transaction`.
-- Tema gelap otomatis lewat token; jangan menulis warna `dark:` manual kecuali yang sudah
-  ditetapkan (sidebar `#1B3364`/`#3C4043`, overlay `#0B1B2E99`/`#000000A6`).
+  + daftarkan barang baru di Inventaris, semuanya dalam satu `$transaction`.
+- Tema gelap otomatis lewat token; jangan menulis warna `dark:` manual kecuali yang ditetapkan
+  (sidebar `#1B3364`/`#3C4043`, overlay `#0B1B2E99`/`#000000A6`).
 
 ## Dependensi yang boleh ditambah
 
 - `qrcode` (+ `@types/qrcode`) untuk generate QR (SVG/data URL) di server.
 - `date-fns` (sudah ada) untuk format tanggal Indonesia.
-- **Jangan** menambah library chart; grafik realisasi bulanan dibuat dengan layout/flex
-  (bar horizontal), seperti di desain.
+- **Jangan** menambah library chart.
 
 ## Definisi selesai
 
 - Alur end-to-end berjalan: buat draft → kirim → guru periksa (checklist) → sahkan →
-  BAP bernomor + QR → stok masuk & barang baru terdaftar → tampil di arsip → terlihat di
-  dasbor eksekutif → QR discan menampilkan halaman verifikasi yang valid.
+  BAP bernomor + QR → stok masuk & barang baru terdaftar → muncul di tab Arsip BAP pada Laporan →
+  ringkasannya tampil di blok BOS pada Dasbor → QR discan menampilkan halaman verifikasi valid.
 - Light & dark sesuai referensi; desktop 1440×880 dan mobile 390×844.
+- Tidak ada role/menu/halaman khusus Kepala Sekolah.
 - `npx tsc --noEmit`, `npm run lint`, `npm run build` hijau.
 - Tidak ada regresi pada modul lama.
 
@@ -191,64 +203,56 @@ Baris info di bawah kartu: ikon `info` 13 + 10.5 `muted`
 
 ---
 
-## 2. `/procurement/archive` — Arsip BAP Pengadaan
+## 2. Tab "Arsip BAP" di `/reports` — Arsip BAP Pengadaan
 
-Ref: `02-arsip-bap-light.png` · `10-arsip-bap-dark.png`
+Ref: `reference/png/02-laporan-arsip-bap-light.png` · `10-laporan-arsip-bap-dark.png`
 
-### Topbar
+Arsip BAP **bukan halaman/menu terpisah** — ia tab ke-5 di halaman Laporan yang sudah ada.
 
-- Judul "Arsip BAP Pengadaan" 27/800, sub 13.5 `muted`
-  ("Riwayat Berita Acara Penerimaan barang inventaris sekolah per bulan.").
-- Aksi: select tahun (`calendar` 14 + "2026" mono 12/600 + `chevron-down`, padding 9/12,
-  radius 9) · `Ekspor Rekap` (secondary, `download`, 12.5).
+### Shell Laporan (sama seperti tab lain)
 
-### Tab bulan
+- Topbar: judul **"Laporan"** 27/800, sub
+  "Rekap stok, peminjaman, mutasi gudang, dan arsip BAP siap cetak."
+- Aksi kanan (gap 9): select tahun (`calendar` 14 + "2026" mono 12/600 + `chevron-down`,
+  padding 9/12, radius 9) · `Export Excel` (secondary, `download`, 12.5) ·
+  `Cetak Laporan` (primary, `printer`, 12.5).
+- **Tabs** (gap 22, border-bottom `line`, padding tiap tab `8/1/6/1`):
+  `Laporan Stok` · `Riwayat Peminjam` · `Riwayat Gudang` · `Barang Masuk` · **`Arsip BAP`**.
+  Aktif: label `brand` 700. Non-aktif: `muted` 600. Semua 12.5px.
+  Di halaman Laporan lain, tab "Arsip BAP" tampil non-aktif (jangan lupa menambahkannya
+  ke keempat tab lain agar konsisten).
 
-13 pill, gap 6, padding **6/13**, radius 999, teks **10.5/700**:
-`Semua` · `Jan` `Feb` `Mar` `Apr` `Mei` `Jun` `Jul` `Agu` `Sep` `Okt` `Nov` `Des`.
-Aktif: `bg brand` + putih. Non-aktif: `surface` + border `line` + `ink-soft`.
+### Isi tab Arsip BAP
 
-### Bar ringkasan filter
-
-Kartu radius 12, padding 12/18, `surface`, border, `justify-between`:
-
-- Kiri (gap 18): **Total 11 Berita Acara** · **420 Unit Barang Diterima**
-  (chip 28 brand-soft + label 11 `muted` + nilai 12/800).
-- Kanan: search 236px, `surface-2`, radius 9, ikon `search` 13,
-  placeholder "Cari nomor BAP atau nama guru…" 10.5.
-
-### Tabel
-
-Header: `surface-2`, padding 9/18, gap **14**, th 10/700 caps ls .5 `muted`.
-Kolom & lebar: `NO. BAP` 150 · `PERIODE` 104 · `TANGGAL SAH` 112 · `GURU PEMERIKSA` flex ·
-`TOTAL UNIT` 78 (kanan) · `STATUS DOKUMEN` 158 · `AKSI` 122 (kanan).
-
-> **Penting:** setiap sel harus `frame` ber-lebar tetap (bukan `text` dengan `width`).
-> Kalau memakai `<table>`, pakai `table-fixed` + `<colgroup>` dengan lebar yang sama
-> agar header & isi rata. Kolom teks pakai `truncate`.
-
-Baris: padding **13/18**, border bawah.
-
-- **No. BAP**: nomor mono 11.5/700 + baris kedua 9.5 — "Dokumen sah" (`muted`) atau
-  "Draft pengajuan" (`$amber` untuk yang belum sah).
-- **Periode**: 11 `ink-soft` ("Nov 2026").
-- **Tanggal Sah**: 11 mono; `—` (muted) bila belum disahkan.
-- **Guru Pemeriksa**: 11.5 `ink`; "Belum diverifikasi" (muted) bila belum.
-- **Total Unit**: mono 11.5/700 rata kanan ("18 Unit").
-- **Status Dokumen**: badge 10 — `Terverifikasi Sah` (mint) / `Menunggu Guru` (amber).
-- **Aksi**: tombol kecil padding 7/12, teks 10.5, radius 8, ikon 12 —
-  `Cetak BAP` (secondary, `printer`) untuk yang sah, `Detail` (soft, `eye`) untuk draft.
-
-Footer: `surface-2`, padding 12/18: "Menampilkan 9 dari 11 berita acara" 11 `muted`;
-pagination kotak 26×26 radius 8 (aktif `brand` + putih, pasif `surface` + border).
+1. **Month tabs** — 13 pill (gap 6, padding 6/13, radius 999, teks 10.5/700):
+   `Semua` · `Jan` … `Des`. Aktif `bg brand` + putih; non-aktif `surface` + border `line` + `ink-soft`.
+2. **Bar ringkasan filter** — kartu radius 12, padding 12/18, `justify-between`:
+   kiri (gap 18) **Total 11 Berita Acara** · **420 Unit Barang Diterima**
+   (chip 28 brand-soft + label 11 `muted` + nilai 12/800); kanan search 236px
+   (`surface-2`, radius 9, ikon `search` 13, placeholder "Cari nomor BAP atau nama guru…" 10.5).
+3. **Tabel** (kartu `panel`, clip, tinggi `fill`):
+   header `surface-2` padding 9/18 gap 14, th 10/700 caps ls .5 `muted`.
+   Kolom: `NO. BAP` 150 · `PERIODE` 104 · `TANGGAL SAH` 112 · `GURU PEMERIKSA` flex ·
+   `TOTAL UNIT` 78 (kanan) · `STATUS DOKUMEN` 158 · `AKSI` 122 (kanan).
+   > Setiap sel harus `frame`/`<td>` ber-lebar tetap (`table-fixed` + `<colgroup>`) — jangan
+   > `text` dengan `width`, judul & isi akan bergeser.
+   Baris padding 13/18, border bawah:
+   - No. BAP: nomor mono 11.5/700 + baris 9.5 "Dokumen sah" (`muted`) / "Draft pengajuan" (`amber`)
+   - Periode 11 `ink-soft` · Tanggal Sah 11 mono (`—` bila draft) · Guru Pemeriksa 11.5
+     ("Belum diverifikasi" muted)
+   - Total Unit mono 11.5/700 rata kanan · Status badge 10 (`Terverifikasi Sah` mint /
+     `Menunggu Guru` amber) · Aksi tombol kecil pad 7/12, 10.5, radius 8 (`Cetak BAP` secondary
+     `printer` / `Detail` soft `eye`).
+   Footer `surface-2`: "Menampilkan 9 dari 11 berita acara" + pagination 26×26 radius 8.
+4. Aksi tab lain tidak berubah (Laporan Stok, Peminjaman, Gudang, Barang Masuk memakai
+   komponen report yang sudah ada).
 
 ### State
 
-- Filter tahun/bulan mengubah query (`?year=&month=`); default tahun berjalan, tab "Semua".
-- Baris kosong → empty state (ikon `file-search`, "Belum ada BAP pada periode ini").
-- Mobile: tabel → list kartu (nomor + badge, periode/tanggal, guru, unit, tombol).
-
----
+- Filter tahun/bulan disimpan di URL (`?tab=bap&year=2026&month=11&q=&page=`), default tahun berjalan.
+- Kosong → empty state di dalam kartu tabel (ikon `file-search`, "Belum ada BAP pada periode ini").
+- Mobile: tab "Arsip BAP" jadi chip ke-5; tabel → list kartu (nomor + badge, periode/tanggal,
+  guru, unit, tombol Cetak/Detail).
 
 ## 3. `/procurement/[id]` — Dokumen BAP (A4)
 
@@ -280,8 +284,8 @@ Struktur:
      `NIP. …` 8 `muted`.
    - Kanan 236px: `Guru Pengawas / Pemeriksa` → **kotak QR 86×86** (border 1px ink, padding 6,
      QR 74px) → caption `QR Verifikasi Sah Sistem HIKA` 6.5/700 → 8px → nama + NIP.
-   - Tengah bawah (padding atas 22): `Mengetahui,` + `Kepala Sekolah` 9 → ruang 46 →
-     nama 9.5 underline + NIP 8.
+   - **Tidak ada** blok "Mengetahui, Kepala Sekolah" — dokumen hanya ditandatangani
+     Penyimpan/Teknisi dan Guru Pengawas (role sistem: ADMIN/TECHNICIAN dan TEACHER).
 9. **Footer** — padding atas 18, garis 1px `line`, dua baris 7px `muted` centered.
 
 Toolbar halaman (di luar kertas, tidak ikut tercetak): breadcrumb + tombol `Cetak BAP`
@@ -345,80 +349,86 @@ Ref: `06-mobile-modal-pengesahan-light.png` · `13-…-dark.png`
 
 ---
 
-## 6. `/executive` — Dasbor Monitoring Eksekutif (desktop)
+## 6. Dasbor (`/dashboard`) + blok BOS — desktop
 
-Ref: `04-dasbor-eksekutif-light.png` · `11-…-dark.png`
+Ref: `reference/png/04-dasbor-bos-light.png` · `11-dasbor-bos-dark.png`
 
-Sidebar sama, item `Dasbor` aktif, user card "Drs. H. Sutarjo · Kepala Sekolah" (initial `S`).
+**Tidak ada dasbor kedua.** Dasbor yang sudah ada (v1) ditambah dua elemen BOS:
 
-**Topbar**
+1. **KPI ke-4** diganti: label `Pengadaan BOS`, nilai **18**, satuan `Unit`,
+   caption "Unit masuk · Nov 2026", ikon `shopping-cart`, chip `mint-soft` / ikon `mint`.
+   (KPI 1–3 tetap: Total Barang 40, Stok Rendah 18, Peminjaman Aktif 10.)
+2. **BOS Strip** — kartu penuh lebar, **di antara KPI Row dan Body** (gap 16), padding **14/18**,
+   radius 16, `surface` + border, `items-center`, gap 14:
+   - chip ikon 38 (`mint-soft`, `clipboard-list` 18 `mint`)
+   - blok teks (flex-1, vertical gap 3):
+     baris 1: "Pengadaan BOS · November 2026" 13/700 + badge `Sah & Lengkap` (mint, 10);
+     baris 2 (gap 10): nomor BAP mono 10.5/600 `ink-soft` · "4 jenis · 18 unit" 10.5 `muted` ·
+       dot 3px `line` · ikon `user-check` 11 + "Budi Santoso" 10.5 `ink-soft`
+   - kanan: tombol `Lihat BAP` (secondary, `file-text`, padding 9/14, 12) → `/procurement/[id]`
+   Tinggi ±67px. Body (Aktivitas + Stok) otomatis menyusut; stok tinggal 3 item,
+   aktivitas 5 baris agar muat tanpa overflow.
 
-- Eyebrow: `shield-check` 11 `brand` + "MODE KEPALA SEKOLAH" 10/700 ls 1.1.
-- Judul "Dasbor Monitoring Eksekutif" 27/800; sub 13.5 `muted`.
-- Aksi: select tahun (`2026`) + primary `Cetak Laporan Semester` (`printer`).
+3. Kolom kanan Body tetap: kartu **Stok Hampir Habis** (3 item + tombol "Buat Daftar Pengadaan").
 
-**KPI row** — 4 kartu, gap 14, padding **22**, radius 16, gap isi 18:
+Data: KPI dari `Procurement` bulan berjalan (`VERIFIED`) + `Item` + `Borrowing` aktif;
+strip menampilkan BAP terakhir yang sah pada bulan berjalan (atau "Belum ada BAP" + tombol
+"Buat Pengajuan" bila kosong).
 
-| # | Label | Nilai | Caption | Ikon / warna |
-| --- | --- | --- | --- | --- |
-| 1 | Total Aset Terdata | **1.428** + "Unit" | 40 kategori inventaris | `boxes` · brand |
-| 2 | Pengadaan BOS Bulan Ini | **18** + "Unit" | Periode November 2026 | `shopping-cart` · brand |
-| 3 | Status BAP Bulan Ini | **badge `Sah & Lengkap`** (mint) | Diverifikasi: Budi Santoso | `shield-check` · mint |
-| 4 | Barang Sedang Dipinjam | **9** + "Unit" | 2 laboratorium praktik | `arrow-right-left` · amber |
+### Versi mobile
 
-Tipografi kartu: label 13/600 `ink-soft`, value 34/800 ls −1.2 mono, unit 12/600 `muted`,
-caption 12 `muted`, chip ikon 34 radius 10 (`*-soft`).
+Ref: `07-mobile-dasbor-bos-light.png` · `14-…-dark.png`
 
-**Body** — 2 kolom (kiri 656px, kanan flex, gap 16, tinggi penuh).
+- KPI ke-4: label `Belanja BOS`, nilai **18**, caption `Nov 2026`, ikon `shopping-cart`.
+- **BOS Strip** setelah dua baris KPI (padding 11/12, radius 14, gap 10):
+  chip 30 (`mint-soft`, `clipboard-list` 14 mint) · teks vertical gap 2:
+  "Pengadaan BOS · Nov 2026" 10/700 + "027/BAP-BOS/XI/2026 · 18 unit" 8.5 `muted` ·
+  badge `Sah` (mint, 8). Tinggi ±52px, bisa di-tap → dokumen BAP.
+- Aktivitas 4 baris, Stok 3 item (agar konten tidak terpotong di 844px).
 
-**Kiri — "Realisasi Pengadaan Barang Bulanan"**
+## 7. Ringkasan perubahan layar yang dihapus
 
-- Header padding 16/20: judul 15.5/700 + sub 11.5 `muted`
-  ("Jumlah unit barang yang diterima per bulan · Dana BOS 2026") + badge `Total 159 Unit`.
-- Chart body padding 14/16, gap 2. Tiap bulan satu baris (padding 5/8, radius 8;
-  baris aktif `brand-soft`): bulan 10.5/600 lebar 26 · track `fill` tinggi **8** radius 999
-  `#EDF2F8` · bar `brand` (aktif) / `#2B4EFF59` (lain) dengan lebar proporsional
-  `nilai/max × lebarTrack` · nilai mono 10.5/700 lebar 28 rata kanan · link `Lihat BAP`
-  9.5/700 `brand` lebar 52.
-- Footer `surface-2` padding 11/20: "Rata-rata 14,5 unit per bulan · tertinggi Oktober (24 unit)"
-  + "Unduh rekap →".
-- Implementasi: **bukan** library chart — `flex` bar seperti resep di atas.
+Layar berikut **dihapus** dari desain dan tidak boleh diimplementasikan:
 
-**Kanan — "Pengadaan Terbaru"**
+- `Dasbor Eksekutif — Redesign/Dark` (desktop) → digabung ke `/dashboard` (bagian 6).
+- `Mobile Dasbor Eksekutif — Redesign/Dark` → digabung ke `/dashboard` versi mobile.
+- Role `HEADMASTER` beserta menu/guard-nya.
+- Route `/procurement/archive` → menjadi tab "Arsip BAP" di `/reports` (bagian 2).
 
-- Header padding 16/20: judul 15.5/700 + sub 11.5 `muted` + badge `4 batch` (amber).
-- Item (padding 13/20, border bawah), 3 baris:
-  1. nomor BAP mono 11/700 + badge status (Menunggu Evaluasi amber / Draft neutral / Sah mint).
-  2. meta `package` 11 + "18 Unit · Nov 2026" 10 `muted` — dan `user-check` 11 + nama 10 `ink-soft`.
-  3. tombol kanan `Pratinjau Berita Acara` (soft, `file-text`, padding 6/11, 10, radius 8).
-- Footer `surface-2` padding 12/20: "38 unit menunggu evaluasi · 1 batch sah" + "Buka arsip BAP →".
+## 9. Template cetak laporan (A4) — pengganti format lama
 
----
+Ref: `reference/png/16-cetak-laporan-stok.png`, `17-…-peminjaman`, `18-…-mutasi`, `19-…-barang-masuk`
+Empat dokumen A4 (794×1123, padding 48/52) yang **memakai template yang sama dengan BAP**:
+KOP resmi → garis ganda → judul + periode → strip ringkasan 3 sel → tabel bergaris → catatan →
+baris total → tanggal → 2 blok tanda tangan → footer.
 
-## 7. `/executive` versi mobile
+Perbedaan antar laporan hanya judul, ringkasan, dan kolom tabel (sesuai data yang sudah ada di
+`src/components/reports/*`):
 
-Ref: `07-mobile-dasbor-eksekutif-light.png` · `14-…-dark.png`
+| Laporan | Judul | Kolom tabel |
+| --- | --- | --- |
+| Stok | `LAPORAN STOK BARANG` | No 22 · Nama & Spesifikasi flex · Barcode 56 · Lokasi 86 · Kategori 66 · Stok 30 (kanan) · Status 58 (kanan) |
+| Peminjaman | `LAPORAN RIWAYAT PEMINJAMAN` | No 22 · Tgl Pinjam 56 · Peminjam 104 · Barang & Spesifikasi flex · Tgl Kembali 56 · Status 50 · Kondisi 44 (kanan) |
+| Mutasi Gudang | `LAPORAN MUTASI GUDANG` | No 22 · Waktu 62 · Tipe 36 · Barang & Spesifikasi flex · Jumlah 36 (kanan) · Catatan 112 |
+| Barang Masuk | `LAPORAN BARANG MASUK` | No 22 · Tanggal 54 · Barang 122 · Spesifikasi flex · Lokasi 70 · Jumlah 30 (kanan) · Keterangan 84 |
 
-- App bar: mark 30 + judul 16/800 "Dasbor Eksekutif" + sub 9.5 "Monitoring Aset & BOS";
-  kanan: icon `bell` 32 + avatar 32 `brand-soft` berisi inisial sekolah **"HK"** (10.5/800 `brand`).
-- Konten padding 0/16/12/16 gap 12:
-  1. **KPI 2×2** (gap 10, padding 13, radius 14): label 9.5/600 `muted` · chip 22 radius 7 ·
-     value 23/800 ls −0.8 + "Unit" 8.5/600 · caption 9. Kartu "Status BAP" memakai badge
-     `Sah Terverifikasi` (8) di slot nilai.
-  2. **Section "Status Pengadaan BOS Terakhir"** (11/700) + link "Lihat arsip" 9/700 `brand`.
-     Kartu (radius 14, padding 13, gap 9): nomor 10.5/700 mono + periode 8.5 `muted` + badge 8;
-     meta (border atas, padding atas 8, dua baris stacked gap 5): `user-check` "Budi Santoso, S.Kom"
-     dan `package` "18 Unit · 4 jenis barang" (8.5 `ink-soft`); tombol secondary full width
-     `Buka BAP` (9/14, 10.5, radius 9).
-  3. **Section "Arsip BAP Cepat"** + link "Semua dokumen". 3 kartu (flex-1, gap 8, padding 11,
-     radius 12): chip PDF 24 (`file-text` 12 rose pada `rose-soft`) + tombol unduh 22
-     (`download` 11 pada `surface-2`), bulan 10/700, meta 8 `muted` "2026 · 24 Unit",
-     link "Unduh PDF" 8/700 `brand`.
-  4. Strip "Data diperbarui 06 Nov 2026 · 14:32 WIB" (`refresh-cw` 10 + 8 `muted`, centered).
-- Bottom nav **62px, 3 tab**: `Dasbor` (`layout-dashboard`), `Arsip BAP` (`archive`), `Akun`
-  (`user-round`).
+Ketentuan:
 
----
+- **Strip ringkasan** (di bawah judul): 3 sel bergaris, tiap sel label 7/700 caps `muted` +
+  nilai 11/800 mono (mis. `JENIS BARANG 40` · `TOTAL UNIT 312` · `STOK RENDAH 18`).
+- **Tabel**: border 1px `ink`, header `surface-2`, tinggi baris seragam, kolom angka rata kanan,
+  status ditulis sebagai **teks berwarna** (bukan badge) agar tidak terpotong saat dicetak:
+  `Baik` mint · `Rendah` amber · `Habis`/`Rusak` rose · `Aktif` brand · `Kembali` mint.
+- **Catatan** kecil 7.5 `muted` di bawah tabel (definisi status/urutan data).
+- **Baris total** `surface-2` bergaris: kiri "Total … · N jenis/transaksi", kanan jumlah unit.
+- **Tanggal** rata kanan: "Purwareja Klampok, 06 November 2026".
+- **Tanda tangan 2 kolom** (padding kiri-kanan 60): kiri `Dibuat oleh, Admin TU` — kanan
+  `Diperiksa oleh, Guru Pengawas`; masing-masing role 9/600, ruang 52px, nama 9.5/700 underline,
+  NIP 8 `muted`.
+- **Footer** 2 baris 7 `muted`: sumber data + "Dicetak … · Halaman 1 dari N".
+- **Tanpa** blok Kepala Sekolah di laporan mana pun.
+- Saat dicetak: pakai aturan `.sheet` yang sama (lihat `05-print-and-qr.md`), font dalam pt
+  (body 9.5pt, tabel 7.5–8pt, judul 10.5pt), dan `@page { size: A4; margin: 0 }`.
 
 ## 8. `/verify/[token]` — Verifikasi Publik (mobile web)
 
@@ -451,7 +461,7 @@ Tanpa shell aplikasi; `bg-app`, konten padding **26/20/20**, gap 14, centered. B
 
 ## Catatan tema gelap
 
-- Layar 1, 2, 4, 6, 7, 8 punya varian gelap dengan struktur **identik**; bedanya hanya token.
+- Layar 1, 2, 4 (dasbor), 5, 6, 8 punya varian gelap dengan struktur **identik**; bedanya hanya token.
 - Yang berubah nilai (lihat `reference/png/09…15`):
   app bg `#202124`, surface `#292A2D`, surface-2 `#303134`, line `#3C4043`,
   ink `#E8EAED`, muted `#9AA0A6`, brand `#1A73E8`, brand-soft `#2D3037`,
@@ -589,7 +599,7 @@ model Item {
 
 model User {
   // ... field lama tetap
-  role String @default("TEACHER") // ADMIN | TECHNICIAN | TEACHER | HEADMASTER
+  role String @default("TEACHER") // ADMIN | TECHNICIAN | TEACHER  (tidak ada role Kepala Sekolah)
   createdProcurements  Procurement[] @relation("ProcurementCreated")
   inspectedProcurements Procurement[] @relation("ProcurementInspector")
   verifiedProcurements Procurement[] @relation("ProcurementVerified")
@@ -604,7 +614,7 @@ npx prisma generate
 ```
 
 Data lama tidak terpengaruh (semua model baru, semua field baru nullable/default).
-`role` cukup ditambah nilai `HEADMASTER` — tidak perlu migrasi kolom.
+Tidak ada perubahan pada kolom `role` (role Kepala Sekolah dibatalkan).
 
 ## 4. Penomoran BAP (atomik)
 
@@ -662,8 +672,7 @@ Dalam satu `prisma.$transaction`:
      + `transaction.create({ type: "IN", ... })`.
 3. `procurement.update({ status: "VERIFIED", verifiedAt: now, verifiedById, totalUnits, totalItems })`.
 4. `procurement.log.create({ action: "PUBLISHED", actorId })`.
-5. `revalidatePath` untuk `/procurement`, `/procurement/archive`, `/procurement/[id]`, `/executive`,
-   `/inventory`, `/dashboard`.
+5. `revalidatePath` untuk `/procurement`, `/procurement/[id]`, `/reports`, `/dashboard`, `/inventory`.
 
 ## 7. Query yang dibutuhkan
 
@@ -716,8 +725,9 @@ Buat `prisma/seed-procurement.js` yang mengisi:
   sisanya `VERIFIED` dengan `bapNumber` berurutan, `qrToken` acak, `verifiedAt` tanggal terkait.
 - 4 `ProcurementItem` untuk BAP November (10 Roll Kabel UTP, 2 Unit Switch Hub, 5 Unit Mouse,
   1 Unit SSD), semua `checked: true`.
-- User: `headmaster@smkhkti2.sch.id` (role `HEADMASTER`), `budi@…` (`TEACHER`),
-  `admin@…` (`ADMIN`).
+- User: `budi@…` (`TEACHER`, guru pengawas) dan `admin@…` (`ADMIN`).
+- `SchoolSettings`: cukup data yang ada (nama sekolah, alamat, telepon, email, website, logo).
+  **Tidak perlu** field kepala sekolah — dokumen BAP & laporan tidak memuat tanda tangannya.
 
 Semua angka di dokumen desain (159 unit/tahun, 420 unit arsip) tidak harus persis — yang penting
 konsisten antar layar.
@@ -727,56 +737,48 @@ konsisten antar layar.
 
 # 03 · Peran, izin, dan alur
 
+> Keputusan final: **tidak ada role Kepala Sekolah**. Role tetap tiga: `ADMIN`,
+> `TECHNICIAN`, `TEACHER`. Tanda tangan "Mengetahui, Kepala Sekolah" pada dokumen BAP tetap
+> dicetak, tetapi bukan seorang user sistem — datanya dari `SchoolSettings`.
+
 ---
 
 ## 1. Peran
 
-Role disimpan di `User.role` (String). Tambahkan satu nilai baru: **`HEADMASTER`**.
+Role disimpan di `User.role` (String) — **tidak ada nilai baru**.
 
 | Role | Sebutan di UI | Tugas dalam modul ini |
 | --- | --- | --- |
 | `ADMIN` | Admin TU | membuat/mengubah pengajuan, memilih guru pengawas, mencetak BAP |
 | `TECHNICIAN` | Teknisi / Penyimpan Barang | menyusun daftar barang, menerima fisik barang |
 | `TEACHER` | Guru Pengawas | memeriksa fisik, mencentang item, mengesahkan BAP |
-| `HEADMASTER` | Kepala Sekolah | memantau dasbor eksekutif, mencetak rekap, melihat BAP |
-
-Satu user hanya punya satu role. `HEADMASTER` **tidak** boleh membuat/mengubah pengajuan
-(hanya baca + cetak) — supaya jejak audit tetap jelas.
 
 ## 2. Matriks izin
 
-| Aksi | ADMIN | TECHNICIAN | TEACHER | HEADMASTER | Publik |
-| --- | :-: | :-: | :-: | :-: | :-: |
-| Lihat `/procurement` | ✓ | ✓ | ✓ (read-only) | ✓ (read-only) | – |
-| Buat draft / ubah draft | ✓ | ✓ | – | – | – |
-| Tambah/hapus item | ✓ | ✓ | – | – | – |
-| Pilih guru pengawas | ✓ | – | – | – | – |
-| Kirim ke guru pengawas | ✓ | ✓ | – | – | – |
-| Checklist pemeriksaan | – | – | ✓ (hanya yang ditunjuk) | – | – |
-| Sahkan / terbitkan BAP | – | – | ✓ | – | – |
-| Tolak BAP | – | – | ✓ | – | – |
-| Arsip BAP | ✓ | ✓ | ✓ | ✓ | – |
-| Cetak BAP | ✓ | ✓ | ✓ | ✓ | – |
-| Dasbor eksekutif | – | – | – | ✓ | – |
-| Verifikasi QR | – | – | – | – | ✓ |
+| Aksi | ADMIN | TECHNICIAN | TEACHER | Publik |
+| --- | :-: | :-: | :-: | :-: |
+| Lihat `/procurement` | ✓ | ✓ | ✓ (read-only) | – |
+| Buat draft / ubah draft | ✓ | ✓ | – | – |
+| Tambah/hapus item | ✓ | ✓ | – | – |
+| Pilih guru pengawas | ✓ | – | – | – |
+| Kirim ke guru pengawas | ✓ | ✓ | – | – |
+| Checklist pemeriksaan | – | – | ✓ (hanya yang ditunjuk) | – |
+| Sahkan / terbitkan BAP | – | – | ✓ | – |
+| Tolak BAP | – | – | ✓ | – |
+| Tab Arsip BAP di `/reports` | ✓ | ✓ | ✓ | – |
+| Cetak BAP | ✓ | ✓ | ✓ | – |
+| Dasbor + blok BOS | ✓ | ✓ | ✓ | – |
+| Verifikasi QR | – | – | – | ✓ |
 
-Penegakan: **server action wajib** memeriksa sesi + role (`assertRole`), bukan hanya
-menyembunyikan tombol. Route protection di `middleware`/`authConfig`:
+Penegakan: **server action wajib** memeriksa sesi + role (`requireUser([...])`), bukan hanya
+menyembunyikan tombol. Route protection:
 
 ```ts
-const protectedPrefixes = ["/dashboard","/inventory","/borrow","/reports","/settings",
-                           "/procurement","/executive"]
-const isExecutive = pathname.startsWith("/executive")
+const protectedPrefixes = ["/dashboard","/inventory","/borrow","/reports","/settings","/procurement"]
 // /verify/** sengaja TIDAK diproteksi
 ```
 
-Tambah di `authConfig.callbacks.authorized`:
-
-```ts
-if (isExecutive && (session?.user as any)?.role !== "HEADMASTER") {
-  return Response.redirect(new URL("/dashboard", nextUrl))
-}
-```
+Tidak ada guard tambahan untuk dasbor — semua user login boleh melihat `/dashboard`.
 
 ## 3. State machine `Procurement.status`
 
@@ -792,60 +794,54 @@ if (isExecutive && (session?.user as any)?.role !== "HEADMASTER") {
 | Status | Arti | Yang boleh terjadi |
 | --- | --- | --- |
 | `DRAFT` | masih disusun, belum bernomor | edit semua field & item, hapus, submit |
-| `SUBMITTED` | nomor BAP & QR sudah terbit, menunggu pemeriksaan | guru mencentang item, menulis catatan, publish/reject; admin hanya baca |
-| `VERIFIED` | sah; stok sudah masuk | cetak, lihat QR; tidak bisa diubah (perubahan = BAP baru) |
+| `SUBMITTED` | nomor BAP & QR sudah terbit, menunggu pemeriksaan | guru mencentang item & publish/reject; admin hanya baca |
+| `VERIFIED` | sah; stok sudah masuk | cetak, lihat QR, muncul di Arsip BAP & strip Dasbor |
 | `REJECTED` | dikembalikan guru dengan alasan | admin merevisi → kembali `DRAFT` (nomor dipertahankan) |
 
 Aturan transisi:
 
-- `submit`: minimal 1 item, semua item punya jumlah > 0, guru pengawas terisi,
-  periode belum dipakai BAP lain.
+- `submit`: minimal 1 item, jumlah > 0, guru pengawas terisi, periode belum dipakai BAP lain.
 - `publish`: **semua** item `checked = true`, dan `status = SUBMITTED`.
 - `reject`: wajib `rejectNote`.
-- `VERIFIED` bersifat final (immutable) — untuk memperbaiki, buat pengajuan baru atau
-  mekanisme revisi bertanda (di luar scope v1 implementasi).
+- `VERIFIED` final. Perbaikan = buat pengajuan baru / revisi bertanda (di luar scope implementasi).
 
 ## 4. Alur utama (happy path)
 
 ```
-Admin TU            Sistem                        Guru Pengawas          Kepala Sekolah
-────────            ──────                        ─────────────          ──────────────
-1. Isi form
-   pilih bulan,
-   guru pengawas,
-   tambah barang ───▶ simpan draft (DRAFT)
-2. Kirim ──────────▶ ambil nomor BAP (027/…)
-                     buat qrToken
-                     status SUBMITTED ───────────▶ 3. buka /procurement/[id]/check
-                                                   cek fisik di gudang
-                                                   centang 4 item + catatan
-                                                   tap "Sahkan & Terbitkan BAP"
-                                                   ▼
-                                  publish: stok IN, item BARU dibuat,
-                                  status VERIFIED, verifiedAt, log
-                                                   │
-                     modal "Pengesahan Berhasil" ◀─┘
-                     (QR + detail verifikasi)
-                                                   │
-4. Arsip BAP / cetak ◀────────── dokumen A4 + QR ──┘
-                                                         5. /executive memantau
-                                                            realisasi & status BAP
-Publik: scan QR dokumen ──▶ /verify/{qrToken} ──▶ data BAP + status sah
+Admin TU / Teknisi          Sistem                        Guru Pengawas
+──────────────────          ──────                        ─────────────
+1. Isi form pengajuan,
+   pilih bulan + guru,
+   tambah barang
+2. Simpan draft ──────────▶ status DRAFT
+3. Kirim ─────────────────▶ ambil nomor BAP + qrToken
+                            status SUBMITTED ────────────▶ 4. buka /procurement/[id]/check
+                                                           cek fisik, centang 4 item, catatan
+                                                           tap "Sahkan & Terbitkan BAP"
+                                                           ▼
+                                             publish: stok IN, item BARU dibuat,
+                                             status VERIFIED, verifiedAt, log
+                                                           │
+                                             modal "Pengesahan Berhasil" (QR)
+                                                           │
+5. Lihat/cetak BAP dari tab Arsip BAP ◀── dokumen A4 + QR ─┘
+6. Ringkasan muncul di blok BOS pada /dashboard
+Publik: scan QR ──▶ /verify/{qrToken} ──▶ data BAP + status sah
 ```
 
 ## 5. Alur QR
 
 | Tahap | Detail |
 | --- | --- |
-| Generate | saat `submit`: `qrToken = crypto.randomBytes(16).toString("hex")` (32 hex) |
-| Isi QR | `${process.env.NEXTAUTH_URL}/verify/${qrToken}` (fallback `https://inventaris.smkhkti2.sch.id`) |
-| Render | server: `qrcode` → `toString(url, { type: "svg", margin: 0, errorCorrectionLevel: "M" })`; sisipkan sebagai `dangerouslySetInnerHTML` di kotak 74px / 22mm |
-| Halaman verifikasi | `/verify/[token]` (server component, **tanpa auth**), cari `Procurement` berdasarkan `qrToken` yang `status = VERIFIED` |
-| Logging | catat `VerificationVisit` (ip + user-agent) — gunakan `after()` (Next 15/16) atau route handler `POST /api/verify/[token]/visit` dari client agar tidak dobel log saat render |
-| Token salah | tampil state "Dokumen tidak ditemukan" (jangan bocorkan info) |
-| Cache | `export const dynamic = "force-dynamic"` pada `/verify/[token]` |
+| Generate | saat `submit`: `crypto.randomBytes(16).toString("hex")` (32 hex) |
+| Isi QR | `${process.env.NEXTAUTH_URL}/verify/${qrToken}` |
+| Render | server: `qrcode` → SVG, disisipkan dalam kotak 19mm / 74px |
+| Halaman | `/verify/[token]` server component **tanpa auth**, hanya `status = VERIFIED` |
+| Logging | `VerificationVisit` (ip + user-agent) via `POST /api/verify/[token]/visit` |
+| Token salah | "Dokumen tidak ditemukan" (tanpa bocor info) |
+| Cache | `dynamic = "force-dynamic"` |
 
-QR **tidak** memuat data sensitif — hanya token. Semua isi dokumen diambil dari DB.
+QR tidak memuat data sensitif — hanya token.
 
 ## 6. Navigasi
 
@@ -853,37 +849,33 @@ QR **tidak** memuat data sensitif — hanya token. Semua isi dokumen diambil dar
 
 | Label | Ikon | Route |
 | --- | --- | --- |
-| Pengadaan BOS | `clipboard-list` | `/procurement` (+ `/procurement/archive` sebagai sub-tab) |
+| Pengadaan BOS | `clipboard-list` | `/procurement` |
 
-Item arsip tidak perlu menu terpisah — masuk lewat tab/halaman `/procurement` (tombol
-"Arsip BAP" di samping "Pengajuan") atau breadcrumb.
+Tidak ada menu "Arsip BAP" — akses lewat tab di `/reports` (dan tombol "Lihat BAP" di Dasbor).
 
-**Sidebar mobile / bottom nav** — tetap 5 tab (Dasbor, Inventaris, Barcode, Pinjam, Laporan).
-`Pengadaan BOS` ditaruh di sheet "Menu lainnya" dari avatar app bar, atau di halaman
-Pengaturan → tautan cepat. `Arsip BAP` juga bisa diakses dari dasbor eksekutif mobile.
-
-**Menu Kepala Sekolah** — jika role `HEADMASTER`, sidebar menampilkan
-`Dasbor` → `/executive` (bukan `/dashboard`), plus `Arsip BAP`.
+**Bottom nav mobile** tetap 5 tab (Dasbor, Inventaris, Barcode, Pinjam, Laporan).
+`Pengadaan BOS` bisa ditaruh di sheet "Menu lainnya" dari avatar, atau lewat tombol
+"Buat Daftar Pengadaan" di kartu Stok Hampir Habis pada Dasbor.
 
 ## 7. Notifikasi & audit
 
-- Toast (sonner) untuk: draft tersimpan, pengajuan terkirim, item diperbarui, BAP disahkan,
-  BAP ditolak.
-- `ProcurementLog` mencatat setiap transisi + `actorId`, ditampilkan di halaman detail
-  (timeline kecil di bawah dokumen atau sheet "Riwayat").
-- Setiap pencetakan boleh dicatat sebagai `action: "PRINTED"` (opsional, frekuensi tinggi).
+- Toast (sonner): draft tersimpan, pengajuan terkirim, item diperbarui, BAP disahkan/ditolak.
+- `ProcurementLog` mencatat tiap transisi + `actorId`; ditampilkan sebagai timeline
+  di halaman `/procurement/[id]`.
+- Cetak boleh dicatat `PRINTED` (opsional).
 
-## 8. Edge case yang harus ditangani
+## 8. Edge case
 
 | Kasus | Perilaku |
 | --- | --- |
-| Dua admin submit periode sama bersamaan | `@@unique([periodMonth, periodYear])` → tampilkan error "BAP periode ini sudah ada" |
-| Guru membuka checklist BAP yang bukan tugasnya | 403 + redirect ke arsip |
-| Guru menutup browser di tengah pemeriksaan | `checked` per item tersimpan (server action per toggle), lanjutkan kapan saja |
-| Barang dihapus dari inventaris setelah dipilih | relasi `onDelete: SetNull`; simpan `name`/`spek` di `ProcurementItem` agar dokumen tetap utuh |
-| BAP di-print sebelum sah | tombol cetak hanya untuk `SUBMITTED`/`VERIFIED`, beri watermark "DRAFT" bila `SUBMITTED` |
-| QR discan dokumen lama (BAP dihapus) | halaman verifikasi → "Dokumen tidak ditemukan" |
-| Zona waktu | simpan UTC, tampilkan `Asia/Jakarta` (`date-fns` + `formatInTimeZone`) |
+| Dua admin submit periode sama bersamaan | `@@unique([periodMonth, periodYear])` → error "BAP periode ini sudah ada" |
+| Guru membuka checklist BAP bukan tugasnya | 403 + redirect ke `/reports` |
+| Guru menutup browser di tengah pemeriksaan | `checked` per item tersimpan |
+| Barang inventaris dihapus setelah dipakai BAP | relasi `onDelete: SetNull`; nama/spek disimpan di `ProcurementItem` |
+| BAP dicetak sebelum sah | tombol cetak untuk `SUBMITTED`/`VERIFIED`, watermark "DRAFT" bila `SUBMITTED` |
+| QR dokumen lama (BAP dihapus) | halaman verifikasi → "Dokumen tidak ditemukan" |
+| Zona waktu | simpan UTC, tampilkan `Asia/Jakarta` |
+| Belum ada BAP bulan ini | strip Dasbor menampilkan "Belum ada BAP · Buat Pengajuan" |
 
 
 ---
@@ -1003,7 +995,7 @@ export async function submitProcurement(id: string) {
     });
     await tx.procurementLog.create({ data: { procurementId: id, action: "SUBMITTED", actorId: user.id } });
     return { ok: true, data: { bapNumber: updated.bapNumber } };
-  }).then((r) => { revalidatePath("/procurement"); revalidatePath("/procurement/archive"); return r; });
+  }).then((r) => { revalidatePath("/procurement"); revalidatePath("/reports"); return r; });
 }
 ```
 
@@ -1083,7 +1075,7 @@ export async function publishBap(id: string) {
     return updated;
   });
 
-  ["/procurement", "/procurement/archive", `/procurement/${id}`, "/executive", "/inventory", "/dashboard"]
+  ["/procurement", `/procurement/${id}`, "/reports", "/dashboard", "/inventory"]
     .forEach((p) => revalidatePath(p));
   return { ok: true, data: { bapNumber: result.bapNumber, qrToken: result.qrToken } };
 }
@@ -1101,9 +1093,8 @@ export async function listBaps({ year, month, q, page = 1, perPage = 10 }) { ...
 export async function getBapSummary({ year }) { ... }
 export async function getProcurementDetail(id) { ... }   // items + users + logs
 export async function getBapByToken(token) { ... }        // hanya status VERIFIED
-export async function getExecutiveOverview({ year, month }) { ... }
-export async function getMonthlyRealization({ year }) { ... }
-export async function getPendingBatches({ limit = 4 }) { ... }
+// Untuk blok BOS di /dashboard (bukan dasbor terpisah):
+export async function getDashboardBosSummary({ year, month }) { ... }  // BAP terakhir + total unit
 export async function getWarehouseSuggestions({ limit = 3 }) { ... }
 ```
 
@@ -1125,10 +1116,10 @@ export const formatTimeID = (d: Date) => formatInTimeZone(d, "Asia/Jakarta", "HH
 | Halaman | Jenis | Catatan |
 | --- | --- | --- |
 | `/procurement` | server (fetch data) + client form | form pakai `react-hook-form` + `zodResolver` (sudah ada) |
-| `/procurement/archive` | server | filter lewat `searchParams`, tabel server-rendered |
+| `/reports` (tab Arsip BAP) | server | filter lewat `searchParams` (`?tab=bap&year=&month=&q=&page=`), tabel server-rendered |
+| `/dashboard` (blok BOS) | server | satu query ringkas, tidak memblok render KPI lain |
 | `/procurement/[id]` | server | tombol cetak = client (`react-to-print`) |
 | `/procurement/[id]/check` | server + client checklist | toggle optimistis (`useOptimistic`/`useTransition`) |
-| `/executive` | server | chart dari data agregat |
 | `/verify/[token]` | server, **tanpa auth** | `dynamic = "force-dynamic"` |
 
 ## 6. Error & pesan
@@ -1538,43 +1529,39 @@ Aturan render:
 - Tutup: tombol, klik overlay, `Esc`; fokus awal ke tombol primary (`autoFocus` / ref).
 - Setelah "Lihat Surat BAP Resmi" → `router.push('/procurement/{id}')`.
 
-## 13. `ExecutiveKpiCard`
+## 13. `DashboardBosStrip` (pengganti dasbor eksekutif)
+
+Blok BOS di dasbor, satu baris penuh, di antara KPI Row dan Body.
 
 ```tsx
-<ExecutiveKpiCard label="Total Aset Terdata" value="1.428" unit="Unit"
-  caption="40 kategori inventaris" icon={Boxes} tone="brand" />
-<ExecutiveKpiCard label="Status BAP Bulan Ini" badge={<StatusBadge tone="mint">Sah & Lengkap</StatusBadge>}
-  caption="Diverifikasi: Budi Santoso" icon={ShieldCheck} tone="mint" />
+<DashboardBosStrip bap={bapThisMonth} />
 ```
 
-- Desktop: `panel p-[22px] flex flex-col gap-[18px]`; label `text-[13px] font-semibold text-ink-soft`;
-  chip `size-[34px] rounded-[10px]` (`tone-soft`); value `text-[34px] font-extrabold tracking-[-1.2px]`;
-  unit `text-xs font-semibold text-muted-ink`; caption `text-xs text-muted-ink`.
-- Mobile: `p-3 rounded-[14px] gap-1.5`, label 9.5, chip 22 (`rounded-[7px]`, ikon 11),
-  value 23 (`tracking-[-0.8px]`), caption 9.
+- Kartu `panel flex items-center gap-3.5 px-4.5 py-3.5`.
+- Chip `size-[38px] rounded-[10px] bg-mint-soft` + `ClipboardList` 18 `text-mint`.
+- Teks (flex-1, flex-col gap-[3px]):
+  baris 1 — `text-[13px] font-bold` "Pengadaan BOS · November 2026" + `StatusBadge tone="mint"` "Sah & Lengkap";
+  baris 2 — nomor BAP `font-mono text-[10.5px] font-semibold text-ink-soft`, meta
+  `text-[10.5px] text-muted-ink` "4 jenis · 18 unit", dot `size-[3px] rounded-full bg-line`,
+  `UserCheck` 11 + "Budi Santoso" `text-[10.5px] text-ink-soft`.
+- Kanan: tombol secondary `Lihat BAP` (`FileText`, `px-3.5 py-2 text-xs`) → `/procurement/[id]`.
+- Bila belum ada BAP bulan ini: judul "Belum ada BAP bulan ini", meta "Buat pengajuan baru
+  untuk periode November 2026", tombol primary `Buat Pengajuan`.
+- Mobile: `p-3 rounded-[14px] gap-2.5`, chip 30 (`rounded-lg`, ikon 14), teks 10/8.5,
+  badge `Sah` 8, seluruh kartu bisa di-tap.
 
-## 14. `MonthlyRealizationChart`
+## 14. `KpiCard` (dipakai juga untuk "Pengadaan BOS")
 
-Props: `data: { month: number; units: number }[]`, `max`, `activeMonth`, `onOpenBap`.
+KPI ke-4 dasbor memakai `MetricCard` yang sudah ada, dengan isi:
+label `Pengadaan BOS`, nilai `18`, satuan `Unit`, caption `Unit masuk · Nov 2026`,
+chip `mint-soft` + ikon `shopping-cart` `text-mint`.
 
-- **Tanpa library chart.** Struktur per bulan:
-  `div.flex.items-center.gap-2.5.px-2.py-1.5.rounded-lg` (aktif: `bg-brand-soft`).
-- Bulan `w-6 text-[10.5px] font-semibold` · track `flex-1 h-2 rounded-full bg-[#EDF2F8]
-  dark:bg-[#3C4043]` dengan bar `h-2 rounded-full` lebar `(units/max*100)%` —
-  aktif `bg-brand`, lain `bg-brand/35` · qty `w-7 text-right font-mono text-[10.5px] font-bold` ·
-  link `w-14 text-right text-[9.5px] font-bold text-brand`.
-- Bar memakai `style={{ width: \`${pct}%\` }}` — persen **diizinkan di CSS inline** untuk
-  lebar bar (bukan properti layout pen.dev).
-- Aksesibilitas: `role="img"` + `aria-label` per baris (`"November: 18 unit"`).
+## 15. `ArchiveTab` (isi tab Arsip BAP di Laporan)
 
-## 15. `PendingBatchList`
+Gabungan: `MonthTabs` + `FilterSummary` + `ArchiveTable` + pagination (lihat §1–§3 dan §7).
+Tidak perlu page/shell baru — render di dalam `/reports` saat `tab=bap`.
 
-- Item `flex flex-col gap-2 border-b border-line px-5 py-3.25`:
-  baris 1 `flex justify-between` (nomor `font-mono text-[11px] font-bold` + `StatusBadge`),
-  baris 2 `flex justify-between text-[10px]` (meta dengan `Package` / inspector dengan `UserCheck`),
-  baris 3 `flex justify-end` → tombol soft kecil `Pratinjau Berita Acara` (`FileText`, 10px).
-
-## 16. `BatchArchiveCard` (mobile)
+## 16. `BapArchiveCard` (mobile)
 
 - `rounded-xl border border-line bg-surface p-3 flex flex-col gap-1.5`:
   chip PDF 24 (`bg-rose-soft`, `FileText` 12 rose) + tombol unduh 22 (`bg-surface-2`, `Download` 11),
@@ -1605,8 +1592,9 @@ sebelum lanjut.
 
 ## Aturan umum
 
-- Modul lama **tidak diubah** selain: entri menu "Pengadaan BOS", role `HEADMASTER`,
-  relasi balik di `Item`/`User`, dan pengecualian `/verify` di middleware.
+- Modul lama **tidak diubah** selain: entri menu "Pengadaan BOS", blok BOS di `/dashboard`,
+  tab Arsip BAP di `/reports`, relasi balik di `Item`/`User`, dan pengecualian `/verify` di middleware.
+- **Tidak ada role Kepala Sekolah** dan **tidak ada `/executive`** — jangan membuatnya.
 - Semua teks UI bahasa Indonesia, format tanggal `id-ID`, mata uang tidak ditampilkan di modul ini.
 - Warna & ukuran mengikuti `tokens.css` + spesifikasi di `01-screens.md`.
 - Jangan menambah library chart; grafik realisasi dibuat dengan flex (lihat `06-components.md`).
@@ -1626,11 +1614,9 @@ sebelum lanjut.
 
 ## Fase 2 — Navigasi & peran (½ hari)
 
-1. `src/auth.config.ts`: tambah `/procurement` & `/executive` ke daftar protected,
-   redirect `/executive` untuk non-HEADMASTER, biarkan `/verify` publik.
-2. `src/components/layout/Sidebar.tsx`: item "Pengadaan BOS" (`clipboard-list`) setelah Inventaris;
-   bila role `HEADMASTER`, "Dasbor" mengarah ke `/executive` dan tampilkan "Arsip BAP".
-3. Mobile: tautan Pengadaan di sheet menu avatar + akses arsip dari dasbor eksekutif.
+1. `src/auth.config.ts`: tambah `/procurement` ke daftar protected, biarkan `/verify` publik.
+2. `src/components/layout/Sidebar.tsx`: item "Pengadaan BOS" (`clipboard-list`) setelah Inventaris.
+3. Mobile: tautan Pengadaan di sheet menu avatar.
 4. Cek: menu tampil sesuai role; user lama tidak terganggu.
 
 ## Fase 3 — Server action & query (1 hari)
@@ -1659,14 +1645,15 @@ sebelum lanjut.
 4. Tampilkan nomor BAP preview dari `peekNextBapNumber` selama `DRAFT`.
 5. Cek: form kosong, validasi, submit ganda, periode sudah ada.
 
-## Fase 6 — Arsip (1 hari)
+## Fase 6 — Tab Arsip BAP di Laporan (1 hari)
 
-1. `/procurement/archive/page.tsx`: `MonthTabs`, `FilterSummary`, `ArchiveTable`,
-   pagination, filter via `searchParams` (`?year=&month=&q=&page=`).
-2. Aksi per baris: `Cetak BAP` → `/procurement/[id]` (auto-open print), `Detail` → dokumen draft.
-3. `Ekspor Rekap`: unduh CSV/XLSX sederhana (boleh CSV dulu) — atau nonaktifkan tombolnya
-   bila belum siap, jangan dibiarkan mati.
+1. `/reports/page.tsx`: tambah tab ke-5 "Arsip BAP" (`?tab=bap`) di desktop (underline tabs)
+   dan mobile (chips); tambahkan juga tab non-aktif itu di keempat tab lain.
+2. Komponen `ArchiveTab`: `MonthTabs`, `FilterSummary`, `ArchiveTable`, pagination,
+   filter via `searchParams` (`?tab=bap&year=&month=&q=&page=`).
+3. Aksi per baris: `Cetak BAP` → `/procurement/[id]` (auto-open print), `Detail` → dokumen draft.
 4. Mobile: `BapArchiveCard` list.
+5. Jangan membuat route/menu `/procurement/archive`.
 
 ## Fase 7 — Pemeriksaan guru (1 hari)
 
@@ -1677,13 +1664,14 @@ sebelum lanjut.
 4. `PublishSuccessDialog` (QR, detail verifikasi, 2 tombol) → redirect ke dokumen.
 5. Cek: refresh di tengah jalan (state tersimpan), double-tap tombol (tidak dobel publish).
 
-## Fase 8 — Dasbor eksekutif (1 hari)
+## Fase 8 — Blok BOS di Dasbor (½ hari)
 
-1. `/executive/page.tsx` (guard `HEADMASTER`): 4 `ExecutiveKpiCard`,
-   `MonthlyRealizationChart`, `PendingBatchList`, `Cetak Laporan Semester`.
-2. Mobile: KPI 2×2, kartu BAP terakhir, `BatchArchiveCard`, bottom nav 3 tab.
-3. "Cetak Laporan Semester" → halaman cetak ringkas (A4 landscape/portrait) memakai pola print
-   yang sama dengan BAP (kop + tabel realisasi + tanda tangan Kepala Sekolah).
+1. `/dashboard/page.tsx`: ganti KPI ke-4 menjadi "Pengadaan BOS" (nilai + caption dari DB).
+2. Tambah `DashboardBosStrip` di antara KPI Row dan Body (desktop), dan versi ringkas
+   setelah KPI 2×2 (mobile). Body dasbor menyusut — pastikan Aktivitas 5 baris / Stok 3 item
+   agar tidak overflow.
+3. Kosong: "Belum ada BAP · Buat Pengajuan".
+4. **Jangan** membuat halaman/route dasbor kedua.
 
 ## Fase 9 — Verifikasi publik (½ hari)
 
@@ -1714,14 +1702,14 @@ src/lib/guard.ts                                      (baru)
 src/lib/queries/procurement.ts                        (baru)
 src/actions/procurement.ts                            (baru)
 src/app/(authenticated)/procurement/page.tsx          (baru)
-src/app/(authenticated)/procurement/archive/page.tsx  (baru)
 src/app/(authenticated)/procurement/[id]/page.tsx     (baru)
 src/app/(authenticated)/procurement/[id]/check/page.tsx (baru)
-src/app/(authenticated)/executive/page.tsx            (baru)
 src/app/verify/[token]/page.tsx                       (baru, publik)
 src/app/api/verify/[token]/visit/route.ts             (baru)
 src/components/procurement/*                          (14 komponen, lihat 05 & 06)
-src/components/layout/Sidebar.tsx                     (edit: menu + role)
+src/app/(authenticated)/reports/page.tsx              (edit: tab Arsip BAP)
+src/app/(authenticated)/dashboard/page.tsx            (edit: KPI BOS + strip)
+src/components/layout/Sidebar.tsx                     (edit: menu Pengadaan)
 src/auth.config.ts                                    (edit: proteksi route)
 src/app/globals.css                                   (edit: @page + .sheet print)
 ```
@@ -1743,8 +1731,9 @@ src/app/globals.css                                   (edit: @page + .sheet prin
       menampilkan QR yang bisa discan.
 - [ ] Scan QR → `/verify/{token}` menampilkan data benar tanpa login; token salah →
       "Dokumen tidak ditemukan"; kunjungan tercatat.
-- [ ] Kepala Sekolah melihat dasbor eksekutif (KPI, realisasi 11 bulan, batch menunggu),
-      bisa membuka pratinjau BAP, dan mencetak rekap semester.
+- [ ] Arsip BAP muncul sebagai tab di halaman Laporan (desktop & mobile), filter bulan/tahun jalan.
+- [ ] Blok BOS muncul di Dasbor: badge sah, nomor BAP, jumlah unit, tombol "Lihat BAP".
+- [ ] Tidak ada menu/halaman/role Kepala Sekolah di aplikasi.
 - [ ] Periode ganda ditolak; user tanpa role ditolak di server (bukan hanya UI).
 
 ### Visual
@@ -1778,6 +1767,6 @@ src/app/globals.css                                   (edit: @page + .sheet prin
 | 6 | Scan QR BAP SUBMITTED | halaman "Dokumen tidak ditemukan" |
 | 7 | Buka `/verify` di mode gelap | halaman publik tetap terbaca (token tema) |
 | 8 | Hapus item inventaris yang dipakai BAP lama | dokumen lama tetap utuh (snapshot nama/spesifikasi) |
-| 9 | Buka `/executive` sebagai ADMIN | redirect ke `/dashboard` |
+| 9 | Buka `/reports?tab=bap` (Arsip BAP) | tab aktif, filter & tabel berjalan, tidak ada route `/procurement/archive` |
 | 10 | Refresh di tengah checklist | centang & catatan tetap tersimpan |
 

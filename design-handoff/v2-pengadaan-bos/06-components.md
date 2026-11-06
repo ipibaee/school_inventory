@@ -171,43 +171,39 @@ Aturan render:
 - Tutup: tombol, klik overlay, `Esc`; fokus awal ke tombol primary (`autoFocus` / ref).
 - Setelah "Lihat Surat BAP Resmi" → `router.push('/procurement/{id}')`.
 
-## 13. `ExecutiveKpiCard`
+## 13. `DashboardBosStrip` (pengganti dasbor eksekutif)
+
+Blok BOS di dasbor, satu baris penuh, di antara KPI Row dan Body.
 
 ```tsx
-<ExecutiveKpiCard label="Total Aset Terdata" value="1.428" unit="Unit"
-  caption="40 kategori inventaris" icon={Boxes} tone="brand" />
-<ExecutiveKpiCard label="Status BAP Bulan Ini" badge={<StatusBadge tone="mint">Sah & Lengkap</StatusBadge>}
-  caption="Diverifikasi: Budi Santoso" icon={ShieldCheck} tone="mint" />
+<DashboardBosStrip bap={bapThisMonth} />
 ```
 
-- Desktop: `panel p-[22px] flex flex-col gap-[18px]`; label `text-[13px] font-semibold text-ink-soft`;
-  chip `size-[34px] rounded-[10px]` (`tone-soft`); value `text-[34px] font-extrabold tracking-[-1.2px]`;
-  unit `text-xs font-semibold text-muted-ink`; caption `text-xs text-muted-ink`.
-- Mobile: `p-3 rounded-[14px] gap-1.5`, label 9.5, chip 22 (`rounded-[7px]`, ikon 11),
-  value 23 (`tracking-[-0.8px]`), caption 9.
+- Kartu `panel flex items-center gap-3.5 px-4.5 py-3.5`.
+- Chip `size-[38px] rounded-[10px] bg-mint-soft` + `ClipboardList` 18 `text-mint`.
+- Teks (flex-1, flex-col gap-[3px]):
+  baris 1 — `text-[13px] font-bold` "Pengadaan BOS · November 2026" + `StatusBadge tone="mint"` "Sah & Lengkap";
+  baris 2 — nomor BAP `font-mono text-[10.5px] font-semibold text-ink-soft`, meta
+  `text-[10.5px] text-muted-ink` "4 jenis · 18 unit", dot `size-[3px] rounded-full bg-line`,
+  `UserCheck` 11 + "Budi Santoso" `text-[10.5px] text-ink-soft`.
+- Kanan: tombol secondary `Lihat BAP` (`FileText`, `px-3.5 py-2 text-xs`) → `/procurement/[id]`.
+- Bila belum ada BAP bulan ini: judul "Belum ada BAP bulan ini", meta "Buat pengajuan baru
+  untuk periode November 2026", tombol primary `Buat Pengajuan`.
+- Mobile: `p-3 rounded-[14px] gap-2.5`, chip 30 (`rounded-lg`, ikon 14), teks 10/8.5,
+  badge `Sah` 8, seluruh kartu bisa di-tap.
 
-## 14. `MonthlyRealizationChart`
+## 14. `KpiCard` (dipakai juga untuk "Pengadaan BOS")
 
-Props: `data: { month: number; units: number }[]`, `max`, `activeMonth`, `onOpenBap`.
+KPI ke-4 dasbor memakai `MetricCard` yang sudah ada, dengan isi:
+label `Pengadaan BOS`, nilai `18`, satuan `Unit`, caption `Unit masuk · Nov 2026`,
+chip `mint-soft` + ikon `shopping-cart` `text-mint`.
 
-- **Tanpa library chart.** Struktur per bulan:
-  `div.flex.items-center.gap-2.5.px-2.py-1.5.rounded-lg` (aktif: `bg-brand-soft`).
-- Bulan `w-6 text-[10.5px] font-semibold` · track `flex-1 h-2 rounded-full bg-[#EDF2F8]
-  dark:bg-[#3C4043]` dengan bar `h-2 rounded-full` lebar `(units/max*100)%` —
-  aktif `bg-brand`, lain `bg-brand/35` · qty `w-7 text-right font-mono text-[10.5px] font-bold` ·
-  link `w-14 text-right text-[9.5px] font-bold text-brand`.
-- Bar memakai `style={{ width: \`${pct}%\` }}` — persen **diizinkan di CSS inline** untuk
-  lebar bar (bukan properti layout pen.dev).
-- Aksesibilitas: `role="img"` + `aria-label` per baris (`"November: 18 unit"`).
+## 15. `ArchiveTab` (isi tab Arsip BAP di Laporan)
 
-## 15. `PendingBatchList`
+Gabungan: `MonthTabs` + `FilterSummary` + `ArchiveTable` + pagination (lihat §1–§3 dan §7).
+Tidak perlu page/shell baru — render di dalam `/reports` saat `tab=bap`.
 
-- Item `flex flex-col gap-2 border-b border-line px-5 py-3.25`:
-  baris 1 `flex justify-between` (nomor `font-mono text-[11px] font-bold` + `StatusBadge`),
-  baris 2 `flex justify-between text-[10px]` (meta dengan `Package` / inspector dengan `UserCheck`),
-  baris 3 `flex justify-end` → tombol soft kecil `Pratinjau Berita Acara` (`FileText`, 10px).
-
-## 16. `BatchArchiveCard` (mobile)
+## 16. `BapArchiveCard` (mobile)
 
 - `rounded-xl border border-line bg-surface p-3 flex flex-col gap-1.5`:
   chip PDF 24 (`bg-rose-soft`, `FileText` 12 rose) + tombol unduh 22 (`bg-surface-2`, `Download` 11),

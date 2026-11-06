@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import {
     Table,
     TableBody,
@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Printer, Calendar as CalendarIcon, Loader2 } from "lucide-react"
 import { getIncomingItemsReport } from "@/actions/reports"
-import { ReportHeader } from "./ReportHeader"
+import { ReportA4Sheet } from "./ReportA4Sheet"
 import { format } from "date-fns"
 import { id } from "date-fns/locale"
 import { Calendar } from "@/components/ui/calendar"
@@ -46,10 +46,19 @@ export function IncomingItemsReport() {
         window.print()
     }
 
-    const totalIncoming = transactions.reduce((sum, t) => sum + t.quantity, 0)
+    const totalIncoming = useMemo(() => {
+        return transactions.reduce((sum, t) => sum + (t.quantity || 0), 0)
+    }, [transactions])
+
+    const periodStr = date?.from
+        ? `${format(date.from, "d MMMM yyyy", { locale: id })} s.d. ${
+              date.to ? format(date.to, "d MMMM yyyy", { locale: id }) : "-"
+          }`
+        : "Semua Riwayat"
 
     return (
         <div className="flex flex-col gap-4">
+            {/* Filter bar - Screen only */}
             <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 print:hidden">
                 <Popover>
                     <PopoverTrigger asChild>
@@ -88,16 +97,70 @@ export function IncomingItemsReport() {
                     </PopoverContent>
                 </Popover>
 
-                <Button variant="primary" size="sm" onClick={handlePrint} className="gap-1.5">
+                <Button variant="primary" size="sm" onClick={handlePrint} className="gap-1.5 cursor-pointer">
                     <Printer className="size-3.5" />
                     <span>Cetak Laporan</span>
                 </Button>
             </div>
 
-            <ReportHeader title="Laporan Barang Masuk" />
+            {/* ── Official A4 Document Sheet for Print ── */}
+            <div className="hidden print:block">
+                <ReportA4Sheet
+                    title="LAPORAN BARANG MASUK"
+                    subtitle="Pencatatan Penerimaan Barang Baru dan Logistik Inventaris"
+                    period={periodStr}
+                    metrics={[
+                        { label: "TRANSAKSI MASUK", value: transactions.length },
+                        { label: "TOTAL UNIT", value: `${totalIncoming} Unit` },
+                        {
+                            label: "LOKASI AKTIF",
+                            value: new Set(transactions.map((t) => t.item?.location?.id).filter(Boolean)).size,
+                        },
+                    ]}
+                    columns={[
+                        { header: "No", width: "24px", align: "center" },
+                        { header: "Tanggal", width: "65px", align: "left" },
+                        { header: "Barang", width: "120px", align: "left" },
+                        { header: "Spesifikasi", align: "left" },
+                        { header: "Lokasi", width: "80px", align: "left" },
+                        { header: "Jumlah", width: "40px", align: "right" },
+                        { header: "Keterangan", width: "95px", align: "left" },
+                    ]}
+                    totalLabel={`Total Barang Masuk · ${transactions.length} penerimaan`}
+                    totalValue={`${totalIncoming} Unit`}
+                    notes="Daftar penerimaan barang bersumber dari pengadaan dana BOS dan mutasi masuk inventaris sekolah."
+                >
+                    {transactions.map((tx, idx) => (
+                        <tr key={tx.id} className="border-b border-black/60">
+                            <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black/60">
+                                {idx + 1}
+                            </td>
+                            <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black/60">
+                                {format(new Date(tx.date), "dd/MM/yy HH:mm", { locale: id })}
+                            </td>
+                            <td className="py-1 px-1.5 font-bold text-[7.5pt] border-r border-black/60">
+                                {tx.item?.name}
+                            </td>
+                            <td className="py-1 px-1.5 text-[6.5pt] text-black/70 border-r border-black/60">
+                                {tx.item?.specification || "-"}
+                            </td>
+                            <td className="py-1 px-1.5 text-[7pt] border-r border-black/60">
+                                {tx.item?.location?.name || "-"}
+                            </td>
+                            <td className="py-1 px-1.5 font-mono font-bold text-right text-[7.5pt] border-r border-black/60 text-[#0EA47A]">
+                                +{tx.quantity}
+                            </td>
+                            <td className="py-1 px-1.5 text-[6.5pt] text-black/70">
+                                {tx.note || "Pengadaan Baru"}
+                            </td>
+                        </tr>
+                    ))}
+                </ReportA4Sheet>
+            </div>
 
-            <div className="panel rounded-2xl flex flex-col overflow-hidden print:border-0 print:shadow-none">
-                <div className="p-4 lg:p-[18px_22px] border-b border-line bg-surface flex items-center justify-between print:hidden">
+            {/* Screen Table Card */}
+            <div className="panel rounded-2xl flex flex-col overflow-hidden print:hidden">
+                <div className="p-4 lg:p-[18px_22px] border-b border-line bg-surface flex items-center justify-between">
                     <div className="flex flex-col">
                         <h3 className="text-[14.5px] font-bold text-ink">Barang Masuk</h3>
                         <p className="text-xs text-muted-ink mt-0.5">
@@ -111,15 +174,15 @@ export function IncomingItemsReport() {
                     </div>
                 </div>
 
-                <Table className="print:border print:border-black">
+                <Table>
                     <TableHeader>
-                        <TableRow className="print:border-black">
-                            <TableHead className="print:text-black">TANGGAL</TableHead>
-                            <TableHead className="print:text-black">BARANG</TableHead>
-                            <TableHead className="print:text-black">SPESIFIKASI</TableHead>
-                            <TableHead className="print:text-black">LOKASI</TableHead>
-                            <TableHead className="text-right print:text-black">JUMLAH</TableHead>
-                            <TableHead className="print:text-black">KETERANGAN</TableHead>
+                        <TableRow>
+                            <TableHead>TANGGAL</TableHead>
+                            <TableHead>BARANG</TableHead>
+                            <TableHead>SPESIFIKASI</TableHead>
+                            <TableHead>LOKASI</TableHead>
+                            <TableHead className="text-right">JUMLAH</TableHead>
+                            <TableHead>KETERANGAN</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -138,7 +201,7 @@ export function IncomingItemsReport() {
                             </TableRow>
                         ) : (
                             transactions.map((tx) => (
-                                <TableRow key={tx.id} className="print:border-black">
+                                <TableRow key={tx.id}>
                                     <TableCell className="font-mono text-xs text-ink-soft whitespace-nowrap">
                                         {format(new Date(tx.date), "d/MM/yy HH:mm", { locale: id })}
                                     </TableCell>

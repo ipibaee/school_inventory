@@ -125,7 +125,7 @@ model Item {
 
 model User {
   // ... field lama tetap
-  role String @default("TEACHER") // ADMIN | TECHNICIAN | TEACHER | HEADMASTER
+  role String @default("TEACHER") // ADMIN | TECHNICIAN | TEACHER  (tidak ada role Kepala Sekolah)
   createdProcurements  Procurement[] @relation("ProcurementCreated")
   inspectedProcurements Procurement[] @relation("ProcurementInspector")
   verifiedProcurements Procurement[] @relation("ProcurementVerified")
@@ -140,7 +140,7 @@ npx prisma generate
 ```
 
 Data lama tidak terpengaruh (semua model baru, semua field baru nullable/default).
-`role` cukup ditambah nilai `HEADMASTER` — tidak perlu migrasi kolom.
+Tidak ada perubahan pada kolom `role` (role Kepala Sekolah dibatalkan).
 
 ## 4. Penomoran BAP (atomik)
 
@@ -198,8 +198,7 @@ Dalam satu `prisma.$transaction`:
      + `transaction.create({ type: "IN", ... })`.
 3. `procurement.update({ status: "VERIFIED", verifiedAt: now, verifiedById, totalUnits, totalItems })`.
 4. `procurement.log.create({ action: "PUBLISHED", actorId })`.
-5. `revalidatePath` untuk `/procurement`, `/procurement/archive`, `/procurement/[id]`, `/executive`,
-   `/inventory`, `/dashboard`.
+5. `revalidatePath` untuk `/procurement`, `/procurement/[id]`, `/reports`, `/dashboard`, `/inventory`.
 
 ## 7. Query yang dibutuhkan
 
@@ -252,8 +251,9 @@ Buat `prisma/seed-procurement.js` yang mengisi:
   sisanya `VERIFIED` dengan `bapNumber` berurutan, `qrToken` acak, `verifiedAt` tanggal terkait.
 - 4 `ProcurementItem` untuk BAP November (10 Roll Kabel UTP, 2 Unit Switch Hub, 5 Unit Mouse,
   1 Unit SSD), semua `checked: true`.
-- User: `headmaster@smkhkti2.sch.id` (role `HEADMASTER`), `budi@…` (`TEACHER`),
-  `admin@…` (`ADMIN`).
+- User: `budi@…` (`TEACHER`, guru pengawas) dan `admin@…` (`ADMIN`).
+- `SchoolSettings`: cukup data yang ada (nama sekolah, alamat, telepon, email, website, logo).
+  **Tidak perlu** field kepala sekolah — dokumen BAP & laporan tidak memuat tanda tangannya.
 
 Semua angka di dokumen desain (159 unit/tahun, 420 unit arsip) tidak harus persis — yang penting
 konsisten antar layar.

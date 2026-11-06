@@ -1,0 +1,208 @@
+# Dasbor — Dark
+
+- id kanvas: `k5DQog`
+- tema: dark
+- frame: 1440×880
+- posisi: (0, 5881)
+
+## Layer tree
+
+- **Dasbor — Dark** · `frame` · 1440×880 · fill: app-bg(#202124) · theme={"mode":"dark"} · clip
+  - **Sidebar** · `frame` · 264×fill_container · layout=vertical gap=24 pad=24/18 · fill: navy(#1B1C1F)
+    - **Brand** · `frame` · fill_container×fit · gap=12 align=center
+      - **Mark** · `frame` · 38×38 · justify=center align=center r=11 · fill: brand(#1A73E8)
+        - **Icon** · `icon` · 20×20 · fill: #FFFFFF · library=lucide
+          - <graduation-cap>
+      - **Brand Text** · `frame` · fill_container×fit · layout=vertical gap=1
+        - **School** · `text` · fit×fit · fill: #FFFFFF
+          - “SMK HKTI 2” (14.5px/800)
+        - **Product** · `text` · fit×fit · fill: #80868B
+          - “HIKA Inventaris” (11px/500)
+    - **Nav** · `frame` · fill_container×fit · layout=vertical gap=4
+      - **Nav Label** · `text` · fit×fit · fill: #5F6368
+        - “MENU UTAMA” (9.5px/normal)
+      - **Nav List** · `frame` · fill_container×fit · layout=vertical gap=4
+        - **Nav Dasbor** · `ref` · fill_container×fit · fill: #3C4043 · ref=Z0vAf · descendants={"NR61K":{"icon":"layout-dashboard","fill":"#FFFFFF"},"UgURJ":{"content":"Dasbor","fill":"#FFFFFF"}}
+        - **Nav Inventaris** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"boxes","fill":"#93A7C4"},"UgURJ":{"content":"Inventaris","fill":"#93A7C4"}}
+        - **Nav Cetak Barcode** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"barcode","fill":"#93A7C4"},"UgURJ":{"content":"Cetak Barcode","fill":"#93A7C4"}}
+        - **Nav Peminjaman** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"shopping-cart","fill":"#93A7C4"},"UgURJ":{"content":"Peminjaman","fill":"#93A7C4"}
+        - **Nav Laporan** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"chart-column","fill":"#93A7C4"},"UgURJ":{"content":"Laporan","fill":"#93A7C4"}}
+        - **Nav Pengaturan** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"settings","fill":"#93A7C4"},"UgURJ":{"content":"Pengaturan","fill":"#93A7C4"}}
+    - **Spacer** · `frame` · fill_container×fill_container
+    - **User Card** · `frame` · fill_container×fit · gap=10 pad=11 align=center r=12 · fill: #2A2B2E
+      - **Avatar** · `frame` · 32×32 · justify=center align=center r=999 · fill: brand(#1A73E8)
+        - **Initial** · `text` · fit×fit · fill: #FFFFFF
+          - “A” (13px/800)
+      - **User Text** · `frame` · fill_container×fit · layout=vertical gap=1
+        - **Name** · `text` · fit×fit · fill: #FFFFFF
+          - “Admin Sekolah” (12.5px/700)
+        - **Email** · `text` · fit×fit · fill: #80868B
+          - “admin@smkhkti2.sch.id” (10px/normal)
+      - **Logout** · `icon` · 15×15 · fill: #80868B · library=lucide
+        - <log-out>
+  - **Main** · `frame` · fill_container×fill_container · layout=vertical gap=22 pad=26/32 · fill: app-bg(#202124)
+    - **Topbar** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Title Block** · `frame` · fit×fit · layout=vertical gap=5
+        - **Page Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - “Dasbor Inventaris” (27px/800)
+        - **Page Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - “Status stok barang dan ringkasan aktivitas sekolah terkini.” (13.5px/normal)
+      - **Actions** · `frame` · fit×fit · gap=10 align=center
+        - **Search** · `ref` · 236×fit · ref=gPVoD
+        - **Icon Button** · `frame` · 38×38 · justify=center align=center r=10 · fill: surface(#292A2D) · stroke=line(#3C4043) · strokeWidth=1
+          - **Icon** · `icon` · 16×16 · fill: muted(#9AA0A6) · library=lucide
+            - <sun>
+        - **Icon Button** · `frame` · 38×38 · justify=center align=center r=10 · fill: surface(#292A2D) · stroke=line(#3C4043) · strokeWidth=1
+          - **Icon** · `icon` · 16×16 · fill: muted(#9AA0A6) · library=lucide
+            - <bell>
+        - **Tambah Barang** · `ref` · fit×fit · ref=YpfPQ · descendants={"pXxWX":{"content":"Tambah Barang"}}
+    - **KPI Row** · `frame` · fill_container×fit · gap=14
+      - **Total Barang** · `ref` · fill_container×fit · ref=KkQWr · descendants={"PSgwu":{"content":"Total Barang"},"LQwnV":{"fill":"$brand-soft"},"SY33q":{"icon":"boxes","fill":"$
+      - **Stok Rendah** · `ref` · fill_container×fit · ref=KkQWr · descendants={"PSgwu":{"content":"Stok Rendah"},"LQwnV":{"fill":"$rose-soft"},"SY33q":{"icon":"triangle-alert","f
+      - **Peminjaman Aktif** · `ref` · fill_container×fit · ref=KkQWr · descendants={"PSgwu":{"content":"Peminjaman Aktif"},"LQwnV":{"fill":"$amber-soft"},"SY33q":{"icon":"clock","fill
+      - **Pengadaan BOS** · `ref` · fill_container×fit · ref=KkQWr · descendants={"PSgwu":{"content":"Pengadaan BOS"},"LQwnV":{"fill":"$mint-soft"},"SY33q":{"icon":"shopping-cart","
+    - **BOS Strip** · `frame` · fill_container×fit · gap=14 pad=14/18 align=center r=16 · fill: surface(#292A2D) · stroke=line(#3C4043) · strokeWidth=1
+      - **Icon Chip** · `frame` · 38×38 · justify=center align=center r=10 · fill: mint-soft(#2C3630)
+        - **Icon** · `icon` · 18×18 · fill: mint(#81C995) · library=lucide
+          - <clipboard-list>
+      - **Text** · `frame` · fill_container×fit · layout=vertical gap=3
+        - **Line 1** · `frame` · fill_container×fit · gap=8 align=center
+          - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+            - “Pengadaan BOS · November 2026” (13px/700)
+          - **Badge Sah & Lengkap** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Sah & Lengkap","fill":"$mint","fontSize":10}}
+        - **Line 2** · `frame` · fill_container×fit · gap=10 align=center
+          - **BAP Number** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+            - “027/BAP-BOS/XI/2026” (10.5px/600)
+          - **Meta** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “4 jenis · 18 unit” (10.5px/normal)
+          - **Divider** · `frame` · 3×3 · r=999 · fill: line(#3C4043)
+          - **Inspector** · `frame` · fit×fit · gap=5 align=center
+            - **Icon** · `icon` · 11×11 · fill: muted(#9AA0A6) · library=lucide
+              - <user-check>
+            - **Name** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Budi Santoso” (10.5px/normal)
+      - **Actions** · `frame` · fit×fit · gap=8 align=center
+        - **Button Lihat BAP** · `frame` · fit×fit · gap=8 pad=9/14 justify=center align=center r=10 · fill: surface(#292A2D) · stroke=line(#3C4043) · strokeWidth=1
+          - **Icon** · `icon` · 13×13 · fill: ink-soft(#BDC1C6) · library=lucide
+            - <file-text>
+          - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+            - “Lihat BAP” (12px/700)
+    - **Body** · `frame` · fill_container×fill_container · gap=16
+      - **Aktivitas Card** · `frame` · fill_container×fill_container · layout=vertical gap=18 pad=22 r=16 · fill: surface(#292A2D) · stroke=line(#3C4043) · strokeWidth=1
+        - **Card Header** · `frame` · fill_container×fit · justify=space_between
+          - **Left** · `frame` · fit×fit · layout=vertical gap=4
+            - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “Aktivitas Terbaru” (15.5px/700)
+            - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Timeline pencatatan barang dan mutasi logistik.” (12px/normal)
+          - **Live** · `text` · fit×fit · fill: mint(#81C995)
+            - “LIVE” (10px/normal)
+        - **Timeline** · `frame` · fill_container×fit · layout=vertical gap=16
+          - **Activity Row** · `frame` · fill_container×fit · gap=13 align=center
+            - **Chip** · `frame` · 32×32 · justify=center align=center r=9 · fill: rose-soft(#3A2B2A)
+              - **Icon** · `icon` · 15×15 · fill: rose(#F28B82) · library=lucide
+                - <shopping-cart>
+            - **Text** · `frame` · fill_container×fit · layout=vertical gap=3
+              - **Title Line** · `frame` · fit×fit · gap=8 align=center
+                - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+                  - “Barang Dipinjam / Keluar” (13.5px/700)
+                - **Tag keluar** · `ref` · fit×fit · fill: rose-soft(#3A2B2A) · ref=QuGLj · descendants={"QlB0F":{"fill":"$rose"},"rOKja":{"content":"keluar","fill":"$rose"}}
+              - **Meta** · `text` · fit×fit · fill: muted(#9AA0A6)
+                - “Mouse Kabel · 32 unit” (11.5px/normal)
+            - **Time** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “2 Nov · 02.05” (10.5px/normal)
+          - **Activity Row** · `frame` · fill_container×fit · gap=13 align=center
+            - **Chip** · `frame` · 32×32 · justify=center align=center r=9 · fill: mint-soft(#2C3630)
+              - **Icon** · `icon` · 15×15 · fill: mint(#81C995) · library=lucide
+                - <package-plus>
+            - **Text** · `frame` · fill_container×fit · layout=vertical gap=3
+              - **Title Line** · `frame` · fit×fit · gap=8 align=center
+                - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+                  - “Barang Masuk / Ditambah” (13.5px/700)
+                - **Tag masuk** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"masuk","fill":"$mint"}}
+              - **Meta** · `text` · fit×fit · fill: muted(#9AA0A6)
+                - “Monitor 24" · 5 unit” (11.5px/normal)
+            - **Time** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “2 Nov · 02.02” (10.5px/normal)
+          - **Activity Row** · `frame` · fill_container×fit · gap=13 align=center
+            - **Chip** · `frame` · 32×32 · justify=center align=center r=9 · fill: rose-soft(#3A2B2A)
+              - **Icon** · `icon` · 15×15 · fill: rose(#F28B82) · library=lucide
+                - <shopping-cart>
+            - **Text** · `frame` · fill_container×fit · layout=vertical gap=3
+              - **Title Line** · `frame` · fit×fit · gap=8 align=center
+                - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+                  - “Barang Dipinjam / Keluar” (13.5px/700)
+                - **Tag keluar** · `ref` · fit×fit · fill: rose-soft(#3A2B2A) · ref=QuGLj · descendants={"QlB0F":{"fill":"$rose"},"rOKja":{"content":"keluar","fill":"$rose"}}
+              - **Meta** · `text` · fit×fit · fill: muted(#9AA0A6)
+                - “Rexus Mouse Vertical · 1 unit” (11.5px/normal)
+            - **Time** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “2 Nov · 02.00” (10.5px/normal)
+          - **Activity Row** · `frame` · fill_container×fit · gap=13 align=center
+            - **Chip** · `frame` · 32×32 · justify=center align=center r=9 · fill: rose-soft(#3A2B2A)
+              - **Icon** · `icon` · 15×15 · fill: rose(#F28B82) · library=lucide
+                - <shopping-cart>
+            - **Text** · `frame` · fill_container×fit · layout=vertical gap=3
+              - **Title Line** · `frame` · fit×fit · gap=8 align=center
+                - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+                  - “Barang Dipinjam / Keluar” (13.5px/700)
+                - **Tag keluar** · `ref` · fit×fit · fill: rose-soft(#3A2B2A) · ref=QuGLj · descendants={"QlB0F":{"fill":"$rose"},"rOKja":{"content":"keluar","fill":"$rose"}}
+              - **Meta** · `text` · fit×fit · fill: muted(#9AA0A6)
+                - “Rexus Mouse Vertical · 1 unit” (11.5px/normal)
+            - **Time** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “2 Nov · 01.59” (10.5px/normal)
+          - **Activity Row** · `frame` · fill_container×fit · gap=13 align=center
+            - **Chip** · `frame` · 32×32 · justify=center align=center r=9 · fill: mint-soft(#2C3630)
+              - **Icon** · `icon` · 15×15 · fill: mint(#81C995) · library=lucide
+                - <package-plus>
+            - **Text** · `frame` · fill_container×fit · layout=vertical gap=3
+              - **Title Line** · `frame` · fit×fit · gap=8 align=center
+                - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+                  - “Barang Masuk / Ditambah” (13.5px/700)
+                - **Tag masuk** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"masuk","fill":"$mint"}}
+              - **Meta** · `text` · fit×fit · fill: muted(#9AA0A6)
+                - “RAM DDR4 8GB · 12 unit” (11.5px/normal)
+            - **Time** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “1 Nov · 14.20” (10.5px/normal)
+        - **Spacer** · `frame` · fill_container×fill_container
+        - **Card Footer** · `frame` · fill_container×fit · pad=13/16 justify=space_between align=center r=10 · fill: surface-2(#303134) · stroke=line(#3C4043) · strokeWidth=1
+          - **Foot Text** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “Menampilkan 5 dari 128 aktivitas” (11.5px/normal)
+          - **Foot Link** · `text` · fit×fit · fill: brand(#1A73E8)
+            - “Lihat semua →” (11.5px/700)
+      - **Stok Card** · `frame` · 322×fill_container · layout=vertical gap=16 pad=18/20 r=16 · fill: surface(#292A2D) · stroke=line(#3C4043) · strokeWidth=1
+        - **Card Header** · `frame` · fill_container×fit · layout=vertical gap=4
+          - **Title Line** · `frame` · fit×fit · gap=8 align=center
+            - **Icon** · `icon` · 15×15 · fill: rose(#F28B82) · library=lucide
+              - <triangle-alert>
+            - **Title** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “Stok Hampir Habis” (15.5px/700)
+          - **Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “Segera lakukan pengadaan barang berikut.” (12px/normal)
+        - **Stock List** · `frame` · fill_container×fit · layout=vertical gap=15
+          - **Stock Item** · `frame` · fill_container×fit · layout=vertical gap=7
+            - **Line** · `frame` · fill_container×fit · justify=space_between align=center
+              - **Left** · `frame` · fill_container×fit · layout=vertical gap=2
+                - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+                  - “Monitor 22"” (12.5px/700)
+                - **Loc** · `text` · fit×fit · fill: muted(#9AA0A6)
+                  - “Gudang” (10.5px/normal)
+              - **Qty** · `text` · fit×fit · fill: rose(#F28B82)
+                - “0” (14px/700)
+            - **Track** · `frame` · fill_container×5 · r=3 · fill: #3C4043
+          - **Stock Item** · `frame` · fill_container×fit · layout=vertical gap=7
+            - **Line** · `frame` · fill_container×fit · justify=space_between align=center
+              - **Left** · `frame` · fill_container×fit · layout=vertical gap=2
+                - **Name** · `text` · fit×fit · fill: ink(#E8EAED)
+                  - “RAM DDR3 4GB” (12.5px/700)
+                - **Loc** · `text` · fit×fit · fill: muted(#9AA0A6)
+                  - “Gudang” (10.5px/normal)
+              - **Qty** · `text` · fit×fit · fill: ink(#E8EAED)
+                - “5” (14px/700)
+            - **Track** · `frame` · fill_container×5 · r=3 · fill: #3C4043
+              - **Bar** · `frame` · 150×5 · r=3 · fill: rose(#F28B82)
+        - **Spacer** · `frame` · fill_container×fill_container
+        - **Order Btn** · `frame` · fill_container×fit · gap=8 pad=11/0 justify=center align=center r=10 · fill: brand(#1A73E8)
+          - **Icon** · `icon` · 14×14 · fill: #FFFFFF · library=lucide
+            - <clipboard-list>
+          - **Label** · `text` · fit×fit · fill: #FFFFFF
+            - “Buat Daftar Pengadaan” (12.5px/700)

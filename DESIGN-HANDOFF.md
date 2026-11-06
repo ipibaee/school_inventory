@@ -1,33 +1,24 @@
-# Redesign handoff — baca ini dulu
+# Handoff desain — baca ini dulu
 
-UI aplikasi ini sudah didesain ulang. Semua spesifikasi ada di **`design-handoff/`**.
+Semua spesifikasi desain ada di **`design-handoff/`**.
+**Acuan utama untuk AI agent:** [`design-handoff/ANTIGRAVITY-MASTER.md`](./design-handoff/ANTIGRAVITY-MASTER.md)
 
-**Mulai dari:** [`design-handoff/ANTIGRAVITY-PROMPT.md`](./design-handoff/ANTIGRAVITY-PROMPT.md)
+Isi ringkas:
 
-| File | Isi |
-| --- | --- |
-| `design-handoff/ANTIGRAVITY-PROMPT.md` | instruksi utama untuk AI agent (tugas, aturan, urutan kerja) |
-| `design-handoff/01-design-tokens.md` | token warna, tipografi, radius, spacing, ikon |
-| `design-handoff/tokens.css` | isi pengganti tema di `src/app/globals.css` |
-| `design-handoff/02-layout-shells.md` | shell desktop (sidebar 264px) & mobile (app bar + bottom nav 62px) |
-| `design-handoff/03-components.md` | spesifikasi komponen + resep kelas Tailwind |
-| `design-handoff/04-screens.md` | isi tiap route (`/login`, `/dashboard`, …) |
-| `design-handoff/05-implementation-plan.md` | langkah kerja + checklist acceptance |
-| `design-handoff/ALL-IN-ONE.md` | semua file di atas digabung jadi satu |
-| `design-handoff/reference/png/` | 34 screenshot desain (light/dark, desktop/mobile) |
-| `design-handoff/reference/html/` | export HTML+Tailwind sebagai acuan ukuran & markup |
-| `design-handoff/spec/` | layer tree detail per layar |
+| Bagian | File | Isi |
+| --- | --- | --- |
+| Instruksi induk | `design-handoff/ANTIGRAVITY-MASTER.md` | seluruh pekerjaan (restyle + modul BOS + revisi final) |
+| Design system | `01-design-tokens.md`, `tokens.css`, `02-layout-shells.md`, `03-components.md` | token, shell, komponen |
+| Layar lama | `04-screens.md`, `reference/png|html/` | login, dashboard, inventory, barcode, borrow, reports, settings |
+| Rencana fase A | `05-implementation-plan.md` | langkah restyle |
+| Modul BOS (fase B) | `v2-pengadaan-bos/` | pengadaan, BAP A4 + QR, pemeriksaan, arsip, verifikasi publik |
+| Detail layar baru | `v2-pengadaan-bos/01-screens.md` (§9 = template cetak laporan) | 8 layar + 4 template cetak |
+| Semua dokumen v2 | `v2-pengadaan-bos/ALL-IN-ONE-V2.md` | gabungan sekali lampir |
 
-Ringkas: ganti gaya glassmorphism lama → flat institutional SaaS, font Plus Jakarta Sans,
-aksen `#2B4EFF`, sidebar navy `#0A1730`. Fitur, route, dan server action **tidak berubah**.
+**Keputusan final yang wajib dipatuhi**
 
----
-
-## V2 — Modul Pengadaan BOS / BAP (fitur baru)
-
-- Prompt: `design-handoff/v2-pengadaan-bos/ANTIGRAVITY-V2.md`
-- Semua dokumen digabung: `design-handoff/v2-pengadaan-bos/ALL-IN-ONE-V2.md`
-- Referensi: `v2-pengadaan-bos/reference/png/` (15 gambar), `reference/html/`, `spec/`
-
-Isi: 8 layar (7 dengan versi dark), model Prisma baru, alur peran & state machine,
-server actions, spesifikasi cetak A4 + QR verifikasi publik.
+1. Satu dasbor saja (`/dashboard`) + blok BOS — **tidak ada** dasbor kedua/`/executive`.
+2. Arsip BAP = tab di `/reports` — **tidak ada** route arsip terpisah.
+3. **Tidak ada role/menu/halaman Kepala Sekolah**, dan **tanda tangannya dihapus** dari semua
+   dokumen (BAP & laporan).
+4. Format cetak BAP + 4 laporan memakai template A4 resmi (KOP, tabel bergaris, 2 tanda tangan).

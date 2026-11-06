@@ -4,374 +4,373 @@
 - tema: light
 - frame: 1440×880
 - posisi: (0, 9900)
-- layout: layout=none
 
 ## Layer tree
 
-- **Pengadaan BOS — Redesign** · `frame` · 1440×880 · layout=none · fill: app-bg(#F4F7FB) · x=0 · y=9900 · clip
-  - **Sidebar** · `frame` · 264×880 · layout=vertical gap=24 pad=24/18 · fill: navy(#0A1730) · x=0 · y=0
+- **Pengadaan BOS — Redesign** · `frame` · 1440×880 · layout=none · fill: app-bg(#F4F7FB) · clip
+  - **Sidebar** · `frame` · 264×880 · layout=vertical gap=24 pad=24/18 · fill: navy(#0A1730)
     - **Brand** · `frame` · fill_container×fit · gap=12 align=center
       - **Mark** · `frame` · 38×38 · justify=center align=center r=11 · fill: brand(#2B4EFF)
         - **Icon** · `icon` · 20×20 · fill: #FFFFFF · library=lucide
-          - <graduation-cap · lucide>
+          - <graduation-cap>
       - **Brand Text** · `frame` · fill_container×fit · layout=vertical gap=1
         - **School** · `text` · fit×fit · fill: #FFFFFF
-          - “SMK HKTI 2” (14.5px/800, #FFFFFF)
+          - “SMK HKTI 2” (14.5px/800)
         - **Product** · `text` · fit×fit · fill: #8296B4
-          - “HIKA Inventaris” (11px/500, #8296B4)
+          - “HIKA Inventaris” (11px/500)
     - **Nav** · `frame` · fill_container×fit · layout=vertical gap=5
       - **Nav Label** · `text` · fit×fit · fill: #5C7295
-        - “MENU UTAMA” (9.5px/normal, #5C7295)
+        - “MENU UTAMA” (9.5px/normal)
       - **Nav List** · `frame` · fill_container×fit · layout=vertical gap=4
         - **Nav Dasbor** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"layout-dashboard","fill":"#93A7C4"},"UgURJ":{"content":"Dasbor","fill":"#93A7C4"}}
         - **Nav Inventaris** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"boxes","fill":"#93A7C4"},"UgURJ":{"content":"Inventaris","fill":"#93A7C4"}}
-        - **Nav Pengadaan BOS** · `ref` · fill_container×fit · fill: #1B3364 · ref=Z0vAf · descendants={"NR61K":{"icon":"clipboard-list","fill":"#FFFFFF"},"UgURJ":{"content":"Pengadaan BOS","fill":"#FFFFFF"}}
+        - **Nav Pengadaan BOS** · `ref` · fill_container×fit · fill: #1B3364 · ref=Z0vAf · descendants={"NR61K":{"icon":"clipboard-list","fill":"#FFFFFF"},"UgURJ":{"content":"Pengadaan BOS","fill":"#FFFF
         - **Nav Cetak Barcode** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"barcode","fill":"#93A7C4"},"UgURJ":{"content":"Cetak Barcode","fill":"#93A7C4"}}
-        - **Nav Peminjaman** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"shopping-cart","fill":"#93A7C4"},"UgURJ":{"content":"Peminjaman","fill":"#93A7C4"}}
+        - **Nav Peminjaman** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"shopping-cart","fill":"#93A7C4"},"UgURJ":{"content":"Peminjaman","fill":"#93A7C4"}
         - **Nav Laporan** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"chart-column","fill":"#93A7C4"},"UgURJ":{"content":"Laporan","fill":"#93A7C4"}}
         - **Nav Pengaturan** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"settings","fill":"#93A7C4"},"UgURJ":{"content":"Pengaturan","fill":"#93A7C4"}}
     - **Spacer** · `frame` · fill_container×fill_container
     - **User Card** · `frame` · fill_container×fit · gap=10 pad=11 align=center r=12 · fill: #122444
       - **Avatar** · `frame` · 32×32 · justify=center align=center r=999 · fill: brand(#2B4EFF)
         - **Initial** · `text` · fit×fit · fill: #FFFFFF
-          - “A” (13px/800, #FFFFFF)
+          - “A” (13px/800)
       - **User Text** · `frame` · fill_container×fit · layout=vertical gap=1
         - **Name** · `text` · fit×fit · fill: #FFFFFF
-          - “Admin Sekolah” (12.5px/700, #FFFFFF)
+          - “Admin Sekolah” (12.5px/700)
         - **Role** · `text` · fit×fit · fill: #8296B4
-          - “admin@smkhkti2.sch.id” (10px/normal, #8296B4)
+          - “admin@smkhkti2.sch.id” (10px/normal)
       - **Icon** · `icon` · 15×15 · fill: #8296B4 · library=lucide
-        - <log-out · lucide>
-  - **Main** · `frame` · 1176×880 · layout=vertical gap=18 pad=26/32 · fill: app-bg(#F4F7FB) · x=264 · y=0
+        - <log-out>
+  - **Main** · `frame` · 1176×880 · layout=vertical gap=18 pad=26/32 · fill: app-bg(#F4F7FB)
     - **Topbar** · `frame` · fill_container×fit · gap=16 justify=space_between align=center
       - **Title Block** · `frame` · fit×fit · layout=vertical gap=5
         - **Breadcrumbs** · `frame` · fit×fit · gap=6 align=center
           - **Crumb 1** · `text` · fit×fit · fill: muted(#74849A)
-            - “Inventaris” (11px/normal, muted(#74849A))
+            - “Inventaris” (11px/normal)
           - **Icon** · `icon` · 11×11 · fill: muted(#74849A) · library=lucide
-            - <chevron-right · lucide>
+            - <chevron-right>
           - **Crumb 2** · `text` · fit×fit · fill: brand(#2B4EFF)
-            - “Pengadaan BOS” (11px/600, brand(#2B4EFF))
+            - “Pengadaan BOS” (11px/600)
         - **Page Title** · `text` · fit×fit · fill: ink(#0B1B2E)
-          - “Pengajuan Pengadaan Barang BOS” (27px/800, ink(#0B1B2E))
+          - “Pengajuan Pengadaan Barang BOS” (27px/800)
         - **Page Sub** · `text` · fit×fit · fill: muted(#74849A)
-          - “Formulir pencatatan barang belanjaan Dana BOS bulanan sebelum diperiksa tim pengawas.” (13.5px/normal, muted(#74849A))
+          - “Formulir pencatatan barang belanjaan Dana BOS bulanan sebelum diperiksa tim pengawas.” (13.5px/normal)
       - **Actions** · `frame` · fit×fit · gap=9 align=center
-        - **Button Simpan Draft** · `frame` · fit×fit · gap=8 pad=11/16 justify=center align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Button Simpan Draft** · `frame` · fit×fit · gap=8 pad=11/16 justify=center align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
           - **Icon** · `icon` · 16×16 · fill: ink-soft(#3B4A5F) · library=lucide
-            - <save · lucide>
+            - <save>
           - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-            - “Simpan Draft” (13.5px/700, ink-soft(#3B4A5F))
+            - “Simpan Draft” (13.5px/700)
         - **Button Kirim ke Guru Pengawas** · `frame` · fit×fit · gap=8 pad=11/18 justify=center align=center r=10 · fill: brand(#2B4EFF)
           - **Icon** · `icon` · 16×16 · fill: #FFFFFF · library=lucide
-            - <send · lucide>
+            - <send>
           - **Label** · `text` · fit×fit · fill: #FFFFFF
-            - “Kirim ke Guru Pengawas” (13.5px/700, #FFFFFF)
+            - “Kirim ke Guru Pengawas” (13.5px/700)
     - **Body** · `frame` · fill_container×fill_container · gap=16
       - **Kolom Informasi** · `frame` · 400×fit · layout=vertical gap=14
-        - **Informasi Berita Acara** · `frame` · fill_container×fit · layout=vertical r=16 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
-          - **Card Head** · `frame` · fill_container×fit · gap=12 pad=16/20 justify=space_between align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+        - **Informasi Berita Acara** · `frame` · fill_container×fit · layout=vertical r=16 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
+          - **Card Head** · `frame` · fill_container×fit · gap=12 pad=16/20 justify=space_between align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
             - **Head Text** · `frame` · fill_container×fit · layout=vertical gap=4
               - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
-                - “Informasi Berita Acara” (15.5px/700, ink(#0B1B2E))
+                - “Informasi Berita Acara” (15.5px/700)
               - **Sub** · `text` · fill_container×fit · fill: muted(#74849A)
-                - “Data ini tercetak pada dokumen BAP resmi.” (12px/normal, muted(#74849A))
+                - “Data ini tercetak pada dokumen BAP resmi.” (12px/normal)
             - **Badge Draft** · `ref` · fit×fit · fill: surface-2(#FAFCFE) · ref=QuGLj · descendants={"QlB0F":{"fill":"$muted"},"rOKja":{"content":"Draft","fill":"$muted","fontSize":10}}
           - **Form Body** · `frame` · fill_container×fit · layout=vertical gap=14 pad=16/20
             - **Row Bulan Tahun** · `frame` · fill_container×fit · gap=10
               - **Field BULAN** · `frame` · fill_container×fit · layout=vertical gap=6
                 - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                  - “BULAN” (11.5px/700, ink-soft(#3B4A5F))
-                - **Input** · `frame` · fill_container×fit · gap=9 pad=10/12 align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+                  - “BULAN” (11.5px/700)
+                - **Input** · `frame` · fill_container×fit · gap=9 pad=10/12 align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
                   - **Value Wrap** · `frame` · fill_container×fit · layout=vertical gap=1
                     - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
-                      - “November” (12.5px/600, ink(#0B1B2E))
+                      - “November” (12.5px/600)
                   - **Icon** · `icon` · 12×12 · fill: muted(#74849A) · library=lucide
-                    - <chevron-down · lucide>
+                    - <chevron-down>
               - **Field TAHUN** · `frame` · fill_container×fit · layout=vertical gap=6
                 - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                  - “TAHUN” (11.5px/700, ink-soft(#3B4A5F))
-                - **Input** · `frame` · fill_container×fit · gap=9 pad=10/12 align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+                  - “TAHUN” (11.5px/700)
+                - **Input** · `frame` · fill_container×fit · gap=9 pad=10/12 align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
                   - **Value Wrap** · `frame` · fill_container×fit · layout=vertical gap=1
                     - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
-                      - “2026” (12.5px/600, ink(#0B1B2E))
+                      - “2026” (12.5px/600)
                   - **Icon** · `icon` · 12×12 · fill: muted(#74849A) · library=lucide
-                    - <chevron-down · lucide>
+                    - <chevron-down>
             - **Field NOMOR BAP (OTOMATIS)** · `frame` · fill_container×fit · layout=vertical gap=6
               - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                - “NOMOR BAP (OTOMATIS)” (11.5px/700, ink-soft(#3B4A5F))
-              - **Input** · `frame` · fill_container×fit · gap=9 pad=10/12 align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+                - “NOMOR BAP (OTOMATIS)” (11.5px/700)
+              - **Input** · `frame` · fill_container×fit · gap=9 pad=10/12 align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
                 - **Icon** · `icon` · 14×14 · fill: muted(#74849A) · library=lucide
-                  - <lock · lucide>
+                  - <lock>
                 - **Value Wrap** · `frame` · fill_container×fit · layout=vertical gap=1
                   - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
-                    - “027/BAP-BOS/XI/2026” (12.5px/600, ink(#0B1B2E))
+                    - “027/BAP-BOS/XI/2026” (12.5px/600)
                 - **Icon** · `icon` · 12×12 · fill: muted(#74849A) · library=lucide
-                  - <check · lucide>
+                  - <check>
               - **Badge AUTO** · `ref` · fit×fit · fill: brand-soft(#EBEFFF) · ref=QuGLj · descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"AUTO","fill":"$brand","fontSize":9}}
             - **Field GURU PENGAWAS PEMERIKSA** · `frame` · fill_container×fit · layout=vertical gap=6
               - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                - “GURU PENGAWAS PEMERIKSA” (11.5px/700, ink-soft(#3B4A5F))
-              - **Input** · `frame` · fill_container×fit · gap=9 pad=10/12 align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+                - “GURU PENGAWAS PEMERIKSA” (11.5px/700)
+              - **Input** · `frame` · fill_container×fit · gap=9 pad=10/12 align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
                 - **Icon** · `icon` · 14×14 · fill: muted(#74849A) · library=lucide
-                  - <user-check · lucide>
+                  - <user-check>
                 - **Value Wrap** · `frame` · fill_container×fit · layout=vertical gap=1
                   - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
-                    - “Drs. Budi Santoso” (12.5px/600, ink(#0B1B2E))
+                    - “Drs. Budi Santoso” (12.5px/600)
                   - **Sub** · `text` · fit×fit · fill: muted(#74849A)
-                    - “NIP. 19780512 200501 1 008” (10px/normal, muted(#74849A))
+                    - “NIP. 19780512 200501 1 008” (10px/normal)
                 - **Icon** · `icon` · 12×12 · fill: muted(#74849A) · library=lucide
-                  - <chevron-down · lucide>
+                  - <chevron-down>
             - **Field Sumber Dana** · `frame` · fill_container×fit · layout=vertical gap=6
               - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                - “SUMBER DANA” (11.5px/700, ink-soft(#3B4A5F))
+                - “SUMBER DANA” (11.5px/700)
               - **Source Row** · `frame` · fill_container×fit · gap=8 align=center
-                - **Badge Dana BOSP / BOS Reguler 2026** · `ref` · fit×fit · fill: brand-soft(#EBEFFF) · ref=QuGLj · descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"Dana BOSP / BOS Reguler 2026","fill":"$brand","fontSize":11}}
+                - **Badge Dana BOSP / BOS Reguler 2026** · `ref` · fit×fit · fill: brand-soft(#EBEFFF) · ref=QuGLj · descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"Dana BOSP / BOS Reguler 2026","fill":"$brand","fontSi
                 - **Link** · `text` · fit×fit · fill: muted(#74849A)
-                  - “Ubah” (10.5px/700, muted(#74849A))
+                  - “Ubah” (10.5px/700)
             - **Field CATATAN PENGADAAN** · `frame` · fill_container×fit · layout=vertical gap=6
               - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                - “CATATAN PENGADAAN” (11.5px/700, ink-soft(#3B4A5F))
-              - **Input** · `frame` · fill_container×88 · gap=9 pad=10/12 r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+                - “CATATAN PENGADAAN” (11.5px/700)
+              - **Input** · `frame` · fill_container×88 · gap=9 pad=10/12 r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
                 - **Value Wrap** · `frame` · fill_container×fit · layout=vertical gap=1
                   - **Value** · `text` · fill_container×fit · fill: muted(#74849A)
-                    - “Belanja rutin bulan November untuk kebutuhan Lab. Software 1 dan ruang guru.” (11.5px/normal, muted(#74849A))
-          - **Card Foot** · `frame` · fill_container×fit · pad=12/20 justify=space_between align=center r=0/0/16/16 · fill: surface-2(#FAFCFE) · stroke=line(#E3EAF3) {"top":1} · strokeWidth={"top":1}
+                    - “Belanja rutin bulan November untuk kebutuhan Lab. Software 1 dan ruang guru.” (11.5px/normal)
+          - **Card Foot** · `frame` · fill_container×fit · pad=12/20 justify=space_between align=center r=0/0/16/16 · fill: surface-2(#FAFCFE) · stroke=line(#E3EAF3) · strokeWidth={"top":1}
             - **Note** · `text` · fit×fit · fill: muted(#74849A)
-              - “Draft diperbarui 14:22 WIB” (10.5px/normal, muted(#74849A))
+              - “Draft diperbarui 14:22 WIB” (10.5px/normal)
             - **Link** · `text` · fit×fit · fill: brand(#2B4EFF)
-              - “Lihat riwayat” (10.5px/700, brand(#2B4EFF))
-        - **Alur Verifikasi** · `frame` · fill_container×fit · layout=vertical gap=12 pad=16/18 r=16 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+              - “Lihat riwayat” (10.5px/700)
+        - **Alur Verifikasi** · `frame` · fill_container×fit · layout=vertical gap=12 pad=16/18 r=16 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
           - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
-            - “Alur Verifikasi” (13px/700, ink(#0B1B2E))
+            - “Alur Verifikasi” (13px/700)
           - **Step Draft pengajuan** · `frame` · fill_container×fit · gap=10 align=center
             - **Dot** · `frame` · 22×22 · justify=center align=center r=999 · fill: mint-soft(#E4F7F0)
               - **Icon** · `icon` · 11×11 · fill: mint(#0EA47A) · library=lucide
-                - <check · lucide>
+                - <check>
             - **Label** · `text` · fill_container×fit · fill: ink(#0B1B2E)
-              - “Draft pengajuan” (11.5px/600, ink(#0B1B2E))
+              - “Draft pengajuan” (11.5px/600)
             - **Status** · `text` · fit×fit · fill: mint(#0EA47A)
-              - “Selesai” (9.5px/700, mint(#0EA47A))
+              - “Selesai” (9.5px/700)
           - **Step Diperiksa Guru Pengawas** · `frame` · fill_container×fit · gap=10 align=center
             - **Dot** · `frame` · 22×22 · justify=center align=center r=999 · fill: brand-soft(#EBEFFF)
               - **Icon** · `icon` · 11×11 · fill: brand(#2B4EFF) · library=lucide
-                - <timer · lucide>
+                - <timer>
             - **Label** · `text` · fill_container×fit · fill: ink(#0B1B2E)
-              - “Diperiksa Guru Pengawas” (11.5px/600, ink(#0B1B2E))
+              - “Diperiksa Guru Pengawas” (11.5px/600)
             - **Status** · `text` · fit×fit · fill: brand(#2B4EFF)
-              - “Menunggu” (9.5px/700, brand(#2B4EFF))
+              - “Menunggu” (9.5px/700)
           - **Step Disahkan & diarsipkan** · `frame` · fill_container×fit · gap=10 align=center
             - **Dot** · `frame` · 22×22 · justify=center align=center r=999 · fill: surface-2(#FAFCFE)
               - **Icon** · `icon` · 11×11 · fill: muted(#74849A) · library=lucide
-                - <archive · lucide>
+                - <archive>
             - **Label** · `text` · fill_container×fit · fill: muted(#74849A)
-              - “Disahkan & diarsipkan” (11.5px/500, muted(#74849A))
+              - “Disahkan & diarsipkan” (11.5px/500)
             - **Status** · `text` · fit×fit · fill: muted(#74849A)
-              - “Belum” (9.5px/700, muted(#74849A))
+              - “Belum” (9.5px/700)
       - **Kolom Daftar Barang** · `frame` · fill_container×fill_container · layout=vertical gap=12
         - **List Head** · `frame` · fill_container×fit · gap=12 justify=space_between align=center
           - **Title Wrap** · `frame` · fit×fit · gap=9 align=center
             - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
-              - “Daftar Barang Belanjaan” (15.5px/700, ink(#0B1B2E))
+              - “Daftar Barang Belanjaan” (15.5px/700)
             - **Badge 4 jenis** · `ref` · fit×fit · fill: brand-soft(#EBEFFF) · ref=QuGLj · descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"4 jenis","fill":"$brand","fontSize":10}}
           - **Actions** · `frame` · fit×fit · gap=8 align=center
-            - **Button Pilih dari Gudang** · `frame` · fit×fit · gap=8 pad=10/14 justify=center align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+            - **Button Pilih dari Gudang** · `frame` · fit×fit · gap=8 pad=10/14 justify=center align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
               - **Icon** · `icon` · 15×15 · fill: ink-soft(#3B4A5F) · library=lucide
-                - <package-search · lucide>
+                - <package-search>
               - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                - “Pilih dari Gudang” (12.5px/700, ink-soft(#3B4A5F))
+                - “Pilih dari Gudang” (12.5px/700)
             - **Button Tambah Barang Baru** · `frame` · fit×fit · gap=8 pad=10/14 justify=center align=center r=10 · fill: brand-soft(#EBEFFF)
               - **Icon** · `icon` · 15×15 · fill: brand(#2B4EFF) · library=lucide
-                - <plus · lucide>
+                - <plus>
               - **Label** · `text` · fit×fit · fill: brand-deep(#1633C7)
-                - “Tambah Barang Baru” (12.5px/700, brand-deep(#1633C7))
-        - **Table Card** · `frame` · fill_container×fit · layout=vertical r=16 · fill: surface(#FFFFFF) · clip · stroke=line(#E3EAF3) 1 · strokeWidth=1
-          - **Table Head** · `frame` · fill_container×fit · gap=12 pad=9/18 align=center · fill: surface-2(#FAFCFE) · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+                - “Tambah Barang Baru” (12.5px/700)
+        - **Table Card** · `frame` · fill_container×fit · layout=vertical r=16 · fill: surface(#FFFFFF) · clip · stroke=line(#E3EAF3) · strokeWidth=1
+          - **Table Head** · `frame` · fill_container×fit · gap=12 pad=9/18 align=center · fill: surface-2(#FAFCFE) · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
             - **Th No** · `frame` · 22×fit · align=center
               - **Label** · `text` · fit×fit · fill: muted(#74849A)
-                - “NO” (10px/700, muted(#74849A))
+                - “NO” (10px/700)
             - **Th Jenis** · `frame` · 66×fit · align=center
               - **Label** · `text` · fit×fit · fill: muted(#74849A)
-                - “JENIS” (10px/700, muted(#74849A))
+                - “JENIS” (10px/700)
             - **Th Nama Barang & Spesifikasi** · `frame` · fill_container×fit · align=center
               - **Label** · `text` · fill_container×fit · fill: muted(#74849A)
-                - “NAMA BARANG & SPESIFIKASI” (10px/700, muted(#74849A))
+                - “NAMA BARANG & SPESIFIKASI” (10px/700)
             - **Th Kategori** · `frame` · 86×fit · align=center
               - **Label** · `text` · fit×fit · fill: muted(#74849A)
-                - “KATEGORI” (10px/700, muted(#74849A))
+                - “KATEGORI” (10px/700)
             - **Th Jumlah** · `frame` · 46×fit · justify=end align=center
               - **Label** · `text` · fit×fit · fill: muted(#74849A)
-                - “JUMLAH” (10px/700, muted(#74849A))
+                - “JUMLAH” (10px/700)
             - **Th Satuan** · `frame` · 46×fit · align=center
               - **Label** · `text` · fit×fit · fill: muted(#74849A)
-                - “SATUAN” (10px/700, muted(#74849A))
+                - “SATUAN” (10px/700)
             - **Th Aksi** · `frame` · 46×fit · justify=end align=center
               - **Label** · `text` · fit×fit · fill: muted(#74849A)
-                - “AKSI” (10px/700, muted(#74849A))
+                - “AKSI” (10px/700)
           - **Table Body** · `frame` · fill_container×fit · layout=vertical
-            - **Row Kabel UTP Cat6 Belden** · `frame` · fill_container×fit · gap=12 pad=11/18 align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+            - **Row Kabel UTP Cat6 Belden** · `frame` · fill_container×fit · gap=12 pad=11/18 align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
               - **No Cell** · `frame` · 22×fit · align=center
                 - **Val** · `text` · fit×fit · fill: muted(#74849A)
-                  - “1” (10.5px/normal, muted(#74849A))
+                  - “1” (10.5px/normal)
               - **Jenis Cell** · `frame` · 66×fit · align=center
                 - **Badge Baru** · `ref` · fit×fit · fill: brand-soft(#EBEFFF) · ref=QuGLj · descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"Baru","fill":"$brand","fontSize":9.5}}
               - **Nama Cell** · `frame` · fill_container×fit · layout=vertical gap=2
                 - **Name** · `text` · fill_container×fit · fill: ink(#0B1B2E)
-                  - “Kabel UTP Cat6 Belden” (12.5px/700, ink(#0B1B2E))
+                  - “Kabel UTP Cat6 Belden” (12.5px/700)
                 - **Spec** · `text` · fill_container×fit · fill: muted(#74849A)
-                  - “Roll 305 meter · Original” (10.5px/normal, muted(#74849A))
+                  - “Roll 305 meter · Original” (10.5px/normal)
               - **Kategori Cell** · `frame` · 86×fit · align=center
                 - **Val** · `text` · fit×fit · fill: muted(#74849A)
-                  - “Jaringan” (11px/normal, muted(#74849A))
+                  - “Jaringan” (11px/normal)
               - **Jumlah Cell** · `frame` · 46×fit · justify=end align=center
                 - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
-                  - “10” (12px/700, ink(#0B1B2E))
+                  - “10” (12px/700)
               - **Satuan Cell** · `frame` · 46×fit · align=center
                 - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                  - “Roll” (11px/normal, ink-soft(#3B4A5F))
+                  - “Roll” (11px/normal)
               - **Aksi Cell** · `frame` · 46×fit · gap=8 justify=end align=center
                 - **Edit** · `icon` · 13×13 · fill: muted(#74849A) · library=lucide
-                  - <pencil · lucide>
+                  - <pencil>
                 - **Hapus** · `icon` · 13×13 · fill: rose(#D93A47) · library=lucide
-                  - <trash-2 · lucide>
-            - **Row Switch Hub 24 Port D-Link** · `frame` · fill_container×fit · gap=12 pad=11/18 align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+                  - <trash-2>
+            - **Row Switch Hub 24 Port D-Link** · `frame` · fill_container×fit · gap=12 pad=11/18 align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
               - **No Cell** · `frame` · 22×fit · align=center
                 - **Val** · `text` · fit×fit · fill: muted(#74849A)
-                  - “2” (10.5px/normal, muted(#74849A))
+                  - “2” (10.5px/normal)
               - **Jenis Cell** · `frame` · 66×fit · align=center
                 - **Badge Baru** · `ref` · fit×fit · fill: brand-soft(#EBEFFF) · ref=QuGLj · descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"Baru","fill":"$brand","fontSize":9.5}}
               - **Nama Cell** · `frame` · fill_container×fit · layout=vertical gap=2
                 - **Name** · `text` · fill_container×fit · fill: ink(#0B1B2E)
-                  - “Switch Hub 24 Port D-Link” (12.5px/700, ink(#0B1B2E))
+                  - “Switch Hub 24 Port D-Link” (12.5px/700)
                 - **Spec** · `text` · fill_container×fit · fill: muted(#74849A)
-                  - “Gigabit 10/100/1000 · Rackmount” (10.5px/normal, muted(#74849A))
+                  - “Gigabit 10/100/1000 · Rackmount” (10.5px/normal)
               - **Kategori Cell** · `frame` · 86×fit · align=center
                 - **Val** · `text` · fit×fit · fill: muted(#74849A)
-                  - “Jaringan” (11px/normal, muted(#74849A))
+                  - “Jaringan” (11px/normal)
               - **Jumlah Cell** · `frame` · 46×fit · justify=end align=center
                 - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
-                  - “2” (12px/700, ink(#0B1B2E))
+                  - “2” (12px/700)
               - **Satuan Cell** · `frame` · 46×fit · align=center
                 - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                  - “Unit” (11px/normal, ink-soft(#3B4A5F))
+                  - “Unit” (11px/normal)
               - **Aksi Cell** · `frame` · 46×fit · gap=8 justify=end align=center
                 - **Edit** · `icon` · 13×13 · fill: muted(#74849A) · library=lucide
-                  - <pencil · lucide>
+                  - <pencil>
                 - **Hapus** · `icon` · 13×13 · fill: rose(#D93A47) · library=lucide
-                  - <trash-2 · lucide>
-            - **Row Mouse Optik USB Logitech** · `frame` · fill_container×fit · gap=12 pad=11/18 align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+                  - <trash-2>
+            - **Row Mouse Optik USB Logitech** · `frame` · fill_container×fit · gap=12 pad=11/18 align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
               - **No Cell** · `frame` · 22×fit · align=center
                 - **Val** · `text` · fit×fit · fill: muted(#74849A)
-                  - “3” (10.5px/normal, muted(#74849A))
+                  - “3” (10.5px/normal)
               - **Jenis Cell** · `frame` · 66×fit · align=center
                 - **Badge Lama** · `ref` · fit×fit · fill: surface-2(#FAFCFE) · ref=QuGLj · descendants={"QlB0F":{"fill":"$muted"},"rOKja":{"content":"Lama","fill":"$muted","fontSize":9.5}}
               - **Nama Cell** · `frame` · fill_container×fit · layout=vertical gap=2
                 - **Name** · `text` · fill_container×fit · fill: ink(#0B1B2E)
-                  - “Mouse Optik USB Logitech” (12.5px/700, ink(#0B1B2E))
+                  - “Mouse Optik USB Logitech” (12.5px/700)
                 - **Spec** · `text` · fill_container×fit · fill: muted(#74849A)
-                  - “B100 Black · USB 2.0” (10.5px/normal, muted(#74849A))
+                  - “B100 Black · USB 2.0” (10.5px/normal)
               - **Kategori Cell** · `frame` · 86×fit · align=center
                 - **Val** · `text` · fit×fit · fill: muted(#74849A)
-                  - “Aksesoris” (11px/normal, muted(#74849A))
+                  - “Aksesoris” (11px/normal)
               - **Jumlah Cell** · `frame` · 46×fit · justify=end align=center
                 - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
-                  - “5” (12px/700, ink(#0B1B2E))
+                  - “5” (12px/700)
               - **Satuan Cell** · `frame` · 46×fit · align=center
                 - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                  - “Unit” (11px/normal, ink-soft(#3B4A5F))
+                  - “Unit” (11px/normal)
               - **Aksi Cell** · `frame` · 46×fit · gap=8 justify=end align=center
                 - **Edit** · `icon` · 13×13 · fill: muted(#74849A) · library=lucide
-                  - <pencil · lucide>
+                  - <pencil>
                 - **Hapus** · `icon` · 13×13 · fill: rose(#D93A47) · library=lucide
-                  - <trash-2 · lucide>
-            - **Row SSD 1TB Kingston NV2** · `frame` · fill_container×fit · gap=12 pad=11/18 align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+                  - <trash-2>
+            - **Row SSD 1TB Kingston NV2** · `frame` · fill_container×fit · gap=12 pad=11/18 align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
               - **No Cell** · `frame` · 22×fit · align=center
                 - **Val** · `text` · fit×fit · fill: muted(#74849A)
-                  - “4” (10.5px/normal, muted(#74849A))
+                  - “4” (10.5px/normal)
               - **Jenis Cell** · `frame` · 66×fit · align=center
                 - **Badge Baru** · `ref` · fit×fit · fill: brand-soft(#EBEFFF) · ref=QuGLj · descendants={"QlB0F":{"fill":"$brand"},"rOKja":{"content":"Baru","fill":"$brand","fontSize":9.5}}
               - **Nama Cell** · `frame` · fill_container×fit · layout=vertical gap=2
                 - **Name** · `text` · fill_container×fit · fill: ink(#0B1B2E)
-                  - “SSD 1TB Kingston NV2” (12.5px/700, ink(#0B1B2E))
+                  - “SSD 1TB Kingston NV2” (12.5px/700)
                 - **Spec** · `text` · fill_container×fit · fill: muted(#74849A)
-                  - “PCIe 4.0 NVMe M.2” (10.5px/normal, muted(#74849A))
+                  - “PCIe 4.0 NVMe M.2” (10.5px/normal)
               - **Kategori Cell** · `frame` · 86×fit · align=center
                 - **Val** · `text` · fit×fit · fill: muted(#74849A)
-                  - “Penyimpanan” (11px/normal, muted(#74849A))
+                  - “Penyimpanan” (11px/normal)
               - **Jumlah Cell** · `frame` · 46×fit · justify=end align=center
                 - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
-                  - “1” (12px/700, ink(#0B1B2E))
+                  - “1” (12px/700)
               - **Satuan Cell** · `frame` · 46×fit · align=center
                 - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
-                  - “Unit” (11px/normal, ink-soft(#3B4A5F))
+                  - “Unit” (11px/normal)
               - **Aksi Cell** · `frame` · 46×fit · gap=8 justify=end align=center
                 - **Edit** · `icon` · 13×13 · fill: muted(#74849A) · library=lucide
-                  - <pencil · lucide>
+                  - <pencil>
                 - **Hapus** · `icon` · 13×13 · fill: rose(#D93A47) · library=lucide
-                  - <trash-2 · lucide>
-            - **Add Row** · `frame` · fill_container×fit · gap=8 pad=12/18 justify=center align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+                  - <trash-2>
+            - **Add Row** · `frame` · fill_container×fit · gap=8 pad=12/18 justify=center align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
               - **Icon** · `icon` · 13×13 · fill: muted(#74849A) · library=lucide
-                - <plus · lucide>
+                - <plus>
               - **Hint** · `text` · fit×fit · fill: muted(#74849A)
-                - “Tambah baris barang lain” (11px/normal, muted(#74849A))
-          - **Table Foot** · `frame` · fill_container×fit · pad=12/18 justify=space_between align=center · fill: surface-2(#FAFCFE) · stroke=line(#E3EAF3) {"top":1} · strokeWidth={"top":1}
+                - “Tambah baris barang lain” (11px/normal)
+          - **Table Foot** · `frame` · fill_container×fit · pad=12/18 justify=space_between align=center · fill: surface-2(#FAFCFE) · stroke=line(#E3EAF3) · strokeWidth={"top":1}
             - **Total Wrap** · `frame` · fit×fit · gap=8 align=center
               - **Label** · `text` · fit×fit · fill: muted(#74849A)
-                - “Total Barang:” (11.5px/normal, muted(#74849A))
+                - “Total Barang:” (11.5px/normal)
               - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
-                - “4 Jenis · 18 Unit” (12.5px/800, ink(#0B1B2E))
+                - “4 Jenis · 18 Unit” (12.5px/800)
             - **Meta** · `text` · fit×fit · fill: muted(#74849A)
-              - “18 unit · Dana BOS Reguler 2026” (10.5px/normal, muted(#74849A))
-        - **Rekomendasi Gudang** · `frame` · fill_container×fit · layout=vertical r=16 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
-          - **Rec Head** · `frame` · fill_container×fit · pad=14/18 justify=space_between align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+              - “18 unit · Dana BOS Reguler 2026” (10.5px/normal)
+        - **Rekomendasi Gudang** · `frame` · fill_container×fit · layout=vertical r=16 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) · strokeWidth=1
+          - **Rec Head** · `frame` · fill_container×fit · pad=14/18 justify=space_between align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
             - **Head Text** · `frame` · fit×fit · layout=vertical gap=3
               - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
-                - “Stok Gudang Tersedia” (13px/700, ink(#0B1B2E))
+                - “Stok Gudang Tersedia” (13px/700)
               - **Sub** · `text` · fit×fit · fill: muted(#74849A)
-                - “Barang yang sering diajukan untuk laboratorium komputer.” (10.5px/normal, muted(#74849A))
+                - “Barang yang sering diajukan untuk laboratorium komputer.” (10.5px/normal)
             - **Link** · `text` · fit×fit · fill: brand(#2B4EFF)
-              - “Lihat semua stok →” (10.5px/700, brand(#2B4EFF))
-          - **Rec Switch Hub 16 Port TP-Link** · `frame` · fill_container×fit · gap=10 pad=11/18 align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+              - “Lihat semua stok →” (10.5px/700)
+          - **Rec Switch Hub 16 Port TP-Link** · `frame` · fill_container×fit · gap=10 pad=11/18 align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
             - **Chip** · `frame` · 30×30 · justify=center align=center r=8 · fill: brand-soft(#EBEFFF)
               - **Icon** · `icon` · 14×14 · fill: brand(#2B4EFF) · library=lucide
-                - <package · lucide>
+                - <package>
             - **Text** · `frame` · fill_container×fit · layout=vertical gap=2
               - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
-                - “Switch Hub 16 Port TP-Link” (11.5px/700, ink(#0B1B2E))
+                - “Switch Hub 16 Port TP-Link” (11.5px/700)
               - **Spec** · `text` · fit×fit · fill: muted(#74849A)
-                - “Gigabit · rak 1U” (10px/normal, muted(#74849A))
+                - “Gigabit · rak 1U” (10px/normal)
             - **Badge 4 unit** · `ref` · fit×fit · fill: surface-2(#FAFCFE) · ref=QuGLj · descendants={"QlB0F":{"fill":"$muted"},"rOKja":{"content":"4 unit","fill":"$muted","fontSize":9.5}}
             - **Add** · `frame` · 26×26 · justify=center align=center r=8 · fill: brand-soft(#EBEFFF)
               - **Icon** · `icon` · 12×12 · fill: brand(#2B4EFF) · library=lucide
-                - <plus · lucide>
-          - **Rec Webcam Logitech C270** · `frame` · fill_container×fit · gap=10 pad=11/18 align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+                - <plus>
+          - **Rec Webcam Logitech C270** · `frame` · fill_container×fit · gap=10 pad=11/18 align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
             - **Chip** · `frame` · 30×30 · justify=center align=center r=8 · fill: brand-soft(#EBEFFF)
               - **Icon** · `icon` · 14×14 · fill: brand(#2B4EFF) · library=lucide
-                - <package · lucide>
+                - <package>
             - **Text** · `frame` · fill_container×fit · layout=vertical gap=2
               - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
-                - “Webcam Logitech C270” (11.5px/700, ink(#0B1B2E))
+                - “Webcam Logitech C270” (11.5px/700)
               - **Spec** · `text` · fit×fit · fill: muted(#74849A)
-                - “HD 720p · klip monitor” (10px/normal, muted(#74849A))
+                - “HD 720p · klip monitor” (10px/normal)
             - **Badge 6 unit** · `ref` · fit×fit · fill: surface-2(#FAFCFE) · ref=QuGLj · descendants={"QlB0F":{"fill":"$muted"},"rOKja":{"content":"6 unit","fill":"$muted","fontSize":9.5}}
             - **Add** · `frame` · 26×26 · justify=center align=center r=8 · fill: brand-soft(#EBEFFF)
               - **Icon** · `icon` · 12×12 · fill: brand(#2B4EFF) · library=lucide
-                - <plus · lucide>
-          - **Rec RAM DDR4 8GB Kingston** · `frame` · fill_container×fit · gap=10 pad=11/18 align=center · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+                - <plus>
+          - **Rec RAM DDR4 8GB Kingston** · `frame` · fill_container×fit · gap=10 pad=11/18 align=center · stroke=line(#E3EAF3) · strokeWidth={"bottom":1}
             - **Chip** · `frame` · 30×30 · justify=center align=center r=8 · fill: brand-soft(#EBEFFF)
               - **Icon** · `icon` · 14×14 · fill: brand(#2B4EFF) · library=lucide
-                - <package · lucide>
+                - <package>
             - **Text** · `frame` · fill_container×fit · layout=vertical gap=2
               - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
-                - “RAM DDR4 8GB Kingston” (11.5px/700, ink(#0B1B2E))
+                - “RAM DDR4 8GB Kingston” (11.5px/700)
               - **Spec** · `text` · fit×fit · fill: muted(#74849A)
-                - “2666MHz · SODIMM” (10px/normal, muted(#74849A))
+                - “2666MHz · SODIMM” (10px/normal)
             - **Badge 12 unit** · `ref` · fit×fit · fill: surface-2(#FAFCFE) · ref=QuGLj · descendants={"QlB0F":{"fill":"$muted"},"rOKja":{"content":"12 unit","fill":"$muted","fontSize":9.5}}
             - **Add** · `frame` · 26×26 · justify=center align=center r=8 · fill: brand-soft(#EBEFFF)
               - **Icon** · `icon` · 12×12 · fill: brand(#2B4EFF) · library=lucide
-                - <plus · lucide>
+                - <plus>
         - **Info Hint** · `frame` · fill_container×fit · gap=7 align=center
           - **Icon** · `icon` · 13×13 · fill: muted(#74849A) · library=lucide
-            - <info · lucide>
+            - <info>
           - **Hint** · `text` · fill_container×fit · fill: muted(#74849A)
-            - “Barang akan tercatat di Master Inventaris sekolah setelah BAP disahkan oleh Guru Pengawas.” (10.5px/normal, muted(#74849A))
+            - “Barang akan tercatat di Master Inventaris sekolah setelah BAP disahkan oleh Guru Pengawas.” (10.5px/normal)

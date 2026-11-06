@@ -27,11 +27,12 @@ Ringkasan arah desain:
 3. Minta agent membaca berurutan:
    `ANTIGRAVITY-PROMPT.md` → `01-design-tokens.md` → `02-layout-shells.md` →
    `03-components.md` → `04-screens.md` → `05-implementation-plan.md`.
-   Kalau lebih praktis, lampirkan satu file saja: **`ALL-IN-ONE.md`**.
+   Untuk acuan tunggal (mencakup v1 + v2 + revisi terakhir), pakai
+   **`ANTIGRAVITY-MASTER.md`** di root folder ini.
 4. Referensi visual ada di `reference/png/` (34 screenshot), kode HTML+Tailwind hasil export
    ada di `reference/html/` (pakai sebagai acuan ukuran & markup, bukan untuk di-copy mentah).
-5. Detail per-layer (nama layer, ukuran, padding, warna hasil resolve) ada di `spec/` bila agent
-   butuh angka pasti.
+5. Detail per-layer layar **baru** ada di `v2-pengadaan-bos/spec/`; layar lama memakai
+   `reference/png` + `reference/html` sebagai acuan ukuran.
 
 ---
 
@@ -47,11 +48,10 @@ design-handoff/
 ├── 03-components.md           ← spesifikasi komponen + resep kelas Tailwind
 ├── 04-screens.md              ← isi & struktur tiap halaman (route → layar desain)
 ├── 05-implementation-plan.md  ← urutan kerja + checklist acceptance
-├── ALL-IN-ONE.md              ← semua dokumen di atas digabung (untuk sekali lampir)
 ├── reference/
 │   ├── png/                   ← 34 screenshot (light + dark, desktop + mobile)
 │   └── html/                  ← export HTML+Tailwind (acuan markup & ukuran)
-└── spec/                      ← layer tree lengkap per layar (auto-generate dari file .pen)
+└── v2-pengadaan-bos/          ← modul BOS (fitur baru) + spec layer-nya
 ```
 
 ## Pemetaan layar → route aplikasi
@@ -81,11 +81,16 @@ design-handoff/
 
 ---
 
-## V2 — Modul baru (Pengadaan BOS / BAP / Dasbor Eksekutif)
+## V2 — Modul baru (Pengadaan BOS / BAP / Arsip di Laporan)
 
-Paket terpisah untuk **fitur baru** (bukan restyling): pengajuan pengadaan BOS, arsip BAP,
-dokumen BAP A4 ber-QR, pemeriksaan fisik mobile, dasbor Kepala Sekolah, dan halaman verifikasi
-publik. Sudah termasuk model Prisma, alur peran, server action, dan spesifikasi cetak.
+Paket terpisah untuk **fitur baru** (bukan restyling): pengajuan pengadaan BOS, dokumen BAP A4
+ber-QR, pemeriksaan fisik mobile, arsip BAP sebagai tab di halaman Laporan, blok BOS di dasbor,
+halaman verifikasi publik, dan **template cetak kertas resmi** untuk BAP + 4 laporan.
+Sudah termasuk model Prisma, alur peran, server action, dan spesifikasi cetak.
+
+Keputusan final: satu dasbor (tanpa dasbor Kepala Sekolah), arsip BAP di `/reports`,
+tanpa role/tanda tangan Kepala Sekolah.
 
 → [`v2-pengadaan-bos/README.md`](./v2-pengadaan-bos/README.md)
-→ instruksi utama: [`v2-pengadaan-bos/ANTIGRAVITY-V2.md`](./v2-pengadaan-bos/ANTIGRAVITY-V2.md)
+→ instruksi modul: [`v2-pengadaan-bos/ANTIGRAVITY-V2.md`](./v2-pengadaan-bos/ANTIGRAVITY-V2.md)
+→ acuan tunggal semua pekerjaan: [`ANTIGRAVITY-MASTER.md`](./ANTIGRAVITY-MASTER.md)

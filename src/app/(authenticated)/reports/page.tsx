@@ -3,11 +3,11 @@
 import { useState } from "react"
 import { PageHeader } from "@/components/layout/PageHeader"
 import { MobileAppBar } from "@/components/layout/MobileAppBar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { StockReport } from "@/components/reports/StockReport"
 import { BorrowingReport } from "@/components/reports/BorrowingReport"
 import { IncomingItemsReport } from "@/components/reports/IncomingItemsReport"
 import { WarehouseReport } from "@/components/reports/WarehouseReport"
+import { BapArchiveReport } from "@/components/reports/BapArchiveReport"
 import { Printer } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -23,6 +23,7 @@ export default function ReportsPage() {
         { id: "borrowing", label: "Riwayat Peminjam" },
         { id: "warehouse", label: "Riwayat Gudang" },
         { id: "incoming", label: "Barang Masuk" },
+        { id: "bap", label: "Arsip BAP" },
     ]
 
     return (
@@ -33,26 +34,30 @@ export default function ReportsPage() {
                 subtitle="Rekap data inventaris"
                 back="/dashboard"
                 actions={
-                    <button
-                        type="button"
-                        onClick={handlePrint}
-                        className="size-[30px] rounded-[9px] bg-surface border border-line grid place-items-center text-ink-soft print:hidden"
-                        title="Cetak"
-                    >
-                        <Printer className="size-3.5" />
-                    </button>
+                    activeTab !== "bap" ? (
+                        <button
+                            type="button"
+                            onClick={handlePrint}
+                            className="size-[30px] rounded-[9px] bg-surface border border-line grid place-items-center text-ink-soft print:hidden cursor-pointer"
+                            title="Cetak"
+                        >
+                            <Printer className="size-3.5" />
+                        </button>
+                    ) : undefined
                 }
             />
 
             {/* Desktop PageHeader */}
             <PageHeader
                 title="Laporan"
-                subtitle="Rekap stok, peminjaman, dan mutasi gudang siap cetak."
+                subtitle="Rekap stok, peminjaman, mutasi gudang, dan arsip BAP siap cetak."
                 actions={
-                    <Button variant="primary" onClick={handlePrint} className="gap-2 print:hidden">
-                        <Printer className="size-4" />
-                        <span>Cetak Laporan</span>
-                    </Button>
+                    activeTab !== "bap" ? (
+                        <Button variant="primary" onClick={handlePrint} className="gap-2 print:hidden cursor-pointer">
+                            <Printer className="size-4" />
+                            <span>Cetak Laporan</span>
+                        </Button>
+                    ) : undefined
                 }
             />
 
@@ -101,6 +106,7 @@ export default function ReportsPage() {
                 {activeTab === "borrowing" && <BorrowingReport />}
                 {activeTab === "warehouse" && <WarehouseReport />}
                 {activeTab === "incoming" && <IncomingItemsReport />}
+                {activeTab === "bap" && <BapArchiveReport />}
             </div>
         </div>
     )

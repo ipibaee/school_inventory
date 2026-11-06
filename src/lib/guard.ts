@@ -37,7 +37,3 @@ export function canManageProcurement(role: string): boolean {
 export function canInspectProcurement(role: string): boolean {
   return role === "TEACHER" || role === "ADMIN"
 }
-
-export function canAccessExecutive(role: string): boolean {
-  return role === "HEADMASTER" || role === "ADMIN"
-}
