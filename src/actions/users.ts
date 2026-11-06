@@ -9,7 +9,7 @@ const userSchema = z.object({
     name: z.string().min(2),
     email: z.string().email(),
     password: z.string().min(6).optional(),
-    role: z.enum(["ADMIN", "TEACHER", "TECHNICIAN"]),
+    role: z.enum(["ADMIN", "TEACHER", "TECHNICIAN", "HEADMASTER"]),
 })
 
 export async function getUsers() {
@@ -70,8 +70,6 @@ export async function updateUser(id: string, data: z.infer<typeof userSchema>) {
 
 export async function deleteUser(id: string) {
     try {
-        // Prevent deleting the last admin? Or maybe just the current user?
-        // For now, just simple delete.
         await prisma.user.delete({
             where: { id },
         })

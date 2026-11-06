@@ -1,0 +1,191 @@
+# Mobile Dasbor Eksekutif — Redesign
+
+- id kanvas: `AxMo2`
+- tema: light
+- frame: 390×844
+- posisi: (860, 11150)
+- layout: layout=vertical
+
+## Layer tree
+
+- **Mobile Dasbor Eksekutif — Redesign** · `frame` · 390×844 · layout=vertical · fill: app-bg(#F4F7FB) · x=860 · y=11150 · clip
+  - **App Bar** · `frame` · fill_container×fit · gap=10 pad=13/16 justify=space_between align=center
+    - **Left** · `frame` · fit×fit · gap=9 align=center
+      - **Mark** · `frame` · 30×30 · justify=center align=center r=9 · fill: brand(#2B4EFF)
+        - **Icon** · `icon` · 16×16 · fill: #FFFFFF · library=lucide
+          - <graduation-cap · lucide>
+      - **Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - “Dasbor Eksekutif” (16px/800, ink(#0B1B2E))
+        - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+          - “Monitoring Aset & BOS” (9.5px/normal, muted(#74849A))
+    - **Right** · `frame` · fit×fit · gap=7 align=center
+      - **Notif** · `frame` · 32×32 · justify=center align=center r=9 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Icon** · `icon` · 14×14 · fill: ink-soft(#3B4A5F) · library=lucide
+          - <bell · lucide>
+      - **Avatar** · `frame` · 32×32 · justify=center align=center r=999 · fill: brand-soft(#EBEFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Initials** · `text` · fit×fit · fill: brand(#2B4EFF)
+          - “HK” (10.5px/800, brand(#2B4EFF))
+  - **Content** · `frame` · fill_container×fill_container · layout=vertical gap=12 pad=0/16/12/16
+    - **KPI Row** · `frame` · fill_container×fit · gap=10
+      - **KPI Total Aset** · `frame` · fill_container×fit · layout=vertical gap=6 pad=13 r=14 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · gap=6 justify=space_between align=center
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “Total Aset” (9.5px/600, muted(#74849A))
+          - **Chip** · `frame` · 22×22 · justify=center align=center r=7 · fill: brand-soft(#EBEFFF)
+            - **Icon** · `icon` · 11×11 · fill: brand(#2B4EFF) · library=lucide
+              - <boxes · lucide>
+        - **Value Row** · `frame` · fit×fit · gap=3 align=end
+          - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “1.428” (23px/800, ink(#0B1B2E))
+          - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+            - “Unit” (8.5px/600, muted(#74849A))
+        - **Caption** · `text` · fit×fit · fill: muted(#74849A)
+          - “40 kategori” (9px/normal, muted(#74849A))
+      - **KPI Belanja BOS** · `frame` · fill_container×fit · layout=vertical gap=6 pad=13 r=14 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · gap=6 justify=space_between align=center
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “Belanja BOS” (9.5px/600, muted(#74849A))
+          - **Chip** · `frame` · 22×22 · justify=center align=center r=7 · fill: brand-soft(#EBEFFF)
+            - **Icon** · `icon` · 11×11 · fill: brand(#2B4EFF) · library=lucide
+              - <shopping-cart · lucide>
+        - **Value Row** · `frame` · fit×fit · gap=3 align=end
+          - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “18” (23px/800, ink(#0B1B2E))
+          - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+            - “Unit” (8.5px/600, muted(#74849A))
+        - **Caption** · `text` · fit×fit · fill: muted(#74849A)
+          - “Nov 2026” (9px/normal, muted(#74849A))
+    - **KPI Row** · `frame` · fill_container×fit · gap=10
+      - **KPI Status BAP** · `frame` · fill_container×fit · layout=vertical gap=6 pad=13 r=14 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · gap=6 justify=space_between align=center
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “Status BAP” (9.5px/600, muted(#74849A))
+          - **Chip** · `frame` · 22×22 · justify=center align=center r=7 · fill: mint-soft(#E4F7F0)
+            - **Icon** · `icon` · 11×11 · fill: mint(#0EA47A) · library=lucide
+              - <shield-check · lucide>
+        - **Value Row** · `frame` · fit×26 · align=center
+          - **Badge Sah Terverifikasi** · `ref` · fit×fit · fill: mint-soft(#E4F7F0) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint","width":5,"height":5},"rOKja":{"content":"Sah Terverifikasi","fill":"$mint","fontSize":8}}
+        - **Caption** · `text` · fit×fit · fill: muted(#74849A)
+          - “Nov 2026” (9px/normal, muted(#74849A))
+      - **KPI Dipinjam** · `frame` · fill_container×fit · layout=vertical gap=6 pad=13 r=14 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · gap=6 justify=space_between align=center
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “Dipinjam” (9.5px/600, muted(#74849A))
+          - **Chip** · `frame` · 22×22 · justify=center align=center r=7 · fill: amber-soft(#FDF2DE)
+            - **Icon** · `icon` · 11×11 · fill: amber(#C77605) · library=lucide
+              - <arrow-right-left · lucide>
+        - **Value Row** · `frame` · fit×fit · gap=3 align=end
+          - **Value** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “9” (23px/800, ink(#0B1B2E))
+          - **Unit** · `text` · fit×fit · fill: muted(#74849A)
+            - “Unit” (8.5px/600, muted(#74849A))
+        - **Caption** · `text` · fit×fit · fill: muted(#74849A)
+          - “2 lab praktik” (9px/normal, muted(#74849A))
+    - **Section Status** · `frame` · fill_container×fit · justify=space_between align=center
+      - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - “Status Pengadaan BOS Terakhir” (11px/700, ink(#0B1B2E))
+      - **Link** · `text` · fit×fit · fill: brand(#2B4EFF)
+        - “Lihat arsip” (9px/700, brand(#2B4EFF))
+    - **BAP Card** · `frame` · fill_container×fit · layout=vertical gap=9 pad=13 r=14 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+      - **Head** · `frame` · fill_container×fit · gap=8 justify=space_between align=center
+        - **No Wrap** · `frame` · fit×fit · layout=vertical gap=1
+          - **Number** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “027/BAP-BOS/XI/2026” (10.5px/700, ink(#0B1B2E))
+          - **Period** · `text` · fit×fit · fill: muted(#74849A)
+            - “Periode November 2026” (8.5px/normal, muted(#74849A))
+        - **Badge Sah Terverifikasi** · `ref` · fit×fit · fill: mint-soft(#E4F7F0) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint","width":5,"height":5},"rOKja":{"content":"Sah Terverifikasi","fill":"$mint","fontSize":8}}
+      - **Meta** · `frame` · fill_container×fit · layout=vertical gap=5 pad=8/0/0/0 · stroke=line(#E3EAF3) {"top":1} · strokeWidth={"top":1}
+        - **Meta Item** · `frame` · fit×fit · gap=5 align=center
+          - **Icon** · `icon` · 11×11 · fill: muted(#74849A) · library=lucide
+            - <user-check · lucide>
+          - **Text** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “Budi Santoso, S.Kom” (8.5px/normal, ink-soft(#3B4A5F))
+        - **Meta Item** · `frame` · fit×fit · gap=5 align=center
+          - **Icon** · `icon` · 11×11 · fill: muted(#74849A) · library=lucide
+            - <package · lucide>
+          - **Text** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “18 Unit · 4 jenis barang” (8.5px/normal, ink-soft(#3B4A5F))
+      - **Button Buka BAP** · `frame` · fill_container×fit · gap=8 pad=9/14 justify=center align=center r=9 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Icon** · `icon` · 12×12 · fill: ink-soft(#3B4A5F) · library=lucide
+          - <file-text · lucide>
+        - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+          - “Buka BAP” (10.5px/700, ink-soft(#3B4A5F))
+    - **Section Arsip** · `frame` · fill_container×fit · pad=2/0/0/0 justify=space_between align=center
+      - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - “Arsip BAP Cepat” (11px/700, ink(#0B1B2E))
+      - **Link** · `text` · fit×fit · fill: brand(#2B4EFF)
+        - “Semua dokumen” (9px/700, brand(#2B4EFF))
+    - **Arsip Cards** · `frame` · fill_container×fit · gap=7
+      - **Arsip Oktober** · `frame` · fill_container×fit · layout=vertical gap=7 pad=11 r=12 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · justify=space_between
+          - **PDF Icon** · `frame` · 24×24 · justify=center align=center r=6 · fill: rose-soft(#FDEBEC)
+            - **Icon** · `icon` · 12×12 · fill: rose(#D93A47) · library=lucide
+              - <file-text · lucide>
+          - **Download** · `frame` · 22×22 · justify=center align=center r=6 · fill: surface-2(#FAFCFE)
+            - **Icon** · `icon` · 11×11 · fill: muted(#74849A) · library=lucide
+              - <download · lucide>
+        - **Month** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - “Oktober” (10px/700, ink(#0B1B2E))
+        - **Meta** · `text` · fit×fit · fill: muted(#74849A)
+          - “2026 · 24 Unit” (8px/normal, muted(#74849A))
+        - **Download Link** · `frame` · fill_container×fit · gap=4 pad=2/0/0/0 align=center
+          - **Icon** · `icon` · 9×9 · fill: brand(#2B4EFF) · library=lucide
+            - <download · lucide>
+          - **Text** · `text` · fit×fit · fill: brand(#2B4EFF)
+            - “Unduh PDF” (8px/700, brand(#2B4EFF))
+      - **Arsip September** · `frame` · fill_container×fit · layout=vertical gap=7 pad=11 r=12 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · justify=space_between
+          - **PDF Icon** · `frame` · 24×24 · justify=center align=center r=6 · fill: rose-soft(#FDEBEC)
+            - **Icon** · `icon` · 12×12 · fill: rose(#D93A47) · library=lucide
+              - <file-text · lucide>
+          - **Download** · `frame` · 22×22 · justify=center align=center r=6 · fill: surface-2(#FAFCFE)
+            - **Icon** · `icon` · 11×11 · fill: muted(#74849A) · library=lucide
+              - <download · lucide>
+        - **Month** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - “September” (10px/700, ink(#0B1B2E))
+        - **Meta** · `text` · fit×fit · fill: muted(#74849A)
+          - “2026 · 20 Unit” (8px/normal, muted(#74849A))
+        - **Download Link** · `frame` · fill_container×fit · gap=4 pad=2/0/0/0 align=center
+          - **Icon** · `icon` · 9×9 · fill: brand(#2B4EFF) · library=lucide
+            - <download · lucide>
+          - **Text** · `text` · fit×fit · fill: brand(#2B4EFF)
+            - “Unduh PDF” (8px/700, brand(#2B4EFF))
+      - **Arsip Agustus** · `frame` · fill_container×fit · layout=vertical gap=7 pad=11 r=12 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Top** · `frame` · fill_container×fit · justify=space_between
+          - **PDF Icon** · `frame` · 24×24 · justify=center align=center r=6 · fill: rose-soft(#FDEBEC)
+            - **Icon** · `icon` · 12×12 · fill: rose(#D93A47) · library=lucide
+              - <file-text · lucide>
+          - **Download** · `frame` · 22×22 · justify=center align=center r=6 · fill: surface-2(#FAFCFE)
+            - **Icon** · `icon` · 11×11 · fill: muted(#74849A) · library=lucide
+              - <download · lucide>
+        - **Month** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - “Agustus” (10px/700, ink(#0B1B2E))
+        - **Meta** · `text` · fit×fit · fill: muted(#74849A)
+          - “2026 · 26 Unit” (8px/normal, muted(#74849A))
+        - **Download Link** · `frame` · fill_container×fit · gap=4 pad=2/0/0/0 align=center
+          - **Icon** · `icon` · 9×9 · fill: brand(#2B4EFF) · library=lucide
+            - <download · lucide>
+          - **Text** · `text` · fit×fit · fill: brand(#2B4EFF)
+            - “Unduh PDF” (8px/700, brand(#2B4EFF))
+    - **Updated Strip** · `frame` · fill_container×fit · gap=5 pad=4/0/0/0 justify=center align=center
+      - **Icon** · `icon` · 10×10 · fill: muted(#74849A) · library=lucide
+        - <refresh-cw · lucide>
+      - **Text** · `text` · fit×fit · fill: muted(#74849A)
+        - “Data diperbarui 06 Nov 2026 · 14:32 WIB” (8px/normal, muted(#74849A))
+  - **Bottom Nav** · `frame` · fill_container×62 · pad=0/6 align=center · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) {"top":1} · strokeWidth={"top":1}
+    - **Tab Dasbor** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: brand(#2B4EFF) · library=lucide
+        - <layout-dashboard · lucide>
+      - **Label** · `text` · fit×fit · fill: brand(#2B4EFF)
+        - “Dasbor” (9px/700, brand(#2B4EFF))
+    - **Tab Arsip BAP** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · library=lucide
+        - <archive · lucide>
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - “Arsip BAP” (9px/500, muted(#74849A))
+    - **Tab Akun** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · library=lucide
+        - <user-round · lucide>
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - “Akun” (9px/500, muted(#74849A))

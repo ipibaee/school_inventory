@@ -7,6 +7,8 @@ import { logout } from "@/actions/auth"
 import {
     LayoutDashboard,
     Boxes,
+    ClipboardList,
+    Archive,
     ScanBarcode,
     ShoppingCart,
     ChartColumn,
@@ -21,47 +23,71 @@ interface SidebarProps {
     settings?: any
 }
 
-const routes = [
-    {
-        label: "Dasbor",
-        icon: LayoutDashboard,
-        href: "/dashboard",
-    },
-    {
-        label: "Inventaris",
-        icon: Boxes,
-        href: "/inventory",
-    },
-    {
-        label: "Cetak Barcode",
-        icon: ScanBarcode,
-        href: "/inventory/barcode",
-    },
-    {
-        label: "Peminjaman",
-        icon: ShoppingCart,
-        href: "/borrow",
-    },
-    {
-        label: "Laporan",
-        icon: ChartColumn,
-        href: "/reports",
-    },
-    {
-        label: "Pengaturan",
-        icon: Settings,
-        href: "/settings",
-    },
-]
-
 export function Sidebar({ user, settings }: SidebarProps) {
     const pathname = usePathname()
+    const isHeadmaster = user?.role === "HEADMASTER"
+
+    const routes = isHeadmaster
+        ? [
+              {
+                  label: "Dasbor Eksekutif",
+                  icon: LayoutDashboard,
+                  href: "/executive",
+              },
+              {
+                  label: "Arsip BAP",
+                  icon: Archive,
+                  href: "/procurement/archive",
+              },
+              {
+                  label: "Laporan",
+                  icon: ChartColumn,
+                  href: "/reports",
+              },
+          ]
+        : [
+              {
+                  label: "Dasbor",
+                  icon: LayoutDashboard,
+                  href: "/dashboard",
+              },
+              {
+                  label: "Inventaris",
+                  icon: Boxes,
+                  href: "/inventory",
+              },
+              {
+                  label: "Pengadaan BOS",
+                  icon: ClipboardList,
+                  href: "/procurement",
+              },
+              {
+                  label: "Cetak Barcode",
+                  icon: ScanBarcode,
+                  href: "/inventory/barcode",
+              },
+              {
+                  label: "Peminjaman",
+                  icon: ShoppingCart,
+                  href: "/borrow",
+              },
+              {
+                  label: "Laporan",
+                  icon: ChartColumn,
+                  href: "/reports",
+              },
+              {
+                  label: "Pengaturan",
+                  icon: Settings,
+                  href: "/settings",
+              },
+          ]
 
     return (
         <div className="flex flex-col h-full w-[264px] bg-navy text-white py-6 px-[18px] gap-6 select-none shrink-0 border-r border-line/10">
             {/* Brand Block */}
             <Link
-                href="/dashboard"
+                href={isHeadmaster ? "/executive" : "/dashboard"}
                 className="flex items-center gap-3 transition-opacity hover:opacity-90"
             >
                 <div className="size-[38px] rounded-[11px] bg-brand grid place-items-center shrink-0">
@@ -95,6 +121,8 @@ export function Sidebar({ user, settings }: SidebarProps) {
                         const isActive =
                             route.href === "/inventory"
                                 ? pathname === "/inventory"
+                                : route.href === "/procurement"
+                                ? pathname === "/procurement" || pathname === "/procurement/archive" || pathname.startsWith("/procurement/")
                                 : pathname.startsWith(route.href)
 
                         const Icon = route.icon

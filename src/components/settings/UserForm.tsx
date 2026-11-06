@@ -34,7 +34,7 @@ const formSchema = z.object({
     name: z.string().min(2, "Nama minimal 2 karakter"),
     email: z.string().email("Email tidak valid"),
     password: z.string().optional(),
-    role: z.enum(["ADMIN", "TEACHER", "TECHNICIAN"]),
+    role: z.enum(["ADMIN", "TEACHER", "TECHNICIAN", "HEADMASTER"]),
 })
 
 interface UserFormProps {
@@ -145,8 +145,9 @@ export function UserForm({ open, onOpenChange, initialData, onSuccess }: UserFor
                                         </FormControl>
                                         <SelectContent>
                                             <SelectItem value="ADMIN">Admin</SelectItem>
-                                            <SelectItem value="TEACHER">Guru</SelectItem>
-                                            <SelectItem value="TECHNICIAN">Teknisi</SelectItem>
+                                            <SelectItem value="TECHNICIAN">Teknisi Gudang</SelectItem>
+                                            <SelectItem value="TEACHER">Guru Pengawas</SelectItem>
+                                            <SelectItem value="HEADMASTER">Kepala Sekolah</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -154,7 +155,7 @@ export function UserForm({ open, onOpenChange, initialData, onSuccess }: UserFor
                             )}
                         />
                         <div className="flex justify-end gap-2">
-                            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+                            <Button type="button" variant="secondary" onClick={() => onOpenChange(false)}>
                                 Batal
                             </Button>
                             <Button type="submit" disabled={loading}>

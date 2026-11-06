@@ -1,0 +1,399 @@
+# Arsip BAP — Dark
+
+- id kanvas: `LgGdZ`
+- tema: dark
+- frame: 1440×880
+- posisi: (1540, 12150)
+- layout: layout=none
+
+## Layer tree
+
+- **Arsip BAP — Dark** · `frame` · 1440×880 · layout=none · fill: app-bg(#202124) · x=1540 · y=12150 · theme={"mode":"dark"} · clip
+  - **Sidebar** · `frame` · 264×880 · layout=vertical gap=24 pad=24/18 · fill: navy(#1B1C1F) · x=0 · y=0
+    - **Brand** · `frame` · fill_container×fit · gap=12 align=center
+      - **Mark** · `frame` · 38×38 · justify=center align=center r=11 · fill: brand(#1A73E8)
+        - **Icon** · `icon` · 20×20 · fill: #FFFFFF · library=lucide
+          - <graduation-cap · lucide>
+      - **Brand Text** · `frame` · fill_container×fit · layout=vertical gap=1
+        - **School** · `text` · fit×fit · fill: #FFFFFF
+          - “SMK HKTI 2” (14.5px/800, #FFFFFF)
+        - **Product** · `text` · fit×fit · fill: #80868B
+          - “HIKA Inventaris” (11px/500, #80868B)
+    - **Nav** · `frame` · fill_container×fit · layout=vertical gap=5
+      - **Nav Label** · `text` · fit×fit · fill: #5F6368
+        - “MENU UTAMA” (9.5px/normal, #5F6368)
+      - **Nav List** · `frame` · fill_container×fit · layout=vertical gap=4
+        - **Nav Dasbor** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"layout-dashboard","fill":"#93A7C4"},"UgURJ":{"content":"Dasbor","fill":"#93A7C4"}}
+        - **Nav Inventaris** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"boxes","fill":"#93A7C4"},"UgURJ":{"content":"Inventaris","fill":"#93A7C4"}}
+        - **Nav Pengadaan BOS** · `ref` · fill_container×fit · fill: #3C4043 · ref=Z0vAf · descendants={"NR61K":{"icon":"clipboard-list","fill":"#FFFFFF"},"UgURJ":{"content":"Pengadaan BOS","fill":"#FFFFFF"}}
+        - **Nav Cetak Barcode** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"barcode","fill":"#93A7C4"},"UgURJ":{"content":"Cetak Barcode","fill":"#93A7C4"}}
+        - **Nav Peminjaman** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"shopping-cart","fill":"#93A7C4"},"UgURJ":{"content":"Peminjaman","fill":"#93A7C4"}}
+        - **Nav Laporan** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"chart-column","fill":"#93A7C4"},"UgURJ":{"content":"Laporan","fill":"#93A7C4"}}
+        - **Nav Pengaturan** · `ref` · fill_container×fit · ref=Z0vAf · descendants={"NR61K":{"icon":"settings","fill":"#93A7C4"},"UgURJ":{"content":"Pengaturan","fill":"#93A7C4"}}
+    - **Spacer** · `frame` · fill_container×fill_container
+    - **User Card** · `frame` · fill_container×fit · gap=10 pad=11 align=center r=12 · fill: #2A2B2E
+      - **Avatar** · `frame` · 32×32 · justify=center align=center r=999 · fill: brand(#1A73E8)
+        - **Initial** · `text` · fit×fit · fill: #FFFFFF
+          - “A” (13px/800, #FFFFFF)
+      - **User Text** · `frame` · fill_container×fit · layout=vertical gap=1
+        - **Name** · `text` · fit×fit · fill: #FFFFFF
+          - “Admin Sekolah” (12.5px/700, #FFFFFF)
+        - **Role** · `text` · fit×fit · fill: #80868B
+          - “admin@smkhkti2.sch.id” (10px/normal, #80868B)
+      - **Icon** · `icon` · 15×15 · fill: #80868B · library=lucide
+        - <log-out · lucide>
+  - **Main** · `frame` · 1176×880 · layout=vertical gap=16 pad=26/32 · fill: app-bg(#202124) · x=264 · y=0
+    - **Topbar** · `frame` · fill_container×fit · gap=16 justify=space_between align=center
+      - **Title Block** · `frame` · fit×fit · layout=vertical gap=5
+        - **Page Title** · `text` · fit×fit · fill: ink(#E8EAED)
+          - “Arsip BAP Pengadaan” (27px/800, ink(#E8EAED))
+        - **Page Sub** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - “Riwayat Berita Acara Penerimaan barang inventaris sekolah per bulan.” (13.5px/normal, muted(#9AA0A6))
+      - **Actions** · `frame` · fit×fit · gap=9 align=center
+        - **Year Select** · `frame` · fit×fit · gap=8 pad=9/12 align=center r=9 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+          - **Icon** · `icon` · 14×14 · fill: muted(#9AA0A6) · library=lucide
+            - <calendar · lucide>
+          - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+            - “2026” (12px/600, ink(#E8EAED))
+          - **Icon** · `icon` · 12×12 · fill: muted(#9AA0A6) · library=lucide
+            - <chevron-down · lucide>
+        - **Button Ekspor Rekap** · `frame` · fit×fit · gap=8 pad=9/14 justify=center align=center r=10 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+          - **Icon** · `icon` · 15×15 · fill: ink-soft(#BDC1C6) · library=lucide
+            - <download · lucide>
+          - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+            - “Ekspor Rekap” (12.5px/700, ink-soft(#BDC1C6))
+    - **Month Tabs** · `frame` · fill_container×fit · gap=6 align=center
+      - **Tab Semua** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: brand(#1A73E8)
+        - **Label** · `text` · fit×fit · fill: #FFFFFF
+          - “Semua” (10.5px/700, #FFFFFF)
+      - **Tab Jan** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Jan” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Feb** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Feb” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Mar** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Mar” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Apr** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Apr” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Mei** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Mei” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Jun** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Jun” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Jul** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Jul” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Agu** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Agu” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Sep** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Sep” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Okt** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Okt” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Nov** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Nov” (10.5px/700, ink-soft(#BDC1C6))
+      - **Tab Des** · `frame` · fit×fit · pad=6/13 justify=center r=999 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+          - “Des” (10.5px/700, ink-soft(#BDC1C6))
+    - **Filter Summary** · `frame` · fill_container×fit · pad=12/18 r=12 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+      - **Summary Left** · `frame` · fill_container×fit · gap=18 align=center
+        - **Stat 11 Berita Acara** · `frame` · fit×fit · gap=8 align=center
+          - **Chip** · `frame` · 28×28 · justify=center align=center r=8 · fill: brand-soft(#2D3037)
+            - **Icon** · `icon` · 14×14 · fill: brand(#1A73E8) · library=lucide
+              - <file-text · lucide>
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “Total” (11px/normal, muted(#9AA0A6))
+          - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+            - “11 Berita Acara” (12px/800, ink(#E8EAED))
+        - **Stat 420 Unit Barang** · `frame` · fit×fit · gap=8 align=center
+          - **Chip** · `frame` · 28×28 · justify=center align=center r=8 · fill: brand-soft(#2D3037)
+            - **Icon** · `icon` · 14×14 · fill: brand(#1A73E8) · library=lucide
+              - <package · lucide>
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “Diterima” (11px/normal, muted(#9AA0A6))
+          - **Value** · `text` · fit×fit · fill: ink(#E8EAED)
+            - “420 Unit Barang” (12px/800, ink(#E8EAED))
+      - **Search** · `frame` · 236×fit · gap=9 pad=8/12 align=center r=9 · fill: surface-2(#303134) · stroke=line(#3C4043) 1 · strokeWidth=1
+        - **Icon** · `icon` · 13×13 · fill: muted(#9AA0A6) · library=lucide
+          - <search · lucide>
+        - **Placeholder** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - “Cari nomor BAP atau nama guru…” (10.5px/normal, muted(#9AA0A6))
+    - **Archive Table** · `frame` · fill_container×fill_container · layout=vertical r=16 · fill: surface(#292A2D) · clip · stroke=line(#3C4043) 1 · strokeWidth=1
+      - **Table Head** · `frame` · fill_container×fit · gap=14 pad=9/18 align=center · fill: surface-2(#303134) · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+        - **Th No. BAP** · `frame` · 150×fit · align=center
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “NO. BAP” (10px/700, muted(#9AA0A6))
+        - **Th Periode** · `frame` · 104×fit · align=center
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “PERIODE” (10px/700, muted(#9AA0A6))
+        - **Th Tanggal Sah** · `frame` · 112×fit · align=center
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “TANGGAL SAH” (10px/700, muted(#9AA0A6))
+        - **Th Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+          - **Label** · `text` · fill_container×fit · fill: muted(#9AA0A6)
+            - “GURU PEMERIKSA” (10px/700, muted(#9AA0A6))
+        - **Th Total Unit** · `frame` · 78×fit · justify=end align=center
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “TOTAL UNIT” (10px/700, muted(#9AA0A6))
+        - **Th Status Dokumen** · `frame` · 158×fit · align=center
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “STATUS DOKUMEN” (10px/700, muted(#9AA0A6))
+        - **Th Aksi** · `frame` · 122×fit · justify=end align=center
+          - **Label** · `text` · fit×fit · fill: muted(#9AA0A6)
+            - “AKSI” (10px/700, muted(#9AA0A6))
+      - **Table Body** · `frame` · fill_container×fit · layout=vertical
+        - **Row 027/BAP-BOS/XI/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “027/BAP-BOS/XI/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Dokumen sah” (9.5px/normal, muted(#9AA0A6))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Nov 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “06 Nov 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: ink(#E8EAED)
+              - “Drs. Budi Santoso” (11.5px/normal, ink(#E8EAED))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “18 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Terverifikasi Sah** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Terverifikasi Sah","fill":"$mint","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Cetak BAP** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+              - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · library=lucide
+                - <printer · lucide>
+              - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+                - “Cetak BAP” (10.5px/700, ink-soft(#BDC1C6))
+        - **Row 026/BAP-BOS/XI/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “026/BAP-BOS/XI/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Dokumen sah” (9.5px/normal, muted(#9AA0A6))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Nov 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “05 Nov 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: ink(#E8EAED)
+              - “Siti Rahmawati, S.Pd.” (11.5px/normal, ink(#E8EAED))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “12 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Terverifikasi Sah** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Terverifikasi Sah","fill":"$mint","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Cetak BAP** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+              - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · library=lucide
+                - <printer · lucide>
+              - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+                - “Cetak BAP” (10.5px/700, ink-soft(#BDC1C6))
+        - **Row 028/BAP-BOS/XII/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “028/BAP-BOS/XII/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: amber(#FDD663)
+              - “Draft pengajuan” (9.5px/normal, amber(#FDD663))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Des 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “—” (11px/normal, muted(#9AA0A6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: muted(#9AA0A6)
+              - “Belum diverifikasi” (11.5px/normal, muted(#9AA0A6))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “8 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Menunggu Guru** · `ref` · fit×fit · fill: amber-soft(#38321F) · ref=QuGLj · descendants={"QlB0F":{"fill":"$amber"},"rOKja":{"content":"Menunggu Guru","fill":"$amber","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Detail** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: brand-soft(#2D3037)
+              - **Icon** · `icon` · 12×12 · fill: brand(#1A73E8) · library=lucide
+                - <eye · lucide>
+              - **Label** · `text` · fit×fit · fill: brand-deep(#8AB4F8)
+                - “Detail” (10.5px/700, brand-deep(#8AB4F8))
+        - **Row 024/BAP-BOS/X/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “024/BAP-BOS/X/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Dokumen sah” (9.5px/normal, muted(#9AA0A6))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Okt 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “02 Okt 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: ink(#E8EAED)
+              - “Siti Rahmawati, S.Pd.” (11.5px/normal, ink(#E8EAED))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “24 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Terverifikasi Sah** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Terverifikasi Sah","fill":"$mint","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Cetak BAP** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+              - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · library=lucide
+                - <printer · lucide>
+              - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+                - “Cetak BAP” (10.5px/700, ink-soft(#BDC1C6))
+        - **Row 023/BAP-BOS/X/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “023/BAP-BOS/X/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Dokumen sah” (9.5px/normal, muted(#9AA0A6))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Okt 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “01 Okt 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: ink(#E8EAED)
+              - “Drs. Budi Santoso” (11.5px/normal, ink(#E8EAED))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “16 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Terverifikasi Sah** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Terverifikasi Sah","fill":"$mint","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Cetak BAP** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+              - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · library=lucide
+                - <printer · lucide>
+              - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+                - “Cetak BAP” (10.5px/700, ink-soft(#BDC1C6))
+        - **Row 022/BAP-BOS/IX/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “022/BAP-BOS/IX/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Dokumen sah” (9.5px/normal, muted(#9AA0A6))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Sep 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “12 Sep 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: ink(#E8EAED)
+              - “Drs. Budi Santoso” (11.5px/normal, ink(#E8EAED))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “20 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Terverifikasi Sah** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Terverifikasi Sah","fill":"$mint","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Cetak BAP** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+              - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · library=lucide
+                - <printer · lucide>
+              - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+                - “Cetak BAP” (10.5px/700, ink-soft(#BDC1C6))
+        - **Row 021/BAP-BOS/IX/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “021/BAP-BOS/IX/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Dokumen sah” (9.5px/normal, muted(#9AA0A6))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Sep 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “04 Sep 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: ink(#E8EAED)
+              - “Siti Rahmawati, S.Pd.” (11.5px/normal, ink(#E8EAED))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “14 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Terverifikasi Sah** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Terverifikasi Sah","fill":"$mint","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Cetak BAP** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+              - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · library=lucide
+                - <printer · lucide>
+              - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+                - “Cetak BAP” (10.5px/700, ink-soft(#BDC1C6))
+        - **Row 020/BAP-BOS/VIII/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “020/BAP-BOS/VIII/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Dokumen sah” (9.5px/normal, muted(#9AA0A6))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Agu 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “18 Agu 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: ink(#E8EAED)
+              - “Drs. Budi Santoso” (11.5px/normal, ink(#E8EAED))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “26 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Terverifikasi Sah** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Terverifikasi Sah","fill":"$mint","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Cetak BAP** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+              - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · library=lucide
+                - <printer · lucide>
+              - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+                - “Cetak BAP” (10.5px/700, ink-soft(#BDC1C6))
+        - **Row 019/BAP-BOS/VIII/2026** · `frame` · fill_container×fit · gap=14 pad=13/18 align=center · stroke=line(#3C4043) {"bottom":1} · strokeWidth={"bottom":1}
+          - **No BAP** · `frame` · 150×fit · layout=vertical gap=2
+            - **Number** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “019/BAP-BOS/VIII/2026” (11.5px/700, ink(#E8EAED))
+            - **Doc State** · `text` · fit×fit · fill: muted(#9AA0A6)
+              - “Dokumen sah” (9.5px/normal, muted(#9AA0A6))
+          - **Periode** · `frame` · 104×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “Agu 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Tanggal Sah** · `frame` · 112×fit · align=center
+            - **Val** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “03 Agu 2026” (11px/normal, ink-soft(#BDC1C6))
+          - **Guru Pemeriksa** · `frame` · fill_container×fit · align=center
+            - **Val** · `text` · fill_container×fit · fill: ink(#E8EAED)
+              - “Siti Rahmawati, S.Pd.” (11.5px/normal, ink(#E8EAED))
+          - **Total Unit** · `frame` · 78×fit · justify=end align=center
+            - **Val** · `text` · fit×fit · fill: ink(#E8EAED)
+              - “10 Unit” (11.5px/700, ink(#E8EAED))
+          - **Status Cell** · `frame` · 158×fit · align=center
+            - **Badge Terverifikasi Sah** · `ref` · fit×fit · fill: mint-soft(#2C3630) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint"},"rOKja":{"content":"Terverifikasi Sah","fill":"$mint","fontSize":10}}
+          - **Aksi Cell** · `frame` · 122×fit · justify=end align=center
+            - **Button Cetak BAP** · `frame` · fit×fit · gap=8 pad=7/12 justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+              - **Icon** · `icon` · 12×12 · fill: ink-soft(#BDC1C6) · library=lucide
+                - <printer · lucide>
+              - **Label** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+                - “Cetak BAP” (10.5px/700, ink-soft(#BDC1C6))
+      - **Body Spacer** · `frame` · fill_container×fill_container
+      - **Table Foot** · `frame` · fill_container×fit · pad=12/18 justify=space_between align=center · fill: surface-2(#303134) · stroke=line(#3C4043) {"top":1} · strokeWidth={"top":1}
+        - **Meta** · `text` · fit×fit · fill: muted(#9AA0A6)
+          - “Menampilkan 9 dari 11 berita acara” (11px/normal, muted(#9AA0A6))
+        - **Pagination** · `frame` · fit×fit · gap=6 align=center
+          - **Page 1** · `frame` · 26×26 · justify=center align=center r=8 · fill: brand(#1A73E8)
+            - **Num** · `text` · fit×fit · fill: #FFFFFF
+              - “1” (10.5px/700, #FFFFFF)
+          - **Page 2** · `frame` · 26×26 · justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+            - **Num** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “2” (10.5px/700, ink-soft(#BDC1C6))
+          - **Page 3** · `frame` · 26×26 · justify=center align=center r=8 · fill: surface(#292A2D) · stroke=line(#3C4043) 1 · strokeWidth=1
+            - **Num** · `text` · fit×fit · fill: ink-soft(#BDC1C6)
+              - “3” (10.5px/700, ink-soft(#BDC1C6))

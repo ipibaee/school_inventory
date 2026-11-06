@@ -42,6 +42,7 @@ model Item {
   
   transactions Transaction[]
   borrowings   Borrowing[]
+  procurementItems ProcurementItem[]
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -97,7 +98,114 @@ model User {
   email     String   @unique
   password  String?  // For email login
   image     String?
-  role      String   @default("TEACHER") // ADMIN, TECHNICIAN, TEACHER
+  role      String   @default("TEACHER") // ADMIN, TECHNICIAN, TEACHER, HEADMASTER
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  createdProcurements   Procurement[] @relation("ProcurementCreated")
+  inspectedProcurements Procurement[] @relation("ProcurementInspector")
+  verifiedProcurements  Procurement[] @relation("ProcurementVerified")
+}
+
+// ---------------------------------------------------------------------------
+// Pengadaan BOS & Berita Acara Penerimaan Barang (BAP)
+// ---------------------------------------------------------------------------
+
+model Procurement {
+  id          String  @id @default(cuid())
+
+  // Identitas dokumen — null selama masih DRAFT
+  bapNumber   String? @unique          // "027/BAP-BOS/XI/2026"
+  qrToken     String? @unique          // 32 hex, dipakai URL /verify/{qrToken}
+
+  periodMonth Int                      // 1..12
+  periodYear  Int
+  source      String  @default("BOS_REGULER") // BOS_REGULER | BOSP
+  note        String?
+
+  status      String  @default("DRAFT")        // DRAFT | SUBMITTED | VERIFIED | REJECTED
+  totalUnits  Int     @default(0)              // cache, dihitung saat publish
+  totalItems  Int     @default(0)              // cache jumlah baris
+
+  // Pihak-pihak
+  createdById  String
+  createdBy    User    @relation("ProcurementCreated", fields: [createdById], references: [id])
+  inspectorId  String?
+  inspector    User?   @relation("ProcurementInspector", fields: [inspectorId], references: [id])
+  verifiedById String?
+  verifiedBy   User?   @relation("ProcurementVerified", fields: [verifiedById], references: [id])
+
+  // Stempel waktu
+  submittedAt DateTime?
+  verifiedAt  DateTime?
+  rejectedAt  DateTime?
+  rejectNote  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  items     ProcurementItem[]
+  logs      ProcurementLog[]
+  visits    VerificationVisit[]
+
+  @@unique([periodMonth, periodYear], name: "unique_period")
+  @@index([periodYear, periodMonth])
+  @@index([status])
+}
+
+model ProcurementItem {
+  id            String      @id @default(cuid())
+  procurementId String
+  procurement   Procurement @relation(fields: [procurementId], references: [id], onDelete: Cascade)
+
+  kind          String  @default("BARU")   // BARU | LAMA  (LAMA = diambil dari inventaris)
+  itemId        String?                    // terisi bila kind = LAMA
+  item          Item?   @relation(fields: [itemId], references: [id], onDelete: SetNull)
+
+  name          String
+  specification String?
+  categoryName  String?
+  quantity      Int
+  unit          String  @default("Unit")   // Unit | Roll | Set | Box | Buah
+  barcode       String?                    // untuk barang BARU, boleh dikosongkan
+
+  condition     String  @default("BAIK")   // BAIK | RUSAK | KURANG
+  checked       Boolean @default(false)    // dicentang Guru Pengawas
+  checkedAt     DateTime?
+  checkedById   String?
+
+  sortOrder     Int     @default(0)
+  createdAt     DateTime @default(now())
+
+  @@index([procurementId])
+}
+
+// Audit trail aksi (dibuat/ubah/kirim/periksa/sahkan/tolak/unduh)
+model ProcurementLog {
+  id            String      @id @default(cuid())
+  procurementId String
+  procurement   Procurement @relation(fields: [procurementId], references: [id], onDelete: Cascade)
+  action        String      // CREATED | UPDATED | ITEM_ADDED | ITEM_REMOVED | SUBMITTED | CHECKED | PUBLISHED | REJECTED | PRINTED
+  actorId       String?
+  note          String?
+  createdAt     DateTime    @default(now())
+
+  @@index([procurementId])
+}
+
+// Setiap kali QR discan & halaman verifikasi dibuka
+model VerificationVisit {
+  id            String      @id @default(cuid())
+  procurementId String
+  procurement   Procurement @relation(fields: [procurementId], references: [id], onDelete: Cascade)
+  ip            String?
+  userAgent     String?
+  visitedAt     DateTime    @default(now())
+
+  @@index([procurementId])
+}
+
+// Counter nomor BAP per tahun — atomik, hindari duplikat saat bersamaan
+model Counter {
+  key   String @id            // "bap:2026"
+  value Int    @default(0)
 }

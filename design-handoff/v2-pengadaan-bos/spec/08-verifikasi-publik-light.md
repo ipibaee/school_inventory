@@ -1,0 +1,101 @@
+# Verifikasi Publik QR — Redesign
+
+- id kanvas: `GXulP`
+- tema: light
+- frame: 390×844
+- posisi: (1290, 11150)
+- layout: layout=vertical
+
+## Layer tree
+
+- **Verifikasi Publik QR — Redesign** · `frame` · 390×844 · layout=vertical · fill: app-bg(#F4F7FB) · x=1290 · y=11150 · clip
+  - **Content** · `frame` · fill_container×fill_container · layout=vertical gap=14 pad=26/20/20/20 align=center
+    - **Brand** · `frame` · fit×fit · gap=9 align=center
+      - **Mark** · `frame` · 40×40 · justify=center align=center r=12 · fill: brand(#2B4EFF)
+        - **Icon** · `icon` · 21×21 · fill: #FFFFFF · library=lucide
+          - <graduation-cap · lucide>
+      - **Brand Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **School** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - “SMK HKTI 2” (14px/800, ink(#0B1B2E))
+        - **Product** · `text` · fit×fit · fill: muted(#74849A)
+          - “Sistem Inventaris Sekolah Resmi (HIKA)” (9px/normal, muted(#74849A))
+    - **Hero** · `frame` · fill_container×fit · layout=vertical gap=8 pad=14/10 align=center
+      - **Shield** · `frame` · 64×64 · justify=center align=center r=999 · fill: mint-soft(#E4F7F0) · stroke=#0EA47A33 1 · strokeWidth=1
+        - **Icon** · `icon` · 30×30 · fill: mint(#0EA47A) · library=lucide
+          - <shield-check · lucide>
+      - **Headline** · `text` · fill_container×fit · fill: ink(#0B1B2E)
+        - “DOKUMEN ASLI & TERVERIFIKASI” (13.5px/800, ink(#0B1B2E))
+      - **Sub** · `text` · 300×fit · fill: muted(#74849A)
+        - “Berita Acara Penerimaan Barang (BAP) ini sah dan tercatat di pangkalan data sekolah.” (10px/normal, muted(#74849A))
+    - **Document Card** · `frame` · fill_container×fit · layout=vertical r=16 · fill: surface(#FFFFFF) · clip · stroke=line(#E3EAF3) 1 · strokeWidth=1
+      - **Doc Head** · `frame` · fill_container×fit · gap=8 pad=12/14 justify=space_between align=center · fill: brand-soft(#EBEFFF)
+        - **Head Text** · `frame` · fit×fit · layout=vertical gap=1
+          - **Title** · `text` · fit×fit · fill: brand-deep(#1633C7)
+            - “BERITA ACARA PENERIMAAN BARANG” (9px/800, brand-deep(#1633C7))
+          - **Sub** · `text` · fit×fit · fill: brand-deep(#1633C7)
+            - “BAP · Dana BOS Reguler 2026” (8px/normal, brand-deep(#1633C7))
+        - **Icon** · `icon` · 18×18 · fill: brand(#2B4EFF) · library=lucide
+          - <badge-check · lucide>
+      - **Fields** · `frame` · fill_container×fit · layout=vertical pad=2/14
+        - **Field Nomor Dokumen** · `frame` · fill_container×fit · layout=vertical gap=2 pad=8/0 · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “NOMOR DOKUMEN” (7.5px/700, muted(#74849A))
+          - **Value** · `text` · fill_container×fit · fill: ink-soft(#3B4A5F)
+            - “027/BAP-BOS/XI/2026” (9.5px/600, ink-soft(#3B4A5F))
+        - **Field Sumber Dana** · `frame` · fill_container×fit · layout=vertical gap=2 pad=8/0 · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “SUMBER DANA” (7.5px/700, muted(#74849A))
+          - **Value** · `text` · fill_container×fit · fill: ink-soft(#3B4A5F)
+            - “Bantuan Operasional Sekolah (BOS) Reguler 2026” (9.5px/600, ink-soft(#3B4A5F))
+        - **Field Tanggal Pengesahan** · `frame` · fill_container×fit · layout=vertical gap=2 pad=8/0 · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “TANGGAL PENGESAHAN” (7.5px/700, muted(#74849A))
+          - **Value** · `text` · fill_container×fit · fill: ink-soft(#3B4A5F)
+            - “Jumat, 06 November 2026 · 14:30 WIB” (9.5px/600, ink-soft(#3B4A5F))
+        - **Field Guru Pengawas / Pemeriksa** · `frame` · fill_container×fit · layout=vertical gap=2 pad=8/0 · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “GURU PENGAWAS / PEMERIKSA” (7.5px/700, muted(#74849A))
+          - **Value** · `text` · fill_container×fit · fill: ink-soft(#3B4A5F)
+            - “Drs. Budi Santoso (NIP. 19780512 200501 1 008)” (9.5px/600, ink-soft(#3B4A5F))
+        - **Field Status Fisik Barang** · `frame` · fill_container×fit · layout=vertical gap=2 pad=8/0 · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “STATUS FISIK BARANG” (7.5px/700, muted(#74849A))
+          - **Value** · `text` · fill_container×fit · fill: mint(#0EA47A)
+            - “100% Lengkap & Kondisi Baik” (9.5px/700, mint(#0EA47A))
+      - **Barang Table** · `frame` · fill_container×fit · layout=vertical pad=8/14/10/14
+        - **Table Head** · `frame` · fill_container×fit · pad=0/0/6/0 justify=space_between
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “BARANG DISETUJUI” (7.5px/700, muted(#74849A))
+          - **Label** · `text` · fit×fit · fill: muted(#74849A)
+            - “VOLUME” (7.5px/700, muted(#74849A))
+        - **Row Kabel UTP Cat6** · `frame` · fill_container×fit · pad=6/0 justify=space_between · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Kabel UTP Cat6” (9.5px/normal, ink(#0B1B2E))
+          - **Volume** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “10 Roll” (9.5px/700, ink-soft(#3B4A5F))
+        - **Row Switch Hub 24 Port** · `frame` · fill_container×fit · pad=6/0 justify=space_between · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Switch Hub 24 Port” (9.5px/normal, ink(#0B1B2E))
+          - **Volume** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “2 Unit” (9.5px/700, ink-soft(#3B4A5F))
+        - **Row Mouse Optik USB** · `frame` · fill_container×fit · pad=6/0 justify=space_between · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Mouse Optik USB” (9.5px/normal, ink(#0B1B2E))
+          - **Volume** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “5 Unit” (9.5px/700, ink-soft(#3B4A5F))
+        - **Row SSD 1TB NVMe** · `frame` · fill_container×fit · pad=6/0 justify=space_between · stroke=line(#E3EAF3) {"bottom":1} · strokeWidth={"bottom":1}
+          - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “SSD 1TB NVMe” (9.5px/normal, ink(#0B1B2E))
+          - **Volume** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “1 Unit” (9.5px/700, ink-soft(#3B4A5F))
+      - **Verified Strip** · `frame` · fill_container×fit · gap=6 pad=9/14 justify=center align=center · fill: mint-soft(#E4F7F0)
+        - **Icon** · `icon` · 11×11 · fill: mint(#0EA47A) · library=lucide
+          - <check · lucide>
+        - **Text** · `text` · fit×fit · fill: mint(#0EA47A)
+          - “Terverifikasi sistem · 18 unit sesuai dokumen” (8.5px/700, mint(#0EA47A))
+    - **Spacer** · `frame` · fill_container×fill_container
+    - **Footer** · `frame` · fill_container×fit · layout=vertical gap=3 align=center
+      - **School** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - “SMK HKTI 2 Purwareja Klampok” (8px/700, ink-soft(#3B4A5F))
+      - **Note** · `text` · fit×fit · fill: muted(#74849A)
+        - “Terenkripsi SHA-256 Digital Signature · HIKA Inventaris” (7.5px/normal, muted(#74849A))

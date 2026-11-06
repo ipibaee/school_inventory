@@ -1,0 +1,83 @@
+# Mobile Pengesahan Modal — Redesign
+
+- id kanvas: `lLsrb`
+- tema: light
+- frame: 390×844
+- posisi: (430, 11150)
+- layout: layout=vertical
+
+## Layer tree
+
+- **Mobile Pengesahan Modal — Redesign** · `frame` · 390×844 · layout=vertical · fill: app-bg(#F4F7FB) · x=430 · y=11150 · clip
+  - **App Bar** · `frame` · fill_container×fit · gap=10 pad=13/16 justify=space_between align=center
+    - **Left** · `frame` · fit×fit · gap=9 align=center
+      - **Back** · `frame` · 30×30 · justify=center align=center r=9 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **Icon** · `icon` · 15×15 · fill: ink-soft(#3B4A5F) · library=lucide
+          - <arrow-left · lucide>
+      - **Text** · `frame` · fit×fit · layout=vertical gap=1
+        - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+          - “Pemeriksaan Barang” (16px/800, ink(#0B1B2E))
+        - **Sub** · `text` · fit×fit · fill: muted(#74849A)
+          - “BAP No. 027/BAP-BOS/XI/2026” (9.5px/normal, muted(#74849A))
+  - **Content Behind** · `frame` · fill_container×fill_container · layout=vertical gap=10 pad=0/16/10/16
+  - **Bottom Nav** · `frame` · fill_container×62 · pad=0/6 align=center · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) {"top":1} · strokeWidth={"top":1}
+    - **Tab Dasbor** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · library=lucide
+        - <layout-dashboard · lucide>
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - “Dasbor” (9px/500, muted(#74849A))
+    - **Tab Inventaris** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: brand(#2B4EFF) · library=lucide
+        - <boxes · lucide>
+      - **Label** · `text` · fit×fit · fill: brand(#2B4EFF)
+        - “Inventaris” (9px/700, brand(#2B4EFF))
+    - **Tab Barcode** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · library=lucide
+        - <barcode · lucide>
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - “Barcode” (9px/500, muted(#74849A))
+    - **Tab Pinjam** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · library=lucide
+        - <shopping-cart · lucide>
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - “Pinjam” (9px/500, muted(#74849A))
+    - **Tab Laporan** · `frame` · fill_container×fit · layout=vertical gap=3 justify=center align=center
+      - **Icon** · `icon` · 19×19 · fill: muted(#74849A) · library=lucide
+        - <chart-column · lucide>
+      - **Label** · `text` · fit×fit · fill: muted(#74849A)
+        - “Laporan” (9px/500, muted(#74849A))
+  - **Overlay** · `frame` · 390×844 · fill: #0B1B2E99 · layoutPosition=absolute · x=0 · y=0
+  - **Dialog** · `frame` · 342×fit · layout=vertical gap=12 pad=24 r=18 · fill: surface(#FFFFFF) · layoutPosition=absolute · x=24 · y=138 · stroke=line(#E3EAF3) 1 · strokeWidth=1 · effect={"type":"shadow","shadowType":"outer","color":"#0B1B2E44","offset":{"x":0,"y":18},"blur":44}
+    - **Success Icon** · `frame` · 56×56 · justify=center align=center r=999 · fill: mint-soft(#E4F7F0)
+      - **Icon** · `icon` · 28×28 · fill: mint(#0EA47A) · library=lucide
+        - <check · lucide>
+    - **Title** · `text` · fill_container×fit · fill: ink(#0B1B2E)
+      - “Pengesahan Berhasil!” (18px/800, ink(#0B1B2E))
+    - **Sub** · `text` · fill_container×fit · fill: muted(#74849A)
+      - “BAP Pengadaan BOS Bulan November 2026 telah sah. Stok otomatis masuk ke gudang.” (10.5px/normal, muted(#74849A))
+    - **QR Wrap** · `frame` · fill_container×fit · layout=vertical gap=6 align=center
+      - **QR Box** · `frame` · 140×140 · layout=vertical pad=8 r=8 · fill: #FFFFFF · stroke=line(#E3EAF3) 1 · strokeWidth=1
+        - **QR Pattern** · `path` · 124×124 · fill: ink(#0B1B2E) · geometry=M0 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m12-6h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-24 12h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2-24h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-8 1h1v1h-1z m8 0h1v1h-1z m-8 1h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-4 1h1v1h-1z m4 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-8 1h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m4 0h1v1h-1z m-4 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-5 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-2 1h1v1h-1z m-13 1h1v1h-1z m4 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m-21 1h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m5 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-24 1h1v1h-1z m4 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m8 0h1v1h-1z m3 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-23 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m6 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-21 1h1v1h-1z m3 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m6 0h1v1h-1z m1 0h1v1h-1z m5 0h1v1h-1z m1 0h1v1h-1z m-24 1h1v1h-1z m2 0h1v1h-1z m3 0h1v1h-1z m3 0h1v1h-1z m9 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m-22 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m6 0h1v1h-1z m-24 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m3 0h1v1h-1z m-10 1h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m6 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-15 1h1v1h-1z m5 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m-11 1h1v1h-1z m7 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m-15 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m-15 1h1v1h-1z m1 0h1v1h-1z m6 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-15 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m-14 1h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m4 0h1v1h-1z m6 0h1v1h-1z m1 0h1v1h-1z m-15 1h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m6 0h1v1h-1z m1 0h1v1h-1z m4 0h1v1h-1z m1 0h1v1h-1z m-16 1h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z · viewBox=[0,0,25,25]
+      - **Caption** · `text` · fit×fit · fill: muted(#74849A)
+        - “Scan untuk cek keabsahan dokumen” (9px/normal, muted(#74849A))
+    - **Details** · `frame` · fill_container×fit · layout=vertical gap=8 pad=12 r=12 · fill: surface-2(#FAFCFE) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+      - **Detail DIVERIFIKASI OLEH** · `frame` · fill_container×fit · gap=8 justify=space_between align=center
+        - **Label** · `text` · fit×fit · fill: muted(#74849A)
+          - “DIVERIFIKASI OLEH” (8px/700, muted(#74849A))
+        - **Value** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+          - “Drs. Budi Santoso, S.Kom.” (9.5px/700, ink-soft(#3B4A5F))
+      - **Detail WAKTU PENGESAHAN** · `frame` · fill_container×fit · gap=8 justify=space_between align=center
+        - **Label** · `text` · fit×fit · fill: muted(#74849A)
+          - “WAKTU PENGESAHAN” (8px/700, muted(#74849A))
+        - **Value** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+          - “06 Nov 2026 · 14:30 WIB” (9.5px/700, ink-soft(#3B4A5F))
+    - **Button Lihat Surat BAP Resmi** · `frame` · fill_container×fit · gap=8 pad=12/16 justify=center align=center r=10 · fill: brand(#2B4EFF)
+      - **Icon** · `icon` · 16×16 · fill: #FFFFFF · library=lucide
+        - <file-text · lucide>
+      - **Label** · `text` · fit×fit · fill: #FFFFFF
+        - “Lihat Surat BAP Resmi” (12px/700, #FFFFFF)
+    - **Button Kembali ke Beranda** · `frame` · fill_container×fit · gap=8 pad=12/16 justify=center align=center r=10 · fill: surface(#FFFFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+      - **Icon** · `icon` · 16×16 · fill: ink-soft(#3B4A5F) · library=lucide
+        - <arrow-left · lucide>
+      - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - “Kembali ke Beranda” (12px/700, ink-soft(#3B4A5F))

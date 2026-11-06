@@ -371,6 +371,9 @@
     background: #fff !important;
     color: #000 !important;
   }
+  .no-print, header, nav, aside, [data-app-chrome] {
+    display: none !important;
+  }
   .panel,
   .panel-sm,
   .glass-card,
@@ -381,8 +384,5 @@
     border: 1px solid #000 !important;
     box-shadow: none !important;
     backdrop-filter: none !important;
-  }
-  .no-print {
-    display: none !important;
   }
 }

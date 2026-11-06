@@ -20,3 +20,14 @@ UI aplikasi ini sudah didesain ulang. Semua spesifikasi ada di **`design-handoff
 
 Ringkas: ganti gaya glassmorphism lama → flat institutional SaaS, font Plus Jakarta Sans,
 aksen `#2B4EFF`, sidebar navy `#0A1730`. Fitur, route, dan server action **tidak berubah**.
+
+---
+
+## V2 — Modul Pengadaan BOS / BAP (fitur baru)
+
+- Prompt: `design-handoff/v2-pengadaan-bos/ANTIGRAVITY-V2.md`
+- Semua dokumen digabung: `design-handoff/v2-pengadaan-bos/ALL-IN-ONE-V2.md`
+- Referensi: `v2-pengadaan-bos/reference/png/` (15 gambar), `reference/html/`, `spec/`
+
+Isi: 8 layar (7 dengan versi dark), model Prisma baru, alur peran & state machine,
+server actions, spesifikasi cetak A4 + QR verifikasi publik.

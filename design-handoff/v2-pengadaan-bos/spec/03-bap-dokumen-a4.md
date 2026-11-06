@@ -1,0 +1,195 @@
+# BAP BOS — Dokumen A4
+
+- id kanvas: `nEGzA`
+- tema: light
+- frame: 794×1123
+- posisi: (4620, 9900)
+- layout: layout=vertical pad=48/52
+
+## Layer tree
+
+- **BAP BOS — Dokumen A4** · `frame` · 794×1123 · layout=vertical pad=48/52 · fill: surface(#FFFFFF) · x=4620 · y=9900 · clip
+  - **KOP Surat** · `frame` · fill_container×fit · gap=14 align=center
+    - **Logo** · `frame` · 64×64 · justify=center align=center r=10 · fill: brand-soft(#EBEFFF) · stroke=line(#E3EAF3) 1 · strokeWidth=1
+      - **Icon** · `icon` · 30×30 · fill: brand(#2B4EFF) · library=lucide
+        - <graduation-cap · lucide>
+    - **KOP Text** · `frame` · fill_container×fit · layout=vertical gap=2 align=center
+      - **Provinsi** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - “PEMERINTAH PROVINSI JAWA TENGAH” (11px/700, ink(#0B1B2E))
+      - **Dinas** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - “DINAS PENDIDIKAN” (10px/600, ink-soft(#3B4A5F))
+      - **Sekolah** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - “SMK HKTI 2 PURWAREJA KLAMPOK” (17px/800, ink(#0B1B2E))
+      - **Alamat** · `text` · fit×fit · fill: muted(#74849A)
+        - “Jl. Raya Purwareja Klampok No. 12, Banjarnegara, Jawa Tengah 53474” (7.5px/normal, muted(#74849A))
+      - **Kontak** · `text` · fit×fit · fill: muted(#74849A)
+        - “NPSN 20302134  ·  Telp. (0282) 496123  ·  smkhkti2.sch.id  ·  hika@smkhkti2.sch.id” (7.5px/normal, muted(#74849A))
+    - **Logo Spacer** · `frame` · 64×64
+  - **Garis Ganda** · `frame` · fill_container×fit · layout=vertical gap=2 pad=14/0/0/0
+    - **Garis Tebal** · `frame` · fill_container×3 · fill: ink(#0B1B2E)
+    - **Garis Tipis** · `frame` · fill_container×1 · fill: ink(#0B1B2E)
+  - **Judul Dokumen** · `frame` · fill_container×fit · layout=vertical gap=4 pad=22/0/0/0 align=center
+    - **Title** · `text` · fit×fit · fill: ink(#0B1B2E)
+      - “BERITA ACARA PENERIMAAN BARANG (BAP)” (13.5px/800, ink(#0B1B2E))
+    - **Nomor** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+      - “Nomor: 027 / BAP-BOS / XI / 2026” (10.5px/normal, ink-soft(#3B4A5F))
+  - **Paragraf Pembuka Wrap** · `frame` · fill_container×fit · layout=vertical pad=16/0/0/0
+    - **Paragraf Pembuka** · `text` · fill_container×fit · fill: ink-soft(#3B4A5F)
+      - “Pada hari ini, Jumat tanggal 06 November 2026, bertempat di SMK HKTI 2 Purwareja Klampok, telah dilaksanakan pemeriksaan dan penerimaan barang hasil belanja Dana Bantuan Operasional Sekolah (BOSP) Reguler Tahun Anggaran 2026 oleh Penyimpan Barang bersama Guru Pengawas, dengan rincian sebagai berikut:” (11px/normal, ink-soft(#3B4A5F))
+  - **Tabel Barang** · `frame` · fill_container×fit · layout=vertical pad=14/0/0/0 · clip · stroke=ink(#0B1B2E) 1 · strokeWidth=1
+    - **Tabel Inner** · `frame` · fill_container×fit · layout=vertical · clip · stroke=ink(#0B1B2E) 1 · strokeWidth=1
+      - **Header** · `frame` · fill_container×fit · align=center · fill: surface-2(#FAFCFE) · stroke=ink(#0B1B2E) {"bottom":1} · strokeWidth={"bottom":1}
+        - **Th No** · `frame` · 30×fit · pad=7/8 align=center
+          - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “No” (8.5px/700, ink(#0B1B2E))
+        - **Th Kode / Barcode** · `frame` · 86×fit · pad=7/8 align=center
+          - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Kode / Barcode” (8.5px/700, ink(#0B1B2E))
+        - **Th Nama Barang & Spesifikasi Teknis** · `frame` · fill_container×fit · pad=7/8 align=center
+          - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Nama Barang & Spesifikasi Teknis” (8.5px/700, ink(#0B1B2E))
+        - **Th Volume** · `frame` · 52×fit · pad=7/8 justify=end align=center
+          - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Volume” (8.5px/700, ink(#0B1B2E))
+        - **Th Satuan** · `frame` · 50×fit · pad=7/8 align=center
+          - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Satuan” (8.5px/700, ink(#0B1B2E))
+        - **Th Kondisi Fisik** · `frame` · 72×fit · pad=7/8 justify=end align=center
+          - **Label** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Kondisi” (8.5px/700, ink(#0B1B2E))
+      - **Row Kabel UTP Cat6 Belden** · `frame` · fill_container×fit · align=center · stroke=ink(#0B1B2E) {"bottom":1} · strokeWidth={"bottom":1}
+        - **No** · `frame` · 30×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “1” (9px/600, ink(#0B1B2E))
+        - **Kode** · `frame` · 86×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “45685” (9px/normal, ink-soft(#3B4A5F))
+        - **Nama** · `frame` · fill_container×fit · layout=vertical gap=1 pad=7/8
+          - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Kabel UTP Cat6 Belden” (9.5px/700, ink(#0B1B2E))
+          - **Spec** · `text` · fit×fit · fill: muted(#74849A)
+            - “Roll 305 meter · kabel original” (8px/normal, muted(#74849A))
+        - **Volume** · `frame` · 52×fit · pad=8 justify=end align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “10” (9px/700, ink(#0B1B2E))
+        - **Satuan** · `frame` · 50×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “Roll” (9px/normal, ink-soft(#3B4A5F))
+        - **Kondisi** · `frame` · 72×fit · pad=8 justify=end align=center
+          - **Badge Baik** · `ref` · fit×fit · fill: mint-soft(#E4F7F0) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint","width":5,"height":5},"rOKja":{"content":"Baik","fill":"$mint","fontSize":7.5}}
+      - **Row Switch Hub 24 Port D-Link** · `frame` · fill_container×fit · align=center · stroke=ink(#0B1B2E) {"bottom":1} · strokeWidth={"bottom":1}
+        - **No** · `frame` · 30×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “2” (9px/600, ink(#0B1B2E))
+        - **Kode** · `frame` · 86×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “77564” (9px/normal, ink-soft(#3B4A5F))
+        - **Nama** · `frame` · fill_container×fit · layout=vertical gap=1 pad=7/8
+          - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Switch Hub 24 Port D-Link” (9.5px/700, ink(#0B1B2E))
+          - **Spec** · `text` · fit×fit · fill: muted(#74849A)
+            - “Gigabit 10/100/1000 · rackmount” (8px/normal, muted(#74849A))
+        - **Volume** · `frame` · 52×fit · pad=8 justify=end align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “2” (9px/700, ink(#0B1B2E))
+        - **Satuan** · `frame` · 50×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “Unit” (9px/normal, ink-soft(#3B4A5F))
+        - **Kondisi** · `frame` · 72×fit · pad=8 justify=end align=center
+          - **Badge Baik** · `ref` · fit×fit · fill: mint-soft(#E4F7F0) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint","width":5,"height":5},"rOKja":{"content":"Baik","fill":"$mint","fontSize":7.5}}
+      - **Row Mouse Optik USB Logitech** · `frame` · fill_container×fit · align=center · stroke=ink(#0B1B2E) {"bottom":1} · strokeWidth={"bottom":1}
+        - **No** · `frame` · 30×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “3” (9px/600, ink(#0B1B2E))
+        - **Kode** · `frame` · 86×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “57170” (9px/normal, ink-soft(#3B4A5F))
+        - **Nama** · `frame` · fill_container×fit · layout=vertical gap=1 pad=7/8
+          - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Mouse Optik USB Logitech” (9.5px/700, ink(#0B1B2E))
+          - **Spec** · `text` · fit×fit · fill: muted(#74849A)
+            - “B100 Black · USB 2.0” (8px/normal, muted(#74849A))
+        - **Volume** · `frame` · 52×fit · pad=8 justify=end align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “5” (9px/700, ink(#0B1B2E))
+        - **Satuan** · `frame` · 50×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “Unit” (9px/normal, ink-soft(#3B4A5F))
+        - **Kondisi** · `frame` · 72×fit · pad=8 justify=end align=center
+          - **Badge Baik** · `ref` · fit×fit · fill: mint-soft(#E4F7F0) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint","width":5,"height":5},"rOKja":{"content":"Baik","fill":"$mint","fontSize":7.5}}
+      - **Row SSD 1TB Kingston NV2** · `frame` · fill_container×fit · align=center · stroke=ink(#0B1B2E) {"bottom":1} · strokeWidth={"bottom":1}
+        - **No** · `frame` · 30×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “4” (9px/600, ink(#0B1B2E))
+        - **Kode** · `frame` · 86×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “93714” (9px/normal, ink-soft(#3B4A5F))
+        - **Nama** · `frame` · fill_container×fit · layout=vertical gap=1 pad=7/8
+          - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “SSD 1TB Kingston NV2” (9.5px/700, ink(#0B1B2E))
+          - **Spec** · `text` · fit×fit · fill: muted(#74849A)
+            - “PCIe 4.0 NVMe M.2” (8px/normal, muted(#74849A))
+        - **Volume** · `frame` · 52×fit · pad=8 justify=end align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “1” (9px/700, ink(#0B1B2E))
+        - **Satuan** · `frame` · 50×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+            - “Unit” (9px/normal, ink-soft(#3B4A5F))
+        - **Kondisi** · `frame` · 72×fit · pad=8 justify=end align=center
+          - **Badge Baik** · `ref` · fit×fit · fill: mint-soft(#E4F7F0) · ref=QuGLj · descendants={"QlB0F":{"fill":"$mint","width":5,"height":5},"rOKja":{"content":"Baik","fill":"$mint","fontSize":7.5}}
+      - **Total Row** · `frame` · fill_container×fit · align=center · fill: surface-2(#FAFCFE)
+        - **Total Label** · `frame` · fill_container×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “Jumlah Keseluruhan” (9px/700, ink(#0B1B2E))
+        - **Total Qty** · `frame` · 52×fit · pad=8 justify=end align=center
+          - **Val** · `text` · fit×fit · fill: ink(#0B1B2E)
+            - “18” (9px/800, ink(#0B1B2E))
+        - **Total Satuan** · `frame` · 50×fit · pad=8 align=center
+          - **Val** · `text` · fit×fit · fill: muted(#74849A)
+            - “Unit” (8.5px/normal, muted(#74849A))
+        - **Total Kondisi** · `frame` · 72×fit · pad=8 justify=end
+          - **Val** · `text` · fit×fit · fill: muted(#74849A)
+            - “10 Roll · 8 Unit” (8px/normal, muted(#74849A))
+  - **Klausul Penutup** · `frame` · fill_container×fit · layout=vertical gap=8 pad=16/0/0/0
+    - **Paragraf 1** · `text` · fill_container×fit · fill: ink(#0B1B2E)
+      - “Barang tersebut di atas telah diterima dalam keadaan lengkap dan baik, sesuai dengan spesifikasi teknis yang tercantum pada dokumen pengadaan. Selanjutnya barang akan dibukukan ke dalam Buku Induk Inventaris Sekolah oleh Penyimpan Barang.” (11px/normal, ink(#0B1B2E))
+    - **Paragraf 2** · `text` · fill_container×fit · fill: ink(#0B1B2E)
+      - “Demikian Berita Acara Penerimaan Barang ini dibuat dengan sebenarnya, tanpa paksaan dari pihak mana pun, untuk dipergunakan sebagaimana mestinya.” (11px/normal, ink(#0B1B2E))
+  - **Spacer Tanda Tangan** · `frame` · fill_container×fill_container
+  - **Blok Tanda Tangan** · `frame` · fill_container×fit · gap=20 justify=space_between
+    - **Penyimpan** · `frame` · 236×fit · layout=vertical align=center
+      - **Role** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - “Penyimpan / Teknisi Barang” (9px/600, ink(#0B1B2E))
+      - **Space** · `frame` · fill_container×103
+      - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - “Arif Nugroho, S.Kom.” (9.5px/700, ink(#0B1B2E))
+      - **NIP** · `text` · fit×fit · fill: muted(#74849A)
+        - “NIP. 19890317 201403 1 002” (8px/normal, muted(#74849A))
+    - **Guru Pemeriksa** · `frame` · 236×fit · layout=vertical align=center
+      - **Role** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - “Guru Pengawas / Pemeriksa” (9px/600, ink(#0B1B2E))
+      - **QR Box** · `frame` · 86×86 · layout=vertical pad=6 · fill: #FFFFFF · stroke=ink(#0B1B2E) 1 · strokeWidth=1
+        - **QR Pattern** · `path` · 74×74 · fill: ink(#0B1B2E) · geometry=M0 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m12-6h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-24 12h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m-6 1h1v1h-1z m6 0h1v1h-1z m-6 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3-24h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-2 1h1v1h-1z m1 0h1v1h-1z m-2 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-6 1h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-4 1h1v1h-1z m4 0h1v1h-1z m1 0h1v1h-1z m-6 1h1v1h-1z m1 0h1v1h-1z m5 0h1v1h-1z m-8 1h1v1h-1z m3 0h1v1h-1z m-2 1h1v1h-1z m2 0h1v1h-1z m5 0h1v1h-1z m-16 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m4 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-24 1h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m4 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m6 0h1v1h-1z m-23 1h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-24 1h1v1h-1z m8 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m-24 1h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m5 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m4 0h1v1h-1z m2 0h1v1h-1z m-24 1h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m5 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m3 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m-23 1h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m5 0h1v1h-1z m4 0h1v1h-1z m1 0h1v1h-1z m-21 1h1v1h-1z m5 0h1v1h-1z m7 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m-23 1h1v1h-1z m4 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m7 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-13 1h1v1h-1z m1 0h1v1h-1z m5 0h1v1h-1z m3 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m-13 1h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m-11 1h1v1h-1z m5 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m4 0h1v1h-1z m2 0h1v1h-1z m-16 1h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-14 1h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m2 0h1v1h-1z m-14 1h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m-15 1h1v1h-1z m3 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z m4 0h1v1h-1z m1 0h1v1h-1z m3 0h1v1h-1z m2 0h1v1h-1z m-16 1h1v1h-1z m1 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m6 0h1v1h-1z m2 0h1v1h-1z m1 0h1v1h-1z m1 0h1v1h-1z · viewBox=[0,0,25,25]
+      - **QR Caption** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+        - “QR Verifikasi Sah Sistem HIKA” (6.5px/700, ink-soft(#3B4A5F))
+      - **Space** · `frame` · fill_container×8
+      - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+        - “Drs. Budi Santoso” (9.5px/700, ink(#0B1B2E))
+      - **NIP** · `text` · fit×fit · fill: muted(#74849A)
+        - “NIP. 19780512 200501 1 008” (8px/normal, muted(#74849A))
+  - **Mengetahui** · `frame` · fill_container×fit · layout=vertical pad=22/0/0/0 align=center
+    - **Label** · `text` · fit×fit · fill: ink-soft(#3B4A5F)
+      - “Mengetahui,” (9px/normal, ink-soft(#3B4A5F))
+    - **Role** · `text` · fit×fit · fill: ink(#0B1B2E)
+      - “Kepala Sekolah” (9px/600, ink(#0B1B2E))
+    - **Space** · `frame` · fill_container×46
+    - **Name** · `text` · fit×fit · fill: ink(#0B1B2E)
+      - “Drs. H. Sutarjo, M.Pd.” (9.5px/700, ink(#0B1B2E))
+    - **NIP** · `text` · fit×fit · fill: muted(#74849A)
+      - “NIP. 19720408 199803 1 004” (8px/normal, muted(#74849A))
+  - **Doc Footer** · `frame` · fill_container×fit · layout=vertical gap=6 pad=18/0/0/0 align=center
+    - **Footer Line** · `frame` · fill_container×1 · fill: line(#E3EAF3)
+    - **Footer 1** · `text` · fit×fit · fill: muted(#74849A)
+      - “Dokumen ini diterbitkan secara elektronik melalui Sistem HIKA Inventaris · SMK HKTI 2 Purwareja Klampok” (7px/normal, muted(#74849A))
+    - **Footer 2** · `text` · fit×fit · fill: muted(#74849A)
+      - “Keaslian dokumen dapat diverifikasi dengan memindai QR Code · 027/BAP-BOS/XI/2026” (7px/normal, muted(#74849A))

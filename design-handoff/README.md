@@ -78,3 +78,14 @@ design-handoff/
 - Pertahankan semua behavior: scanner keyboard listener, print barcode (mm), export PDF, dark mode toggle.
 - Satu sumber kebenaran warna: token di `src/app/globals.css`. Jangan hardcode hex di komponen,
   kecuali sidebar navy (lihat `01-design-tokens.md`).
+
+---
+
+## V2 — Modul baru (Pengadaan BOS / BAP / Dasbor Eksekutif)
+
+Paket terpisah untuk **fitur baru** (bukan restyling): pengajuan pengadaan BOS, arsip BAP,
+dokumen BAP A4 ber-QR, pemeriksaan fisik mobile, dasbor Kepala Sekolah, dan halaman verifikasi
+publik. Sudah termasuk model Prisma, alur peran, server action, dan spesifikasi cetak.
+
+→ [`v2-pengadaan-bos/README.md`](./v2-pengadaan-bos/README.md)
+→ instruksi utama: [`v2-pengadaan-bos/ANTIGRAVITY-V2.md`](./v2-pengadaan-bos/ANTIGRAVITY-V2.md)
