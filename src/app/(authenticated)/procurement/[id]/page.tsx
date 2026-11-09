@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation"
 import Link from "next/link"
+import { headers } from "next/headers"
 import { getProcurementDetail } from "@/lib/queries/procurement"
 import { getSchoolSettings } from "@/actions/settings"
-import { bapQrSvg } from "@/lib/qr"
+import { bapQrSvg, getVerifyUrl } from "@/lib/qr"
 import { BapDocument } from "@/components/procurement/BapDocument"
 import { BapPrintButton } from "@/components/procurement/BapPrintButton"
 import { PageHeader } from "@/components/layout/PageHeader"
@@ -38,7 +39,13 @@ export default async function BapDetailPage({
     notFound()
   }
 
-  const qrSvg = bap.qrToken ? await bapQrSvg(bap.qrToken) : undefined
+  const headerList = await headers()
+  const host = headerList.get("x-forwarded-host") || headerList.get("host") || "localhost:3000"
+  const proto = headerList.get("x-forwarded-proto") || (host.includes("localhost") ? "http" : "https")
+  const reqBaseUrl = `${proto}://${host}`
+
+  const verifyUrl = bap.qrToken ? getVerifyUrl(bap.qrToken, reqBaseUrl) : undefined
+  const qrSvg = bap.qrToken ? await bapQrSvg(bap.qrToken, reqBaseUrl) : undefined
 
   const statusBadge = () => {
     switch (bap.status) {
@@ -149,6 +156,7 @@ export default async function BapDetailPage({
             bap={bap}
             schoolSettings={schoolSettings}
             qrSvg={qrSvg}
+            verifyUrl={verifyUrl}
           />
         </div>
       </div>

@@ -8,6 +8,7 @@ import {
     LayoutDashboard,
     Boxes,
     ClipboardList,
+    ClipboardCheck,
     Archive,
     ScanBarcode,
     ShoppingCart,
@@ -25,44 +26,58 @@ interface SidebarProps {
 
 export function Sidebar({ user, settings }: SidebarProps) {
     const pathname = usePathname()
+    const isTeacher = user?.role === "TEACHER"
 
-    const routes = [
-        {
-            label: "Dasbor",
-            icon: LayoutDashboard,
-            href: "/dashboard",
-        },
-        {
-            label: "Inventaris",
-            icon: Boxes,
-            href: "/inventory",
-        },
-        {
-            label: "Pengadaan BOS",
-            icon: ClipboardList,
-            href: "/procurement",
-        },
-        {
-            label: "Cetak Barcode",
-            icon: ScanBarcode,
-            href: "/inventory/barcode",
-        },
-        {
-            label: "Peminjaman",
-            icon: ShoppingCart,
-            href: "/borrow",
-        },
-        {
-            label: "Laporan",
-            icon: ChartColumn,
-            href: "/reports",
-        },
-        {
-            label: "Pengaturan",
-            icon: Settings,
-            href: "/settings",
-        },
-    ]
+    const routes = isTeacher
+        ? [
+              {
+                  label: "Dasbor",
+                  icon: LayoutDashboard,
+                  href: "/dashboard",
+              },
+              {
+                  label: "Validasi BOS",
+                  icon: ClipboardCheck,
+                  href: "/procurement",
+              },
+          ]
+        : [
+              {
+                  label: "Dasbor",
+                  icon: LayoutDashboard,
+                  href: "/dashboard",
+              },
+              {
+                  label: "Inventaris",
+                  icon: Boxes,
+                  href: "/inventory",
+              },
+              {
+                  label: "Pengadaan BOS",
+                  icon: ClipboardList,
+                  href: "/procurement",
+              },
+              {
+                  label: "Cetak Barcode",
+                  icon: ScanBarcode,
+                  href: "/inventory/barcode",
+              },
+              {
+                  label: "Peminjaman",
+                  icon: ShoppingCart,
+                  href: "/borrow",
+              },
+              {
+                  label: "Laporan",
+                  icon: ChartColumn,
+                  href: "/reports",
+              },
+              {
+                  label: "Pengaturan",
+                  icon: Settings,
+                  href: "/settings",
+              },
+          ]
 
     return (
         <div className="flex flex-col h-full w-[264px] bg-navy text-white py-6 px-[18px] gap-6 select-none shrink-0 border-r border-line/10">

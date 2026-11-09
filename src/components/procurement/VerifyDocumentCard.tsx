@@ -1,6 +1,6 @@
 import React from "react"
 import Image from "next/image"
-import { ShieldCheck, BadgeCheck, Check, GraduationCap } from "lucide-react"
+import { ShieldCheck, BadgeCheck, Check, GraduationCap, Clock, FileText } from "lucide-react"
 import { formatDateTimeId, formatNumberId } from "@/lib/format"
 
 interface VerifyDocumentCardProps {
@@ -10,12 +10,15 @@ interface VerifyDocumentCardProps {
     periodMonth: number
     periodYear: number
     source: string
+    status?: string
     totalUnits: number
     totalItems: number
     verifiedAt: Date | string | null
+    submittedAt?: Date | string | null
     updatedAt: Date | string
     inspector?: { name: string | null; email: string | null } | null
     verifiedBy?: { name: string | null } | null
+    createdBy?: { name: string | null; email: string | null } | null
     items: Array<{
       id: string
       name: string
@@ -35,6 +38,9 @@ export function VerifyDocumentCard({
   schoolName = "SMK HKTI 2 Purwareja Klampok",
   schoolLogo,
 }: VerifyDocumentCardProps) {
+  const isVerified = bap.status === "VERIFIED"
+  const isSubmitted = bap.status === "SUBMITTED"
+
   const totalUnits =
     bap.totalUnits > 0
       ? bap.totalUnits
@@ -76,16 +82,33 @@ export function VerifyDocumentCard({
 
       {/* Hero Badge */}
       <div className="flex flex-col items-center text-center gap-2 py-2">
-        <div className="w-16 h-16 rounded-full bg-mint-soft border border-mint/25 flex items-center justify-center shadow-xs">
-          <ShieldCheck className="w-8 h-8 text-mint" />
-        </div>
+        {isVerified ? (
+          <div className="w-16 h-16 rounded-full bg-mint-soft border border-mint/25 flex items-center justify-center shadow-xs">
+            <ShieldCheck className="w-8 h-8 text-mint" />
+          </div>
+        ) : isSubmitted ? (
+          <div className="w-16 h-16 rounded-full bg-amber-soft border border-amber/25 flex items-center justify-center shadow-xs">
+            <Clock className="w-8 h-8 text-amber" />
+          </div>
+        ) : (
+          <div className="w-16 h-16 rounded-full bg-brand-soft border border-brand/25 flex items-center justify-center shadow-xs">
+            <FileText className="w-8 h-8 text-brand" />
+          </div>
+        )}
         <div className="flex flex-col gap-1">
           <h2 className="text-sm sm:text-base font-extrabold tracking-wide text-ink">
-            DOKUMEN ASLI &amp; TERVERIFIKASI
+            {isVerified
+              ? "DOKUMEN ASLI & TERVERIFIKASI"
+              : isSubmitted
+              ? "MENUNGGU PENGESAHAN GURU"
+              : "DRAF DOKUMEN PENGADAAN"}
           </h2>
           <p className="text-[11px] text-muted-ink max-w-[320px] mx-auto leading-relaxed">
-            Berita Acara Penerimaan Barang (BAP) ini sah dan tercatat di
-            pangkalan data sekolah.
+            {isVerified
+              ? "Berita Acara Penerimaan Barang (BAP) ini sah dan tercatat di pangkalan data sekolah."
+              : isSubmitted
+              ? "Berita Acara ini telah diajukan dan sedang dalam proses pemeriksaan fisik barang di sekolah."
+              : "Dokumen ini masih dalam status penyusunan draf oleh teknisi inventaris."}
           </p>
         </div>
       </div>
@@ -127,13 +150,13 @@ export function VerifyDocumentCard({
             </span>
           </div>
 
-          {/* Tanggal Pengesahan */}
+          {/* Tanggal Pengesahan / Pengajuan */}
           <div className="py-2.5 flex flex-col gap-0.5">
             <span className="text-[9px] font-bold tracking-wider text-muted-ink uppercase">
-              Tanggal Pengesahan
+              {isVerified ? "Tanggal Pengesahan" : "Tanggal Pengajuan"}
             </span>
             <span className="text-xs font-semibold text-ink-soft">
-              {formatDateTimeId(bap.verifiedAt || bap.updatedAt)}
+              {formatDateTimeId(bap.verifiedAt || bap.submittedAt || bap.updatedAt)}
             </span>
           </div>
 
@@ -152,17 +175,28 @@ export function VerifyDocumentCard({
             <span className="text-[9px] font-bold tracking-wider text-muted-ink uppercase">
               Status Fisik Barang
             </span>
-            <span className="text-xs font-bold text-mint flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
-              100% Lengkap &amp; Kondisi Baik
-            </span>
+            {isVerified ? (
+              <span className="text-xs font-bold text-mint flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
+                100% Lengkap &amp; Kondisi Baik
+              </span>
+            ) : isSubmitted ? (
+              <span className="text-xs font-bold text-amber flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber animate-pulse" />
+                Menunggu Pemeriksaan Fisik Guru
+              </span>
+            ) : (
+              <span className="text-xs font-semibold text-muted-ink">
+                Belum Diverifikasi
+              </span>
+            )}
           </div>
         </div>
 
         {/* Table of Approved Items */}
         <div className="px-4 pt-3 pb-2 border-t border-line">
           <div className="flex items-center justify-between pb-1.5 text-[9px] font-bold text-muted-ink tracking-wider uppercase">
-            <span>Barang Disetujui</span>
+            <span>Daftar Barang</span>
             <span>Volume</span>
           </div>
           <div className="divide-y divide-line/60">
@@ -190,12 +224,34 @@ export function VerifyDocumentCard({
         </div>
 
         {/* Verified Strip */}
-        <div className="bg-mint-soft px-4 py-2.5 flex items-center justify-center gap-1.5 border-t border-line text-mint">
-          <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-          <span className="text-[10.5px] font-bold">
-            Terverifikasi sistem · {formatNumberId(totalUnits)} unit sesuai
-            dokumen
-          </span>
+        <div
+          className={`px-4 py-2.5 flex items-center justify-center gap-1.5 border-t border-line font-bold text-[10.5px] ${
+            isVerified
+              ? "bg-mint-soft text-mint"
+              : isSubmitted
+              ? "bg-amber-soft text-amber"
+              : "bg-surface-2 text-muted-ink"
+          }`}
+        >
+          {isVerified ? (
+            <>
+              <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>
+                Terverifikasi sistem · {formatNumberId(totalUnits)} unit sesuai dokumen
+              </span>
+            </>
+          ) : isSubmitted ? (
+            <>
+              <Clock className="w-3.5 h-3.5" />
+              <span>
+                Dalam pemeriksaan · {formatNumberId(totalUnits)} unit terdata
+              </span>
+            </>
+          ) : (
+            <span>
+              Draf Pengadaan · {formatNumberId(totalUnits)} unit diajukan
+            </span>
+          )}
         </div>
       </div>
 

@@ -7,6 +7,7 @@ interface BapDocumentProps {
   bap: any
   schoolSettings?: any
   qrSvg?: string
+  verifyUrl?: string
   className?: string
 }
 
@@ -14,6 +15,7 @@ export function BapDocument({
   bap,
   schoolSettings,
   qrSvg,
+  verifyUrl,
   className = "",
 }: BapDocumentProps) {
   const isVerified = bap.status === "VERIFIED"
@@ -235,8 +237,12 @@ export function BapDocument({
             <span className="font-semibold">Guru Pengawas / Pemeriksa</span>
             <div className="h-[22mm] flex items-center justify-center my-0.5">
               {qrSvg ? (
-                <div
-                  className="w-[19mm] h-[19mm] border border-black/60 p-[1mm] bg-white flex items-center justify-center"
+                <a
+                  href={verifyUrl || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Klik untuk membuka verifikasi daring"
+                  className="w-[19mm] h-[19mm] border border-black/60 p-[1mm] bg-white flex items-center justify-center hover:opacity-85 transition-opacity cursor-pointer"
                   dangerouslySetInnerHTML={{ __html: qrSvg }}
                 />
               ) : (
@@ -245,9 +251,21 @@ export function BapDocument({
                 </div>
               )}
             </div>
-            <span className="text-[6pt] font-mono text-black/70 tracking-tight">
-              QR Verifikasi Sah Sistem HIKA
-            </span>
+            {verifyUrl ? (
+              <a
+                href={verifyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[5.5pt] font-mono text-black/80 tracking-tight hover:underline cursor-pointer block max-w-[50mm] truncate"
+                title={verifyUrl}
+              >
+                Pindai / Kunjungi Link Verifikasi
+              </a>
+            ) : (
+              <span className="text-[6pt] font-mono text-black/70 tracking-tight">
+                QR Verifikasi Sah Sistem HIKA
+              </span>
+            )}
             <span className="font-bold text-[8.5pt] underline text-black mt-0.5">
               {bap.verifiedBy?.name || bap.inspector?.name || "Guru Pengawas"}
             </span>
@@ -264,7 +282,7 @@ export function BapDocument({
           Dokumen ini diterbitkan secara elektronik melalui Sistem Informasi Inventaris (HIKA) · {schoolName}
         </span>
         <span>
-          Keaslian dokumen dapat diverifikasi secara daring dengan memindai QR Code di atas · Ref: {bap.bapNumber || bap.id}
+          Keaslian dokumen dapat diverifikasi daring dengan memindai QR Code di atas {verifyUrl ? `atau akses link: ${verifyUrl}` : `· Ref: ${bap.bapNumber || bap.id}`}
         </span>
       </div>
     </div>

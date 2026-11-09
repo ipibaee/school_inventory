@@ -51,6 +51,57 @@ export async function getActiveDraftOrSubmitted(year: number, month: number) {
   }
 }
 
+export async function getTeacherValidations(teacherId?: string) {
+  try {
+    const [pending, verified] = await Promise.all([
+      prisma.procurement.findMany({
+        where: {
+          status: "SUBMITTED",
+          ...(teacherId
+            ? {
+                OR: [{ inspectorId: teacherId }, { inspectorId: null }],
+              }
+            : {}),
+        },
+        include: {
+          items: {
+            orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+          },
+          createdBy: { select: { id: true, name: true, email: true } },
+          inspector: { select: { id: true, name: true, email: true } },
+          _count: { select: { items: true } },
+        },
+        orderBy: { submittedAt: "desc" },
+      }),
+      prisma.procurement.findMany({
+        where: {
+          status: "VERIFIED",
+          ...(teacherId
+            ? {
+                OR: [{ inspectorId: teacherId }, { verifiedById: teacherId }],
+              }
+            : {}),
+        },
+        include: {
+          items: {
+            orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+          },
+          inspector: { select: { id: true, name: true, email: true } },
+          verifiedBy: { select: { id: true, name: true, email: true } },
+          _count: { select: { items: true } },
+        },
+        orderBy: { verifiedAt: "desc" },
+        take: 10,
+      }),
+    ])
+
+    return { pending, verified }
+  } catch (error) {
+    console.error("Error getTeacherValidations:", error)
+    return { pending: [], verified: [] }
+  }
+}
+
 export async function listBaps({
   year,
   month,
@@ -164,7 +215,6 @@ export async function getBapByToken(token: string) {
     return await prisma.procurement.findFirst({
       where: {
         qrToken: token,
-        status: "VERIFIED",
       },
       include: {
         items: {
@@ -174,6 +224,9 @@ export async function getBapByToken(token: string) {
           select: { id: true, name: true, email: true },
         },
         verifiedBy: {
+          select: { id: true, name: true, email: true },
+        },
+        createdBy: {
           select: { id: true, name: true, email: true },
         },
       },

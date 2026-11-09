@@ -18,6 +18,7 @@ import {
   ArrowLeft,
   CheckCircle2,
   PencilLine,
+  ExternalLink,
 } from "lucide-react"
 
 interface ChecklistClientProps {
@@ -309,16 +310,28 @@ export function ChecklistClient({ procurement, currentUserId }: ChecklistClientP
 
             <div className="w-full flex flex-col gap-2 mt-1">
               <Link href={`/procurement/${procurement.id}`} className="w-full">
-                <Button variant="primary" className="w-full text-xs font-bold gap-1.5">
+                <Button variant="primary" className="w-full text-xs font-bold gap-1.5 h-9">
                   <FileText className="size-3.5" />
-                  <span>Lihat Surat BAP Resmi</span>
+                  <span>Lihat Surat BAP Resmi &amp; Cetak</span>
                 </Button>
               </Link>
 
-              <Link href="/procurement/archive" className="w-full">
-                <Button variant="secondary" className="w-full text-xs font-semibold gap-1.5">
+              <a
+                href={`/verify/${successData.qrToken}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full"
+              >
+                <Button variant="outline" className="w-full text-xs font-semibold gap-1.5 h-9 text-brand border-brand/30 hover:bg-brand-soft/40">
+                  <ExternalLink className="size-3.5" />
+                  <span>Uji Halaman Verifikasi QR Daring</span>
+                </Button>
+              </a>
+
+              <Link href="/dashboard" className="w-full">
+                <Button variant="secondary" className="w-full text-xs font-semibold gap-1.5 h-9">
                   <ArrowLeft className="size-3.5" />
-                  <span>Kembali ke Arsip</span>
+                  <span>Kembali ke Dasbor</span>
                 </Button>
               </Link>
             </div>

@@ -5,16 +5,25 @@ export function generateQrToken(): string {
   return crypto.randomBytes(16).toString("hex")
 }
 
-export function getVerifyUrl(token: string): string {
-  const base =
-    process.env.NEXTAUTH_URL ||
-    process.env.NEXT_PUBLIC_APP_URL ||
-    "https://inventaris.smkhkti2.sch.id"
+export function getVerifyUrl(token: string, baseUrl?: string): string {
+  let base = baseUrl
+
+  if (!base && typeof window !== "undefined" && window.location?.origin) {
+    base = window.location.origin
+  }
+
+  if (!base) {
+    base =
+      process.env.NEXT_PUBLIC_APP_URL ||
+      process.env.NEXTAUTH_URL ||
+      "http://localhost:3000"
+  }
+
   return `${base.replace(/\/$/, "")}/verify/${token}`
 }
 
-export async function bapQrSvg(token: string): Promise<string> {
-  const url = getVerifyUrl(token)
+export async function bapQrSvg(token: string, baseUrl?: string): Promise<string> {
+  const url = getVerifyUrl(token, baseUrl)
   return QRCode.toString(url, {
     type: "svg",
     margin: 0,
@@ -26,8 +35,8 @@ export async function bapQrSvg(token: string): Promise<string> {
   })
 }
 
-export async function bapQrDataUrl(token: string): Promise<string> {
-  const url = getVerifyUrl(token)
+export async function bapQrDataUrl(token: string, baseUrl?: string): Promise<string> {
+  const url = getVerifyUrl(token, baseUrl)
   return QRCode.toDataURL(url, {
     margin: 1,
     width: 256,

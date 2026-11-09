@@ -13,22 +13,229 @@ import {
     CheckCircle2,
     ArrowRight,
     ClipboardList,
+    ClipboardCheck,
     FileText,
     UserCheck,
+    Package,
+    ShieldCheck,
 } from "lucide-react"
 
 import { getDashboardStats, getRecentActivity, getLowStockItems } from "@/actions/dashboard"
+import { getTeacherValidations } from "@/lib/queries/procurement"
+import { getCurrentUser } from "@/lib/guard"
 import { PageHeader } from "@/components/layout/PageHeader"
 import { MobileAppBar } from "@/components/layout/MobileAppBar"
 import { ThemeToggle } from "@/components/ui/ThemeToggle"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
-import { MONTH_NAMES_ID, formatDateId } from "@/lib/format"
+import { MONTH_NAMES_ID, formatDateId, formatNumberId } from "@/lib/format"
 
 export const dynamic = "force-dynamic"
 
 export default async function DashboardPage() {
+    const currentUser = await getCurrentUser()
+
+    // ─────────────────────────────────────────────────────────────────────────────
+    // DASBOR KHUSUS GURU PENGAWAS (ROLE: TEACHER)
+    // Tampilan khusus validasi barang BOS tanpa UI administrasi teknisi/inventaris
+    // ─────────────────────────────────────────────────────────────────────────────
+    if (currentUser?.role === "TEACHER") {
+        const validations = await getTeacherValidations(currentUser.id)
+        const pendingCount = validations.pending.length
+
+        return (
+            <div className="flex flex-col gap-4 lg:gap-5 pb-16">
+                {/* Mobile App Bar */}
+                <MobileAppBar
+                    title="Dasbor Pengawas"
+                    subtitle="Validasi Pengadaan BOS"
+                    showBrandMark={true}
+                />
+
+                {/* Desktop PageHeader */}
+                <PageHeader
+                    title={`Halo, ${currentUser.name}`}
+                    subtitle="Pemeriksaan fisik barang belanja Dana BOS dan pengesahan Berita Acara Penerimaan (BAP)."
+                    actions={
+                        <div className="flex items-center gap-2.5">
+                            <ThemeToggle />
+                            <div className="flex items-center gap-2 pl-2 border-l border-line">
+                                <Badge variant="mint" dot>
+                                    Guru Pengawas
+                                </Badge>
+                            </div>
+                        </div>
+                    }
+                />
+
+                {/* Status Tugas Validasi */}
+                {pendingCount > 0 ? (
+                    <div className="flex flex-col gap-4">
+                        <div className="rounded-2xl border-2 border-amber/40 bg-amber-soft/40 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+                            <div className="flex items-center gap-3">
+                                <div className="size-10 rounded-xl bg-amber text-white grid place-items-center shrink-0">
+                                    <ClipboardCheck className="size-5" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-sm sm:text-base font-extrabold text-ink">
+                                        Ada {pendingCount} Pengadaan BOS Menunggu Pemeriksaan Anda
+                                    </span>
+                                    <span className="text-xs text-muted-ink">
+                                        Barang belanja sekolah telah diajukan oleh teknisi dan siap diperiksa di gudang/lokasi.
+                                    </span>
+                                </div>
+                            </div>
+                            <Badge variant="amber" dot className="self-start sm:self-auto text-xs py-1 px-3 font-bold">
+                                Perlu Tindakan
+                            </Badge>
+                        </div>
+
+                        {/* Kartu Tugas Pengadaan Menunggu */}
+                        <div className="flex flex-col gap-3.5">
+                            {validations.pending.map((p) => {
+                                const mName = MONTH_NAMES_ID[p.periodMonth - 1] || p.periodMonth
+                                const totalItems = p.items?.length || p._count?.items || 0
+                                const totalUnits =
+                                    p.totalUnits ||
+                                    p.items?.reduce((s: number, i: any) => s + (i.quantity || 0), 0) ||
+                                    0
+
+                                return (
+                                    <div
+                                        key={p.id}
+                                        className="panel rounded-2xl border-2 border-brand/35 bg-surface p-4 sm:p-5 flex flex-col gap-4 shadow-sm"
+                                    >
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-line pb-3">
+                                            <div className="flex items-center gap-2.5">
+                                                <div className="size-9 rounded-xl bg-brand-soft text-brand grid place-items-center shrink-0">
+                                                    <Package className="size-5" />
+                                                </div>
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-extrabold text-ink">
+                                                        Pengadaan BOS · {mName} {p.periodYear}
+                                                    </span>
+                                                    <span className="font-mono text-[11px] text-muted-ink">
+                                                        No. BAP: {p.bapNumber || "Belum Diterbitkan"}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <span className="text-xs text-muted-ink">
+                                                Diajukan oleh:{" "}
+                                                <strong className="text-ink font-semibold">
+                                                    {p.createdBy?.name || "Teknisi Gudang"}
+                                                </strong>{" "}
+                                                · {p.submittedAt ? formatDateId(p.submittedAt, "dd MMM yyyy") : "-"}
+                                            </span>
+                                        </div>
+
+                                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs bg-surface-2 p-3 rounded-xl border border-line">
+                                            <div>
+                                                <span className="text-muted-ink block text-[10px]">Volume Pengadaan</span>
+                                                <strong className="text-ink text-xs font-bold">
+                                                    {totalItems} Jenis Barang · {formatNumberId(totalUnits)} Unit
+                                                </strong>
+                                            </div>
+                                            {p.note && (
+                                                <div className="text-left sm:text-right max-w-sm truncate">
+                                                    <span className="text-muted-ink block text-[10px]">Catatan Teknisi</span>
+                                                    <span className="text-ink-soft italic">"{p.note}"</span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* Aksi Guru */}
+                                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-2.5 pt-1">
+                                            <Link href={`/procurement/${p.id}`}>
+                                                <Button variant="outline" size="sm" className="w-full sm:w-auto text-xs h-9 gap-1.5">
+                                                    <FileText className="size-3.5" />
+                                                    <span>Pratinjau Dokumen BAP</span>
+                                                </Button>
+                                            </Link>
+                                            <Link href={`/procurement/${p.id}/check`}>
+                                                <Button variant="primary" size="sm" className="w-full sm:w-auto text-xs font-bold gap-1.5 h-9 px-4">
+                                                    <ClipboardCheck className="size-4" />
+                                                    <span>Mulai Pemeriksaan &amp; Sahkan</span>
+                                                    <ArrowRight className="size-3.5" />
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                ) : (
+                    /* Jika tidak ada validasi: Tampilan dasbor tenang */
+                    <div className="panel rounded-2xl border border-line p-10 flex flex-col items-center justify-center text-center gap-3 bg-surface">
+                        <div className="size-16 rounded-full bg-mint-soft text-mint grid place-items-center">
+                            <ShieldCheck className="size-9 stroke-[2.2]" />
+                        </div>
+                        <div className="flex flex-col gap-1.5 max-w-md">
+                            <h3 className="text-base font-bold text-ink">
+                                Tidak Ada Pengadaan Menunggu Validasi
+                            </h3>
+                            <p className="text-xs text-muted-ink leading-relaxed">
+                                Seluruh barang belanja Dana BOS periode ini telah selesai divalidasi dan tercatat sah di sistem inventaris. Anda akan otomatis menerima tugas baru di dasbor ini bila teknisi mengajukan pengadaan barang.
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {/* Riwayat Dokumen yang Pernah Disahkan */}
+                {validations.verified.length > 0 && (
+                    <div className="flex flex-col gap-2.5 pt-2">
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-xs font-bold uppercase tracking-wider text-muted-ink">
+                                Riwayat Berita Acara yang Telah Anda Sahkan
+                            </h3>
+                            <Link href="/procurement" className="text-xs font-bold text-brand hover:underline">
+                                Lihat semua
+                            </Link>
+                        </div>
+
+                        <div className="divide-y divide-line rounded-2xl border border-line bg-surface overflow-hidden">
+                            {validations.verified.slice(0, 5).map((v) => {
+                                const mName = MONTH_NAMES_ID[v.periodMonth - 1] || v.periodMonth
+                                return (
+                                    <div
+                                        key={v.id}
+                                        className="p-3 sm:p-3.5 flex items-center justify-between gap-3 text-xs hover:bg-surface-2 transition-colors"
+                                    >
+                                        <div className="flex items-center gap-2.5">
+                                            <div className="size-7 rounded-md bg-mint-soft text-mint grid place-items-center shrink-0">
+                                                <CheckCircle2 className="size-3.5" />
+                                            </div>
+                                            <div className="flex flex-col">
+                                                <span className="font-bold text-ink">
+                                                    Pengadaan BOS · {mName} {v.periodYear}
+                                                </span>
+                                                <span className="font-mono text-[10.5px] text-muted-ink">
+                                                    {v.bapNumber || "-"} · {v.totalUnits || 0} unit
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <Link href={`/procurement/${v.id}`}>
+                                            <Button variant="secondary" size="sm" className="text-xs h-7 px-2.5 gap-1">
+                                                <FileText className="size-3" />
+                                                <span>Buka BAP</span>
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                )}
+            </div>
+        )
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────────
+    // DASBOR ADMIN & TEKNISI (ROLE: ADMIN / TECHNICIAN)
+    // Tampilan lengkap manajemen stok, ringkasan BOS, aktivitas dan alert stok
+    // ─────────────────────────────────────────────────────────────────────────────
     const stats = await getDashboardStats()
     const recentActivity = await getRecentActivity()
     const lowStockItems = await getLowStockItems()
