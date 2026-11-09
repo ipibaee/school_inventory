@@ -17,7 +17,6 @@ import {
   CheckCircle,
   Clock,
   AlertTriangle,
-  History,
   FileCheck2,
 } from "lucide-react"
 
@@ -160,41 +159,6 @@ export default async function BapDetailPage({
           />
         </div>
       </div>
-
-      {/* ── Riwayat Log Aktivitas Dokumen (no-print) ── */}
-      {bap.logs && bap.logs.length > 0 && (
-        <div className="no-print mx-4 lg:mx-0 mt-4 rounded-2xl border border-line bg-surface p-5 max-w-[800px] w-full self-center">
-          <div className="flex items-center gap-2 mb-3.5">
-            <History className="size-4 text-brand" />
-            <h3 className="text-[13.5px] font-bold text-ink">Riwayat Audit Dokumen</h3>
-          </div>
-
-          <div className="flex flex-col gap-2.5">
-            {bap.logs.map((log: any) => (
-              <div
-                key={log.id}
-                className="flex items-start justify-between gap-4 py-2 border-b border-line/60 last:border-b-0 text-[11.5px]"
-              >
-                <div className="flex flex-col">
-                  <span className="font-semibold text-ink">
-                    {log.action === "CREATED" && "Dokumen dibuat"}
-                    {log.action === "UPDATED" && "Data pengadaan diperbarui"}
-                    {log.action === "ITEM_ADDED" && "Penambahan barang"}
-                    {log.action === "ITEM_REMOVED" && "Penghapusan barang"}
-                    {log.action === "SUBMITTED" && "Diajukan ke Guru Pengawas"}
-                    {log.action === "PUBLISHED" && "Disahkan & Terbit BAP (Stok Masuk Gudang)"}
-                    {log.action === "REJECTED" && "Pengajuan ditolak / perlu revisi"}
-                  </span>
-                  <span className="text-[10.5px] text-muted-ink">{log.note}</span>
-                </div>
-                <span className="text-[10px] text-muted-ink shrink-0 font-mono">
-                  {formatDateTimeId(log.createdAt)}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }
