@@ -66,13 +66,56 @@ export async function updateItem(id: string, data: {
 
 export async function deleteItem(id: string) {
     try {
-        await prisma.item.delete({
+        const item = await prisma.item.findUnique({
             where: { id },
+            include: {
+                borrowings: {
+                    where: { status: "ACTIVE" },
+                },
+            },
         })
+
+        if (!item) {
+            return { success: false, error: "Barang tidak ditemukan" }
+        }
+
+        if (item.borrowings.length > 0) {
+            return {
+                success: false,
+                error: `Barang "${item.name}" tidak dapat dihapus karena saat ini sedang dipinjam (${item.borrowings.length} peminjaman aktif). Harap kembalikan barang terlebih dahulu.`,
+            }
+        }
+
+        await prisma.$transaction(async (tx) => {
+            // 1. Putuskan relasi dari dokumen BAP Pengadaan BOS agar arsip historis BAP tetap utuh
+            await tx.procurementItem.updateMany({
+                where: { itemId: id },
+                data: { itemId: null },
+            })
+
+            // 2. Hapus riwayat mutasi / logistik barang ini
+            await tx.transaction.deleteMany({
+                where: { itemId: id },
+            })
+
+            // 3. Hapus riwayat peminjaman lama yang sudah dikembalikan/selesai
+            await tx.borrowing.deleteMany({
+                where: { itemId: id },
+            })
+
+            // 4. Hapus barang dari master inventaris
+            await tx.item.delete({
+                where: { id },
+            })
+        })
+
         revalidatePath("/inventory")
+        revalidatePath("/dashboard")
+        revalidatePath("/reports")
         return { success: true }
-    } catch (error) {
-        return { success: false, error: "Failed to delete item" }
+    } catch (error: any) {
+        console.error("Error deleteItem:", error)
+        return { success: false, error: error?.message || "Gagal menghapus barang dari inventaris" }
     }
 }
 

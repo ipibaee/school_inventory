@@ -41,7 +41,7 @@ export default async function ProcurementPage() {
   ] = await Promise.all([
     getActiveDraftOrSubmitted(currentYear, currentMonth),
     getAvailableInspectors(),
-    getWarehouseSuggestions({ limit: 12 }),
+    getWarehouseSuggestions({ limit: 100 }),
     getCategories(),
     peekNextBapNumber(currentYear, currentMonth),
   ])

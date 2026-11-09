@@ -10,7 +10,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreHorizontal, Pencil, Trash } from "lucide-react"
+import { MoreHorizontal, Pencil, Trash, Loader2 } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -30,6 +30,7 @@ import {
 import { ItemForm } from "./ItemForm"
 import { deleteItem } from "@/actions/inventory"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 interface InventoryActionsProps {
     item: any // Type this properly later
@@ -40,12 +41,22 @@ interface InventoryActionsProps {
 export function InventoryActions({ item, categories, locations }: InventoryActionsProps) {
     const [showEditDialog, setShowEditDialog] = useState(false)
     const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false)
     const router = useRouter()
 
-    async function handleDelete() {
-        await deleteItem(item.id)
-        setShowDeleteDialog(false)
-        router.refresh()
+    async function handleDelete(e: React.MouseEvent) {
+        e.preventDefault()
+        setIsDeleting(true)
+        const res = await deleteItem(item.id)
+        setIsDeleting(false)
+
+        if (res.success) {
+            toast.success(`Barang "${item.name}" berhasil dihapus dari inventaris`)
+            setShowDeleteDialog(false)
+            router.refresh()
+        } else {
+            toast.error(res.error || "Gagal menghapus barang")
+        }
     }
 
     return (
@@ -83,20 +94,32 @@ export function InventoryActions({ item, categories, locations }: InventoryActio
                 </DialogContent>
             </Dialog>
 
-            <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
+            <AlertDialog open={showDeleteDialog} onOpenChange={(open) => !isDeleting && setShowDeleteDialog(open)}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
+                        <AlertDialogTitle>Hapus Barang Inventaris?</AlertDialogTitle>
                         <AlertDialogDescription>
-                            Tindakan ini tidak dapat dibatalkan. Ini akan menghapus permanen barang
-                            "{item.name}" dari inventaris.
+                            Tindakan ini akan menghapus barang <strong>&quot;{item.name}&quot;</strong> ({item.barcode}) beserta riwayat mutasinya secara permanen dari daftar inventaris. Dokumen Berita Acara (BAP) lama tetap akan menyimpan nama barang ini sebagai arsip historis.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>Batal</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
-                            Hapus
-                        </AlertDialogAction>
+                        <AlertDialogCancel disabled={isDeleting}>Batal</AlertDialogCancel>
+                        <Button
+                            type="button"
+                            variant="destructive"
+                            onClick={handleDelete}
+                            disabled={isDeleting}
+                            className="bg-red-600 hover:bg-red-700 text-white flex items-center gap-2"
+                        >
+                            {isDeleting ? (
+                                <>
+                                    <Loader2 className="size-4 animate-spin" />
+                                    <span>Menghapus...</span>
+                                </>
+                            ) : (
+                                <span>Hapus Permanen</span>
+                            )}
+                        </Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

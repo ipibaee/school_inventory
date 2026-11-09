@@ -237,15 +237,23 @@ export async function getBapByToken(token: string) {
   }
 }
 
-export async function getWarehouseSuggestions({ limit = 6 }: { limit?: number } = {}) {
+export async function getWarehouseSuggestions({ limit = 100 }: { limit?: number } = {}) {
   try {
     return await prisma.item.findMany({
+      where: {
+        location: {
+          name: {
+            equals: "Gudang",
+            mode: "insensitive",
+          },
+        },
+      },
       include: {
         category: true,
         location: true,
       },
       orderBy: { name: "asc" },
-      take: limit,
+      ...(limit ? { take: limit } : {}),
     })
   } catch (error) {
     console.error("Error getWarehouseSuggestions:", error)

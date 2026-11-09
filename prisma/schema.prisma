@@ -58,7 +58,7 @@ model Transaction {
   date      DateTime @default(now())
   
   itemId    String
-  item      Item     @relation(fields: [itemId], references: [id])
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
 }
 
 model Borrowing {
@@ -72,7 +72,7 @@ model Borrowing {
   condition   String?   // Condition upon return
   
   itemId      String
-  item        Item      @relation(fields: [itemId], references: [id])
+  item        Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
 }
 
 model SchoolSettings {

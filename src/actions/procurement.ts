@@ -154,7 +154,7 @@ export async function updateProcurementMeta(
 
 export async function addItemFromWarehouse(
   input: z.infer<typeof warehouseItemInputSchema>
-): Promise<ActionResult> {
+): Promise<ActionResult<{ items: any[] }>> {
   try {
     const user = await assertRole(["ADMIN", "TECHNICIAN"])
     const { procurementId, itemId, quantity } = warehouseItemInputSchema.parse(input)
@@ -211,9 +211,14 @@ export async function addItemFromWarehouse(
       },
     })
 
+    const updatedItems = await prisma.procurementItem.findMany({
+      where: { procurementId },
+      orderBy: { sortOrder: "asc" },
+    })
+
     revalidatePath(`/procurement/${procurementId}`)
     revalidatePath("/procurement")
-    return { ok: true }
+    return { ok: true, data: { items: updatedItems } }
   } catch (error: any) {
     console.error("Error addItemFromWarehouse:", error)
     return { ok: false, error: error.message || "Gagal menambahkan barang dari gudang" }
@@ -222,7 +227,7 @@ export async function addItemFromWarehouse(
 
 export async function addNewItem(
   input: z.infer<typeof newItemInputSchema>
-): Promise<ActionResult> {
+): Promise<ActionResult<{ items: any[] }>> {
   try {
     const user = await assertRole(["ADMIN", "TECHNICIAN"])
     const data = newItemInputSchema.parse(input)
@@ -262,16 +267,21 @@ export async function addNewItem(
       },
     })
 
+    const updatedItems = await prisma.procurementItem.findMany({
+      where: { procurementId: data.procurementId },
+      orderBy: { sortOrder: "asc" },
+    })
+
     revalidatePath(`/procurement/${data.procurementId}`)
     revalidatePath("/procurement")
-    return { ok: true }
+    return { ok: true, data: { items: updatedItems } }
   } catch (error: any) {
     console.error("Error addNewItem:", error)
     return { ok: false, error: error.message || "Gagal menambahkan barang baru" }
   }
 }
 
-export async function removeItem(itemId: string): Promise<ActionResult> {
+export async function removeItem(itemId: string): Promise<ActionResult<{ items: any[] }>> {
   try {
     const user = await assertRole(["ADMIN", "TECHNICIAN"])
 
@@ -295,9 +305,14 @@ export async function removeItem(itemId: string): Promise<ActionResult> {
       },
     })
 
+    const updatedItems = await prisma.procurementItem.findMany({
+      where: { procurementId: it.procurementId },
+      orderBy: { sortOrder: "asc" },
+    })
+
     revalidatePath(`/procurement/${it.procurementId}`)
     revalidatePath("/procurement")
-    return { ok: true }
+    return { ok: true, data: { items: updatedItems } }
   } catch (error: any) {
     console.error("Error removeItem:", error)
     return { ok: false, error: error.message || "Gagal menghapus barang" }

@@ -18,6 +18,7 @@ interface AddNewItemDialogProps {
   onOpenChange: (open: boolean) => void
   procurementId: string
   categories: any[]
+  onSuccess?: (items?: any[]) => void
 }
 
 const UNITS = ["Unit", "Roll", "Set", "Box", "Buah", "Lembar", "Pcs", "Rim"]
@@ -27,6 +28,7 @@ export function AddNewItemDialog({
   onOpenChange,
   procurementId,
   categories,
+  onSuccess,
 }: AddNewItemDialogProps) {
   const [name, setName] = useState("")
   const [specification, setSpecification] = useState("")
@@ -67,6 +69,7 @@ export function AddNewItemDialog({
       setQuantity(1)
       setBarcode("")
       onOpenChange(false)
+      onSuccess?.(res.data?.items)
     } else {
       toast.error(res.error || "Gagal menambahkan barang baru")
     }

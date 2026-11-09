@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   Dialog,
   DialogContent,
@@ -18,6 +18,8 @@ interface WarehouseQuickPickDialogProps {
   onOpenChange: (open: boolean) => void
   procurementId: string
   warehouseItems: any[]
+  defaultSelectedId?: string | null
+  onSuccess?: (items?: any[]) => void
 }
 
 export function WarehouseQuickPickDialog({
@@ -25,11 +27,25 @@ export function WarehouseQuickPickDialog({
   onOpenChange,
   procurementId,
   warehouseItems,
+  defaultSelectedId,
+  onSuccess,
 }: WarehouseQuickPickDialogProps) {
   const [search, setSearch] = useState("")
-  const [selectedItemId, setSelectedItemId] = useState<string | null>(null)
+  const [selectedItemId, setSelectedItemId] = useState<string | null>(defaultSelectedId || null)
   const [quantity, setQuantity] = useState(1)
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (open) {
+      if (defaultSelectedId) {
+        setSelectedItemId(defaultSelectedId)
+      }
+    } else {
+      setSelectedItemId(null)
+      setQuantity(1)
+      setSearch("")
+    }
+  }, [open, defaultSelectedId])
 
   const filtered = warehouseItems.filter((it) =>
     it.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -63,6 +79,7 @@ export function WarehouseQuickPickDialog({
       setSelectedItemId(null)
       setQuantity(1)
       onOpenChange(false)
+      onSuccess?.(res.data?.items)
     } else {
       toast.error(res.error || "Gagal menambahkan barang")
     }
@@ -115,7 +132,7 @@ export function WarehouseQuickPickDialog({
                           {item.name}
                         </span>
                         <span className="text-[10.5px] text-muted-ink truncate">
-                          Stok saat ini: {item.quantity} · {item.category?.name || "Umum"}
+                          Stok Gudang: {item.quantity} Unit · {item.category?.name || "Umum"}
                         </span>
                       </div>
                     </div>

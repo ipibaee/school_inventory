@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
@@ -85,9 +85,28 @@ export function ProcurementForm({
 
   const [openWarehousePick, setOpenWarehousePick] = useState(false)
   const [openAddNewItem, setOpenAddNewItem] = useState(false)
+  const [preselectedWarehouseId, setPreselectedWarehouseId] = useState<string | null>(null)
+
+  // Sinkronisasi otomatis jika data initialProcurement berubah
+  useEffect(() => {
+    if (initialProcurement) {
+      setProcurement(initialProcurement)
+    }
+  }, [initialProcurement])
 
   const items = procurement?.items || []
   const totalUnits = items.reduce((acc: number, it: any) => acc + (it.quantity || 0), 0)
+
+  // Handler reaktif saat barang berhasil ditambah/diubah
+  const handleItemsUpdated = (updatedItems?: any[]) => {
+    if (updatedItems) {
+      setProcurement((prev: any) => ({
+        ...prev,
+        items: updatedItems,
+      }))
+    }
+    router.refresh()
+  }
 
   // Pastikan draft tersimpan dulu bila belum pernah ada ID
   const ensureDraftSaved = async (): Promise<string | null> => {
@@ -143,7 +162,13 @@ export function ProcurementForm({
     }
   }
 
-  const handleOpenWarehouseModal = async () => {
+  const handleOpenWarehouseModal = async (target?: string | unknown) => {
+    const itemId = typeof target === "string" ? target : null
+    if (itemId) {
+      setPreselectedWarehouseId(itemId)
+    } else {
+      setPreselectedWarehouseId(null)
+    }
     const id = await ensureDraftSaved()
     if (id) {
       setOpenWarehousePick(true)
@@ -161,6 +186,17 @@ export function ProcurementForm({
     const res = await removeItem(itemId)
     if (res.ok) {
       toast.success("Barang dihapus dari daftar")
+      if ("data" in res && res.data?.items) {
+        setProcurement((prev: any) => ({
+          ...prev,
+          items: res.data!.items,
+        }))
+      } else {
+        setProcurement((prev: any) => ({
+          ...prev,
+          items: (prev?.items || []).filter((it: any) => it.id !== itemId),
+        }))
+      }
       router.refresh()
     } else {
       toast.error(res.error || "Gagal menghapus barang")
@@ -599,21 +635,25 @@ export function ProcurementForm({
                 {warehouseSuggestions.slice(0, 3).map((wItem) => (
                   <div
                     key={wItem.id}
-                    className="p-3 rounded-xl border border-line bg-surface-2/60 flex items-center justify-between gap-2"
+                    onClick={() => handleOpenWarehouseModal(wItem.id)}
+                    className="p-3 rounded-xl border border-line bg-surface-2/60 hover:bg-surface-2 transition flex items-center justify-between gap-2 cursor-pointer"
                   >
                     <div className="flex flex-col min-w-0">
                       <span className="text-[12px] font-bold text-ink truncate">
                         {wItem.name}
                       </span>
                       <span className="text-[10px] text-muted-ink truncate">
-                        Stok: {wItem.quantity} unit · {wItem.category?.name || "Umum"}
+                        Stok Gudang: {wItem.quantity} unit · {wItem.category?.name || "Umum"}
                       </span>
                     </div>
                     <Button
                       type="button"
                       variant="secondary"
                       size="icon"
-                      onClick={handleOpenWarehouseModal}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleOpenWarehouseModal(wItem.id)
+                      }}
                       className="size-7 shrink-0 text-brand"
                       title="Tambah ke pengajuan"
                     >
@@ -643,6 +683,8 @@ export function ProcurementForm({
             onOpenChange={setOpenWarehousePick}
             procurementId={procurement.id}
             warehouseItems={warehouseSuggestions}
+            defaultSelectedId={preselectedWarehouseId}
+            onSuccess={handleItemsUpdated}
           />
 
           <AddNewItemDialog
@@ -650,6 +692,7 @@ export function ProcurementForm({
             onOpenChange={setOpenAddNewItem}
             procurementId={procurement.id}
             categories={categories}
+            onSuccess={handleItemsUpdated}
           />
         </>
       )}
