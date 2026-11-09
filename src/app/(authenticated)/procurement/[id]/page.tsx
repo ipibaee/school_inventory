@@ -18,6 +18,7 @@ import {
   Clock,
   AlertTriangle,
   FileCheck2,
+  ScanBarcode,
 } from "lucide-react"
 
 export const dynamic = "force-dynamic"
@@ -64,6 +65,9 @@ export default async function BapDetailPage({
     currentUser?.role === "ADMIN" ||
     currentUser?.role === "TEACHER"
 
+  const canManageBarcode =
+    currentUser?.role === "ADMIN" || currentUser?.role === "TECHNICIAN"
+
   return (
     <div className="flex flex-col gap-5 pb-20">
       {/* ── Desktop Topbar ── */}
@@ -73,10 +77,10 @@ export default async function BapDetailPage({
           subtitle={`Periode ${bap.periodMonth}/${bap.periodYear} · Dibuat oleh ${bap.createdBy?.name || "Admin"}`}
           actions={
             <div className="flex items-center gap-2.5">
-              <Link href="/procurement/archive">
+              <Link href={currentUser?.role === "TEACHER" ? "/dashboard" : "/procurement"}>
                 <Button variant="secondary" size="sm" className="gap-1.5">
                   <ArrowLeft className="size-3.5" />
-                  <span>Kembali ke Arsip</span>
+                  <span>Kembali</span>
                 </Button>
               </Link>
 
@@ -97,6 +101,15 @@ export default async function BapDetailPage({
                 </Link>
               )}
 
+              {canManageBarcode && bap.status === "VERIFIED" && (
+                <Link href={`/procurement/${bap.id}/barcode`}>
+                  <Button variant="secondary" size="sm" className="gap-1.5 text-brand hover:text-brand-dark">
+                    <ScanBarcode className="size-3.5" />
+                    <span>Cetak Label Barcode</span>
+                  </Button>
+                </Link>
+              )}
+
               <BapPrintButton
                 bap={bap}
                 schoolSettings={schoolSettings}
@@ -113,14 +126,23 @@ export default async function BapDetailPage({
         <MobileAppBar
           title="Dokumen BAP"
           subtitle={bap.bapNumber || "Draft BAP"}
-          back="/procurement/archive"
+          back={currentUser?.role === "TEACHER" ? "/dashboard" : "/procurement"}
           actions={
-            <BapPrintButton
-              bap={bap}
-              schoolSettings={schoolSettings}
-              qrSvg={qrSvg}
-              label="Cetak"
-            />
+            <div className="flex items-center gap-1.5">
+              {canManageBarcode && bap.status === "VERIFIED" && (
+                <Link href={`/procurement/${bap.id}/barcode`}>
+                  <Button variant="secondary" size="sm" className="h-8 px-2 text-xs">
+                    <ScanBarcode className="size-3.5 text-brand" />
+                  </Button>
+                </Link>
+              )}
+              <BapPrintButton
+                bap={bap}
+                schoolSettings={schoolSettings}
+                qrSvg={qrSvg}
+                label="Cetak"
+              />
+            </div>
           }
         />
       </div>

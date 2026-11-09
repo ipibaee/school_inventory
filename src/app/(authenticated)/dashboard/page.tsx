@@ -18,6 +18,7 @@ import {
     UserCheck,
     Package,
     ShieldCheck,
+    ScanBarcode,
 } from "lucide-react"
 
 import { getDashboardStats, getRecentActivity, getLowStockItems } from "@/actions/dashboard"
@@ -412,6 +413,14 @@ export default async function DashboardPage() {
                     </Link>
 
                     <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+                        {stats.currentBap.status === "VERIFIED" && currentUser?.role !== "TEACHER" && (
+                            <Button asChild variant="secondary" size="sm" className="gap-1.5 text-xs h-8 text-brand hover:text-brand-dark">
+                                <Link href={`/procurement/${stats.currentBap.id}/barcode`}>
+                                    <ScanBarcode className="size-3.5" />
+                                    <span className="hidden sm:inline">Cetak Barcode</span>
+                                </Link>
+                            </Button>
+                        )}
                         <Button asChild variant="secondary" size="sm" className="gap-1.5 text-xs h-8">
                             <Link href={`/procurement/${stats.currentBap.id}`}>
                                 <FileText className="size-3.5" />

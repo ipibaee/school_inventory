@@ -4,7 +4,7 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { formatDateId, MONTH_NAMES_ID } from "@/lib/format"
-import { FileText, Printer, ArrowRight } from "lucide-react"
+import { FileText, Printer, ArrowRight, ScanBarcode } from "lucide-react"
 
 interface ArchiveTableProps {
   baps: any[]
@@ -90,6 +90,14 @@ export function ArchiveTable({ baps }: ArchiveTableProps) {
                   </td>
                   <td className="py-3.5 px-4 text-right">
                     <div className="flex items-center justify-end gap-1.5">
+                      {bap.status === "VERIFIED" && (
+                        <Link href={`/procurement/${bap.id}/barcode`}>
+                          <Button variant="secondary" size="sm" className="h-7 text-xs px-2.5 gap-1 text-brand hover:text-brand-dark">
+                            <ScanBarcode className="size-3" />
+                            <span>Barcode</span>
+                          </Button>
+                        </Link>
+                      )}
                       <Link href={`/procurement/${bap.id}`}>
                         <Button variant="secondary" size="sm" className="h-7 text-xs px-2.5 gap-1">
                           <Printer className="size-3 text-muted-ink" />

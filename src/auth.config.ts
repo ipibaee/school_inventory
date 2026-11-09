@@ -25,12 +25,13 @@ export const authConfig = {
             if (isProtected) {
                 if (!isLoggedIn) return false // Redirect unauthenticated users to login page
 
-                // Guru Pengawas hanya fokus pada Dasbor, Validasi BOS, dan Laporan
+                // Guru Pengawas hanya fokus pada Dasbor dan Validasi/Cetak Dokumen BAP
                 if (userRole === "TEACHER") {
                     if (
                         nextUrl.pathname.startsWith("/inventory") ||
                         nextUrl.pathname.startsWith("/borrow") ||
-                        nextUrl.pathname.startsWith("/settings")
+                        nextUrl.pathname.startsWith("/settings") ||
+                        nextUrl.pathname.includes("/barcode")
                     ) {
                         return Response.redirect(new URL("/dashboard", nextUrl))
                     }
