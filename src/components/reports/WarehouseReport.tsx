@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
+import { useReactToPrint } from "react-to-print"
 import {
     Table,
     TableBody,
@@ -21,6 +22,8 @@ export function WarehouseReport() {
     const [transactions, setTransactions] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
 
+    const printRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => {
         const fetchData = async () => {
             const data = await getWarehouseReport()
@@ -30,9 +33,40 @@ export function WarehouseReport() {
         fetchData()
     }, [])
 
-    const handlePrint = () => {
-        window.print()
-    }
+    const handlePrint = useReactToPrint({
+        contentRef: printRef,
+        documentTitle: `Laporan-Mutasi-Gudang-${new Date().toISOString().slice(0, 10)}`,
+        pageStyle: `
+            @page {
+                size: A4 portrait;
+                margin: 0mm !important;
+            }
+            @media print {
+                html, body {
+                    background: #FFFFFF !important;
+                    color: #000000 !important;
+                    margin: 0mm !important;
+                    padding: 0mm !important;
+                }
+                .no-print, header, nav, aside {
+                    display: none !important;
+                }
+                .report-a4-sheet {
+                    width: 210mm !important;
+                    min-height: 297mm !important;
+                    padding: 12mm 14mm !important;
+                    box-sizing: border-box !important;
+                    margin: 0 !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                }
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+            }
+        `,
+    })
 
     const totalIncoming = useMemo(() => {
         return transactions
@@ -56,62 +90,64 @@ export function WarehouseReport() {
             </div>
 
             {/* ── Official A4 Document Sheet for Print ── */}
-            <div className="hidden print:block">
-                <ReportA4Sheet
-                    title="LAPORAN MUTASI GUDANG"
-                    subtitle="Catatan Keluar dan Masuk Barang Persediaan Laboratorium"
-                    metrics={[
-                        { label: "TOTAL MUTASI", value: transactions.length },
-                        { label: "BARANG MASUK", value: `${totalIncoming} Unit` },
-                        { label: "BARANG KELUAR", value: `${totalOutgoing} Unit` },
-                    ]}
-                    columns={[
-                        { header: "No", width: "24px", align: "center" },
-                        { header: "Waktu", width: "70px", align: "left" },
-                        { header: "Tipe", width: "45px", align: "center" },
-                        { header: "Barang & Spesifikasi", align: "left" },
-                        { header: "Jumlah", width: "45px", align: "right" },
-                        { header: "Catatan", width: "130px", align: "left" },
-                    ]}
-                    totalLabel={`Total Mutasi · ${transactions.length} pencatatan`}
-                    totalValue={`${totalIncoming + totalOutgoing} Unit`}
-                    notes="Mutasi IN (Barang masuk gudang / pengadaan), Mutasi OUT (Barang dikeluarkan / pemakaian)."
-                >
-                    {transactions.map((t, idx) => {
-                        const isIncoming = t.type === "IN"
-                        return (
-                            <tr key={t.id} className="border-b border-black/60">
-                                <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black/60">
-                                    {idx + 1}
-                                </td>
-                                <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black/60">
-                                    {format(new Date(t.date), "dd/MM/yy HH:mm", { locale: id })}
-                                </td>
-                                <td
-                                    className={`py-1 px-1.5 text-center font-bold text-[7pt] border-r border-black/60 ${
-                                        isIncoming ? "text-[#0EA47A]" : "text-[#D93A47]"
-                                    }`}
-                                >
-                                    {isIncoming ? "Masuk" : "Keluar"}
-                                </td>
-                                <td className="py-1 px-1.5 border-r border-black/60">
-                                    <span className="font-bold text-black">{t.item?.name}</span>
-                                    {t.item?.specification && (
-                                        <span className="block text-[6.5pt] text-black/60">
-                                            {t.item?.specification}
-                                        </span>
-                                    )}
-                                </td>
-                                <td className="py-1 px-1.5 text-right font-mono font-bold text-[7.5pt] border-r border-black/60">
-                                    {t.quantity}
-                                </td>
-                                <td className="py-1 px-1.5 text-[6.5pt] text-black/70">
-                                    {t.note || "-"}
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </ReportA4Sheet>
+            <div style={{ display: "none" }}>
+                <div ref={printRef}>
+                    <ReportA4Sheet
+                        title="LAPORAN MUTASI GUDANG"
+                        subtitle="Catatan Keluar dan Masuk Barang Persediaan Laboratorium"
+                        metrics={[
+                            { label: "TOTAL MUTASI", value: transactions.length },
+                            { label: "BARANG MASUK", value: `${totalIncoming} Unit` },
+                            { label: "BARANG KELUAR", value: `${totalOutgoing} Unit` },
+                        ]}
+                        columns={[
+                            { header: "No", width: "24px", align: "center" },
+                            { header: "Waktu", width: "65px", align: "left" },
+                            { header: "Tipe", width: "42px", align: "center" },
+                            { header: "Barang & Spesifikasi", align: "left" },
+                            { header: "Jumlah", width: "40px", align: "right" },
+                            { header: "Catatan", width: "110px", align: "left" },
+                        ]}
+                        totalLabel={`Total Mutasi · ${transactions.length} pencatatan`}
+                        totalValue={`${totalIncoming + totalOutgoing} Unit`}
+                        notes="Mutasi IN (Barang masuk gudang / pengadaan), Mutasi OUT (Barang dikeluarkan / pemakaian)."
+                    >
+                        {transactions.map((t, idx) => {
+                            const isIncoming = t.type === "IN"
+                            return (
+                                <tr key={t.id} className="border-b border-black">
+                                    <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black">
+                                        {idx + 1}
+                                    </td>
+                                    <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black">
+                                        {format(new Date(t.date), "dd/MM/yy HH:mm", { locale: id })}
+                                    </td>
+                                    <td
+                                        className={`py-1 px-1.5 text-center font-bold text-[7pt] border-r border-black ${
+                                            isIncoming ? "text-[#0EA47A]" : "text-[#D93A47]"
+                                        }`}
+                                    >
+                                        {isIncoming ? "Masuk" : "Keluar"}
+                                    </td>
+                                    <td className="py-1 px-1.5 border-r border-black">
+                                        <span className="font-bold text-black">{t.item?.name}</span>
+                                        {t.item?.specification && (
+                                            <span className="block text-[6.5pt] text-black/70">
+                                                {t.item?.specification}
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td className="py-1 px-1.5 text-right font-mono font-bold text-[7.5pt] border-r border-black">
+                                        {t.quantity}
+                                    </td>
+                                    <td className="py-1 px-1.5 text-[6.5pt] text-black/80">
+                                        {t.note || "-"}
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </ReportA4Sheet>
+                </div>
             </div>
 
             {/* Screen Table Card */}

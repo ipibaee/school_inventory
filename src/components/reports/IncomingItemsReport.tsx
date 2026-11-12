@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
+import { useReactToPrint } from "react-to-print"
 import {
     Table,
     TableBody,
@@ -32,6 +33,8 @@ export function IncomingItemsReport() {
         to: new Date(),
     })
 
+    const printRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
@@ -42,9 +45,40 @@ export function IncomingItemsReport() {
         fetchData()
     }, [date])
 
-    const handlePrint = () => {
-        window.print()
-    }
+    const handlePrint = useReactToPrint({
+        contentRef: printRef,
+        documentTitle: `Laporan-Barang-Masuk-${new Date().toISOString().slice(0, 10)}`,
+        pageStyle: `
+            @page {
+                size: A4 portrait;
+                margin: 0mm !important;
+            }
+            @media print {
+                html, body {
+                    background: #FFFFFF !important;
+                    color: #000000 !important;
+                    margin: 0mm !important;
+                    padding: 0mm !important;
+                }
+                .no-print, header, nav, aside {
+                    display: none !important;
+                }
+                .report-a4-sheet {
+                    width: 210mm !important;
+                    min-height: 297mm !important;
+                    padding: 12mm 14mm !important;
+                    box-sizing: border-box !important;
+                    margin: 0 !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                }
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+            }
+        `,
+    })
 
     const totalIncoming = useMemo(() => {
         return transactions.reduce((sum, t) => sum + (t.quantity || 0), 0)
@@ -104,58 +138,60 @@ export function IncomingItemsReport() {
             </div>
 
             {/* ── Official A4 Document Sheet for Print ── */}
-            <div className="hidden print:block">
-                <ReportA4Sheet
-                    title="LAPORAN BARANG MASUK"
-                    subtitle="Pencatatan Penerimaan Barang Baru dan Logistik Inventaris"
-                    period={periodStr}
-                    metrics={[
-                        { label: "TRANSAKSI MASUK", value: transactions.length },
-                        { label: "TOTAL UNIT", value: `${totalIncoming} Unit` },
-                        {
-                            label: "LOKASI AKTIF",
-                            value: new Set(transactions.map((t) => t.item?.location?.id).filter(Boolean)).size,
-                        },
-                    ]}
-                    columns={[
-                        { header: "No", width: "24px", align: "center" },
-                        { header: "Tanggal", width: "65px", align: "left" },
-                        { header: "Barang", width: "120px", align: "left" },
-                        { header: "Spesifikasi", align: "left" },
-                        { header: "Lokasi", width: "80px", align: "left" },
-                        { header: "Jumlah", width: "40px", align: "right" },
-                        { header: "Keterangan", width: "95px", align: "left" },
-                    ]}
-                    totalLabel={`Total Barang Masuk · ${transactions.length} penerimaan`}
-                    totalValue={`${totalIncoming} Unit`}
-                    notes="Daftar penerimaan barang bersumber dari pengadaan dana BOS dan mutasi masuk inventaris sekolah."
-                >
-                    {transactions.map((tx, idx) => (
-                        <tr key={tx.id} className="border-b border-black/60">
-                            <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black/60">
-                                {idx + 1}
-                            </td>
-                            <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black/60">
-                                {format(new Date(tx.date), "dd/MM/yy HH:mm", { locale: id })}
-                            </td>
-                            <td className="py-1 px-1.5 font-bold text-[7.5pt] border-r border-black/60">
-                                {tx.item?.name}
-                            </td>
-                            <td className="py-1 px-1.5 text-[6.5pt] text-black/70 border-r border-black/60">
-                                {tx.item?.specification || "-"}
-                            </td>
-                            <td className="py-1 px-1.5 text-[7pt] border-r border-black/60">
-                                {tx.item?.location?.name || "-"}
-                            </td>
-                            <td className="py-1 px-1.5 font-mono font-bold text-right text-[7.5pt] border-r border-black/60 text-[#0EA47A]">
-                                +{tx.quantity}
-                            </td>
-                            <td className="py-1 px-1.5 text-[6.5pt] text-black/70">
-                                {tx.note || "Pengadaan Baru"}
-                            </td>
-                        </tr>
-                    ))}
-                </ReportA4Sheet>
+            <div style={{ display: "none" }}>
+                <div ref={printRef}>
+                    <ReportA4Sheet
+                        title="LAPORAN BARANG MASUK"
+                        subtitle="Pencatatan Penerimaan Barang Baru dan Logistik Inventaris"
+                        period={periodStr}
+                        metrics={[
+                            { label: "TRANSAKSI MASUK", value: transactions.length },
+                            { label: "TOTAL UNIT", value: `${totalIncoming} Unit` },
+                            {
+                                label: "LOKASI AKTIF",
+                                value: new Set(transactions.map((t) => t.item?.location?.id).filter(Boolean)).size,
+                            },
+                        ]}
+                        columns={[
+                            { header: "No", width: "24px", align: "center" },
+                            { header: "Tanggal", width: "55px", align: "left" },
+                            { header: "Barang", width: "95px", align: "left" },
+                            { header: "Spesifikasi", align: "left" },
+                            { header: "Lokasi", width: "65px", align: "left" },
+                            { header: "Jumlah", width: "38px", align: "right" },
+                            { header: "Keterangan", width: "85px", align: "left" },
+                        ]}
+                        totalLabel={`Total Barang Masuk · ${transactions.length} penerimaan`}
+                        totalValue={`${totalIncoming} Unit`}
+                        notes="Daftar penerimaan barang bersumber dari pengadaan dana BOS dan mutasi masuk inventaris sekolah."
+                    >
+                        {transactions.map((tx, idx) => (
+                            <tr key={tx.id} className="border-b border-black">
+                                <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black">
+                                    {idx + 1}
+                                </td>
+                                <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black">
+                                    {format(new Date(tx.date), "dd/MM/yy HH:mm", { locale: id })}
+                                </td>
+                                <td className="py-1 px-1.5 font-bold text-[7.5pt] border-r border-black">
+                                    {tx.item?.name}
+                                </td>
+                                <td className="py-1 px-1.5 text-[6.5pt] text-black/70 border-r border-black">
+                                    {tx.item?.specification || "-"}
+                                </td>
+                                <td className="py-1 px-1.5 text-[7pt] border-r border-black">
+                                    {tx.item?.location?.name || "-"}
+                                </td>
+                                <td className="py-1 px-1.5 font-mono font-bold text-right text-[7.5pt] border-r border-black text-[#0EA47A]">
+                                    +{tx.quantity}
+                                </td>
+                                <td className="py-1 px-1.5 text-[6.5pt] text-black/80">
+                                    {tx.note || "Pengadaan Baru"}
+                                </td>
+                            </tr>
+                        ))}
+                    </ReportA4Sheet>
+                </div>
             </div>
 
             {/* Screen Table Card */}

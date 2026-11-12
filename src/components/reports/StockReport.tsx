@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
+import { useReactToPrint } from "react-to-print"
 import {
     Table,
     TableBody,
@@ -31,6 +32,8 @@ export function StockReport() {
     const [selectedCategory, setSelectedCategory] = useState<string>("all")
     const [searchQuery, setSearchQuery] = useState("")
 
+    const printRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => {
         const fetchData = async () => {
             const data = await getStockReport()
@@ -40,9 +43,40 @@ export function StockReport() {
         fetchData()
     }, [])
 
-    const handlePrint = () => {
-        window.print()
-    }
+    const handlePrint = useReactToPrint({
+        contentRef: printRef,
+        documentTitle: `Laporan-Stok-Barang-${new Date().toISOString().slice(0, 10)}`,
+        pageStyle: `
+            @page {
+                size: A4 portrait;
+                margin: 0mm !important;
+            }
+            @media print {
+                html, body {
+                    background: #FFFFFF !important;
+                    color: #000000 !important;
+                    margin: 0mm !important;
+                    padding: 0mm !important;
+                }
+                .no-print, header, nav, aside {
+                    display: none !important;
+                }
+                .report-a4-sheet {
+                    width: 210mm !important;
+                    min-height: 297mm !important;
+                    padding: 12mm 14mm !important;
+                    box-sizing: border-box !important;
+                    margin: 0 !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                }
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+            }
+        `,
+    })
 
     const locations = useMemo(() => {
         const map = new Map<string, string>()
@@ -138,71 +172,73 @@ export function StockReport() {
             </div>
 
             {/* ── Official A4 Document Sheet for Print ── */}
-            <div className="hidden print:block">
-                <ReportA4Sheet
-                    title="LAPORAN STOK BARANG"
-                    subtitle="Rekapitulasi Inventaris Sarana dan Prasarana Sekolah"
-                    metrics={[
-                        { label: "JENIS BARANG", value: filteredItems.length },
-                        { label: "TOTAL UNIT", value: totalUnits },
-                        { label: "STOK RENDAH", value: lowStockCount },
-                    ]}
-                    columns={[
-                        { header: "No", width: "24px", align: "center" },
-                        { header: "Nama & Spesifikasi", align: "left" },
-                        { header: "Barcode", width: "65px", align: "left" },
-                        { header: "Lokasi", width: "80px", align: "left" },
-                        { header: "Kategori", width: "65px", align: "left" },
-                        { header: "Stok", width: "35px", align: "right" },
-                        { header: "Status", width: "45px", align: "right" },
-                    ]}
-                    totalLabel={`Total Keseluruhan · ${filteredItems.length} jenis barang`}
-                    totalValue={`${totalUnits} Unit`}
-                    notes="Status Stok: Baik (> Stok Minimum), Rendah (≤ Stok Minimum), Habis (0 Unit)."
-                >
-                    {filteredItems.map((item, idx) => {
-                        const isLow = item.quantity <= item.minStock
-                        const isOut = item.quantity === 0
-                        return (
-                            <tr key={item.id} className="border-b border-black/60">
-                                <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black/60">
-                                    {idx + 1}
-                                </td>
-                                <td className="py-1 px-1.5 border-r border-black/60">
-                                    <span className="font-bold text-black">{item.name}</span>
-                                    {item.specification && (
-                                        <span className="block text-[6.5pt] text-black/60">
-                                            {item.specification}
-                                        </span>
-                                    )}
-                                </td>
-                                <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black/60">
-                                    {item.barcode}
-                                </td>
-                                <td className="py-1 px-1.5 text-[7pt] border-r border-black/60">
-                                    {item.location?.name || "-"}
-                                </td>
-                                <td className="py-1 px-1.5 text-[7pt] border-r border-black/60">
-                                    {item.category?.name || "-"}
-                                </td>
-                                <td className="py-1 px-1.5 font-mono font-bold text-right border-r border-black/60">
-                                    {item.quantity}
-                                </td>
-                                <td
-                                    className={`py-1 px-1.5 font-bold text-right ${
-                                        isOut
-                                            ? "text-[#D93A47]"
-                                            : isLow
-                                            ? "text-[#C77605]"
-                                            : "text-[#0EA47A]"
-                                    }`}
-                                >
-                                    {isOut ? "Habis" : isLow ? "Rendah" : "Baik"}
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </ReportA4Sheet>
+            <div style={{ display: "none" }}>
+                <div ref={printRef}>
+                    <ReportA4Sheet
+                        title="LAPORAN STOK BARANG"
+                        subtitle="Rekapitulasi Inventaris Sarana dan Prasarana Sekolah"
+                        metrics={[
+                            { label: "JENIS BARANG", value: filteredItems.length },
+                            { label: "TOTAL UNIT", value: totalUnits },
+                            { label: "STOK RENDAH", value: lowStockCount },
+                        ]}
+                        columns={[
+                            { header: "No", width: "26px", align: "center" },
+                            { header: "Nama & Spesifikasi", align: "left" },
+                            { header: "Barcode", width: "55px", align: "left" },
+                            { header: "Lokasi", width: "70px", align: "left" },
+                            { header: "Kategori", width: "65px", align: "left" },
+                            { header: "Stok", width: "35px", align: "right" },
+                            { header: "Status", width: "42px", align: "right" },
+                        ]}
+                        totalLabel={`Total Keseluruhan · ${filteredItems.length} jenis barang`}
+                        totalValue={`${totalUnits} Unit`}
+                        notes="Status Stok: Baik (> Stok Minimum), Rendah (≤ Stok Minimum), Habis (0 Unit)."
+                    >
+                        {filteredItems.map((item, idx) => {
+                            const isLow = item.quantity <= item.minStock
+                            const isOut = item.quantity === 0
+                            return (
+                                <tr key={item.id} className="border-b border-black">
+                                    <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black">
+                                        {idx + 1}
+                                    </td>
+                                    <td className="py-1 px-1.5 border-r border-black">
+                                        <span className="font-bold text-black">{item.name}</span>
+                                        {item.specification && (
+                                            <span className="block text-[6.5pt] text-black/70">
+                                                {item.specification}
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black">
+                                        {item.barcode}
+                                    </td>
+                                    <td className="py-1 px-1.5 text-[7pt] border-r border-black">
+                                        {item.location?.name || "-"}
+                                    </td>
+                                    <td className="py-1 px-1.5 text-[7pt] border-r border-black">
+                                        {item.category?.name || "-"}
+                                    </td>
+                                    <td className="py-1 px-1.5 font-mono font-bold text-right border-r border-black">
+                                        {item.quantity}
+                                    </td>
+                                    <td
+                                        className={`py-1 px-1.5 font-bold text-right ${
+                                            isOut
+                                                ? "text-[#D93A47]"
+                                                : isLow
+                                                ? "text-[#C77605]"
+                                                : "text-[#0EA47A]"
+                                        }`}
+                                    >
+                                        {isOut ? "Habis" : isLow ? "Rendah" : "Baik"}
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </ReportA4Sheet>
+                </div>
             </div>
 
             {/* Report Table Card - Screen only */}

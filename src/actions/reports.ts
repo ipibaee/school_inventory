@@ -119,3 +119,37 @@ export async function getWarehouseReport(startDate?: Date, endDate?: Date) {
         return []
     }
 }
+
+export async function getOutgoingItemsReport(startDate?: Date, endDate?: Date) {
+    try {
+        const whereClause: any = {
+            type: "OUT"
+        }
+
+        if (startDate && endDate) {
+            whereClause.date = {
+                gte: startDate,
+                lte: endDate,
+            }
+        }
+
+        const transactions = await prisma.transaction.findMany({
+            where: whereClause,
+            include: {
+                item: {
+                    include: {
+                        location: true,
+                        category: true,
+                    },
+                },
+            },
+            orderBy: {
+                date: "desc",
+            },
+        })
+        return transactions
+    } catch (error) {
+        console.error("Error fetching outgoing items report:", error)
+        return []
+    }
+}

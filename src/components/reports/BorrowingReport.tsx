@@ -1,6 +1,7 @@
 "use client"
 
-import { useEffect, useState, useMemo } from "react"
+import { useEffect, useState, useMemo, useRef } from "react"
+import { useReactToPrint } from "react-to-print"
 import {
     Table,
     TableBody,
@@ -34,6 +35,8 @@ export function BorrowingReport() {
         to: new Date(),
     })
 
+    const printRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true)
@@ -44,9 +47,40 @@ export function BorrowingReport() {
         fetchData()
     }, [date])
 
-    const handlePrint = () => {
-        window.print()
-    }
+    const handlePrint = useReactToPrint({
+        contentRef: printRef,
+        documentTitle: `Laporan-Peminjaman-${new Date().toISOString().slice(0, 10)}`,
+        pageStyle: `
+            @page {
+                size: A4 portrait;
+                margin: 0mm !important;
+            }
+            @media print {
+                html, body {
+                    background: #FFFFFF !important;
+                    color: #000000 !important;
+                    margin: 0mm !important;
+                    padding: 0mm !important;
+                }
+                .no-print, header, nav, aside {
+                    display: none !important;
+                }
+                .report-a4-sheet {
+                    width: 210mm !important;
+                    min-height: 297mm !important;
+                    padding: 12mm 14mm !important;
+                    box-sizing: border-box !important;
+                    margin: 0 !important;
+                    box-shadow: none !important;
+                    border: none !important;
+                }
+                * {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+            }
+        `,
+    })
 
     const filteredTransactions = useMemo(() => {
         return transactions.filter((tx) => {
@@ -135,70 +169,72 @@ export function BorrowingReport() {
             </div>
 
             {/* ── Official A4 Document Sheet for Print ── */}
-            <div className="hidden print:block">
-                <ReportA4Sheet
-                    title="LAPORAN RIWAYAT PEMINJAMAN"
-                    subtitle="Pencatatan Peminjaman dan Pengembalian Sarana Laboratorium"
-                    period={periodStr}
-                    metrics={[
-                        { label: "TOTAL TRANSAKSI", value: filteredTransactions.length },
-                        { label: "SEDANG DIPINJAM", value: activeCount },
-                        { label: "TELAH KEMBALI", value: returnedCount },
-                    ]}
-                    columns={[
-                        { header: "No", width: "24px", align: "center" },
-                        { header: "Tgl Pinjam", width: "65px", align: "left" },
-                        { header: "Peminjam", width: "95px", align: "left" },
-                        { header: "Barang & Spesifikasi", align: "left" },
-                        { header: "Tgl Kembali", width: "65px", align: "left" },
-                        { header: "Status", width: "50px", align: "center" },
-                        { header: "Kondisi", width: "45px", align: "right" },
-                    ]}
-                    totalLabel={`Total Riwayat · ${filteredTransactions.length} transaksi`}
-                    totalValue={`${filteredTransactions.length} Peminjaman`}
-                    notes="Status Peminjaman: Kembali (Telah dikembalikan), Dipinjam (Masih aktif berjalan), Terlambat (Melebihi batas tempo)."
-                >
-                    {filteredTransactions.map((tx, idx) => {
-                        const isReturned = tx.status === "RETURNED"
-                        const isActive = tx.status === "ACTIVE"
-                        return (
-                            <tr key={tx.id} className="border-b border-black/60">
-                                <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black/60">
-                                    {idx + 1}
-                                </td>
-                                <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black/60">
-                                    {format(new Date(tx.borrowDate), "dd/MM/yyyy")}
-                                </td>
-                                <td className="py-1 px-1.5 font-bold text-[7.5pt] border-r border-black/60">
-                                    {tx.studentName}
-                                </td>
-                                <td className="py-1 px-1.5 border-r border-black/60">
-                                    <span className="font-bold text-black">{tx.item?.name}</span>
-                                    <span className="block font-mono text-[6pt] text-black/60">
-                                        {tx.item?.barcode}
-                                    </span>
-                                </td>
-                                <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black/60">
-                                    {tx.returnDate ? format(new Date(tx.returnDate), "dd/MM/yyyy") : "-"}
-                                </td>
-                                <td
-                                    className={`py-1 px-1.5 text-center font-bold text-[7pt] border-r border-black/60 ${
-                                        isReturned
-                                            ? "text-[#0EA47A]"
-                                            : isActive
-                                            ? "text-[#2B4EFF]"
-                                            : "text-[#D93A47]"
-                                    }`}
-                                >
-                                    {isReturned ? "Kembali" : isActive ? "Dipinjam" : "Terlambat"}
-                                </td>
-                                <td className="py-1 px-1.5 text-right text-[7pt]">
-                                    {tx.condition || "-"}
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </ReportA4Sheet>
+            <div style={{ display: "none" }}>
+                <div ref={printRef}>
+                    <ReportA4Sheet
+                        title="LAPORAN RIWAYAT PEMINJAMAN"
+                        subtitle="Pencatatan Peminjaman dan Pengembalian Sarana Laboratorium"
+                        period={periodStr}
+                        metrics={[
+                            { label: "TOTAL TRANSAKSI", value: filteredTransactions.length },
+                            { label: "SEDANG DIPINJAM", value: activeCount },
+                            { label: "TELAH KEMBALI", value: returnedCount },
+                        ]}
+                        columns={[
+                            { header: "No", width: "24px", align: "center" },
+                            { header: "Tgl Pinjam", width: "55px", align: "left" },
+                            { header: "Peminjam", width: "80px", align: "left" },
+                            { header: "Barang & Spesifikasi", align: "left" },
+                            { header: "Tgl Kembali", width: "55px", align: "left" },
+                            { header: "Status", width: "48px", align: "center" },
+                            { header: "Kondisi", width: "45px", align: "right" },
+                        ]}
+                        totalLabel={`Total Riwayat · ${filteredTransactions.length} transaksi`}
+                        totalValue={`${filteredTransactions.length} Peminjaman`}
+                        notes="Status Peminjaman: Kembali (Telah dikembalikan), Dipinjam (Masih aktif berjalan), Terlambat (Melebihi batas tempo)."
+                    >
+                        {filteredTransactions.map((tx, idx) => {
+                            const isReturned = tx.status === "RETURNED"
+                            const isActive = tx.status === "ACTIVE"
+                            return (
+                                <tr key={tx.id} className="border-b border-black">
+                                    <td className="py-1 px-1.5 text-center font-mono text-[7pt] border-r border-black">
+                                        {idx + 1}
+                                    </td>
+                                    <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black">
+                                        {format(new Date(tx.borrowDate), "dd/MM/yyyy")}
+                                    </td>
+                                    <td className="py-1 px-1.5 font-bold text-[7.5pt] border-r border-black">
+                                        {tx.studentName}
+                                    </td>
+                                    <td className="py-1 px-1.5 border-r border-black">
+                                        <span className="font-bold text-black">{tx.item?.name}</span>
+                                        <span className="block font-mono text-[6pt] text-black/70">
+                                            {tx.item?.barcode}
+                                        </span>
+                                    </td>
+                                    <td className="py-1 px-1.5 font-mono text-[6.5pt] border-r border-black">
+                                        {tx.returnDate ? format(new Date(tx.returnDate), "dd/MM/yyyy") : "-"}
+                                    </td>
+                                    <td
+                                        className={`py-1 px-1.5 text-center font-bold text-[7pt] border-r border-black ${
+                                            isReturned
+                                                ? "text-[#0EA47A]"
+                                                : isActive
+                                                ? "text-[#2B4EFF]"
+                                                : "text-[#D93A47]"
+                                        }`}
+                                    >
+                                        {isReturned ? "Kembali" : isActive ? "Dipinjam" : "Terlambat"}
+                                    </td>
+                                    <td className="py-1 px-1.5 text-right text-[7pt]">
+                                        {tx.condition || "-"}
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </ReportA4Sheet>
+                </div>
             </div>
 
             {/* Screen Table Card */}

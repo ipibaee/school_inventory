@@ -6,6 +6,7 @@ import { MobileAppBar } from "@/components/layout/MobileAppBar"
 import { StockReport } from "@/components/reports/StockReport"
 import { BorrowingReport } from "@/components/reports/BorrowingReport"
 import { IncomingItemsReport } from "@/components/reports/IncomingItemsReport"
+import { OutgoingItemsReport } from "@/components/reports/OutgoingItemsReport"
 import { WarehouseReport } from "@/components/reports/WarehouseReport"
 import { BapArchiveReport } from "@/components/reports/BapArchiveReport"
 import { Printer } from "lucide-react"
@@ -20,9 +21,10 @@ export default function ReportsPage() {
 
     const reportTabs = [
         { id: "stock", label: "Laporan Stok" },
-        { id: "borrowing", label: "Riwayat Peminjam" },
-        { id: "warehouse", label: "Riwayat Gudang" },
+        { id: "borrowing", label: "Riwayat Peminjaman" },
+        { id: "warehouse", label: "Mutasi Gudang" },
         { id: "incoming", label: "Barang Masuk" },
+        { id: "outgoing", label: "Barang Keluar" },
         { id: "bap", label: "Arsip BAP" },
     ]
 
@@ -51,14 +53,6 @@ export default function ReportsPage() {
             <PageHeader
                 title="Laporan"
                 subtitle="Rekap stok, peminjaman, mutasi gudang, dan arsip BAP siap cetak."
-                actions={
-                    activeTab !== "bap" ? (
-                        <Button variant="primary" onClick={handlePrint} className="gap-2 print:hidden cursor-pointer">
-                            <Printer className="size-4" />
-                            <span>Cetak Laporan</span>
-                        </Button>
-                    ) : undefined
-                }
             />
 
             {/* Mobile Filter Chips */}
@@ -106,6 +100,7 @@ export default function ReportsPage() {
                 {activeTab === "borrowing" && <BorrowingReport />}
                 {activeTab === "warehouse" && <WarehouseReport />}
                 {activeTab === "incoming" && <IncomingItemsReport />}
+                {activeTab === "outgoing" && <OutgoingItemsReport />}
                 {activeTab === "bap" && <BapArchiveReport />}
             </div>
         </div>
