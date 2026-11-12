@@ -8,14 +8,17 @@ export async function authenticate(
     formData: FormData,
 ) {
     try {
-        await signIn("credentials", formData)
+        await signIn("credentials", {
+            ...Object.fromEntries(formData),
+            redirectTo: "/dashboard",
+        })
     } catch (error) {
         if (error instanceof AuthError) {
             switch (error.type) {
                 case "CredentialsSignin":
-                    return "Invalid credentials."
+                    return "Email atau password salah."
                 default:
-                    return "Something went wrong."
+                    return "Terjadi kesalahan saat masuk."
             }
         }
         throw error
@@ -25,3 +28,4 @@ export async function authenticate(
 export async function logout() {
     await signOut({ redirectTo: "/login" })
 }
+
