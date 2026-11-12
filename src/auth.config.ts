@@ -1,11 +1,12 @@
 import type { NextAuthConfig } from "next-auth"
 
 export const authConfig = {
+    trustHost: true,
     pages: {
         signIn: "/login",
     },
     callbacks: {
-        authorized({ auth, request: { nextUrl } }) {
+        authorized({ auth, request: { nextUrl, headers } }) {
             const isLoggedIn = !!auth?.user
             const userRole = (auth?.user as any)?.role
 
@@ -23,7 +24,16 @@ export const authConfig = {
                 nextUrl.pathname.startsWith("/procurement")
 
             if (isProtected) {
-                if (!isLoggedIn) return false // Redirect unauthenticated users to login page
+                if (!isLoggedIn) {
+                    const host =
+                        headers.get("x-forwarded-host") ||
+                        (headers.get("host") && !headers.get("host")?.includes("localhost") ? headers.get("host") : null) ||
+                        "inventaris.ipibaee.my.id"
+                    const proto = headers.get("x-forwarded-proto") || "https"
+                    const loginUrl = new URL("/login", `${proto}://${host}`)
+                    loginUrl.searchParams.set("callbackUrl", `${proto}://${host}${nextUrl.pathname}`)
+                    return Response.redirect(loginUrl)
+                }
 
                 // Guru Pengawas hanya fokus pada Dasbor dan Validasi/Cetak Dokumen BAP
                 if (userRole === "TEACHER") {
@@ -50,3 +60,4 @@ export const authConfig = {
     },
     providers: [],
 } satisfies NextAuthConfig
+
