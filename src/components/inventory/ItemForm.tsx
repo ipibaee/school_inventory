@@ -21,8 +21,9 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { createItem, updateItem } from "@/actions/inventory"
+import { createItem, updateItem, createCategory } from "@/actions/inventory"
 import { useRouter } from "next/navigation"
+import { Plus, Loader2 } from "lucide-react"
 
 const formSchema = z.object({
     name: z.string().min(2, "Nama minimal 2 karakter"),
@@ -61,6 +62,10 @@ interface ItemFormProps {
 export function ItemForm({ categories, locations, initialData, onSuccess, defaultBarcode, forcedLocationId, defaults }: ItemFormProps) {
     const router = useRouter()
     const [loading, setLoading] = useState(false)
+    const [localCategories, setLocalCategories] = useState(categories)
+    const [isAddingCategory, setIsAddingCategory] = useState(false)
+    const [newCategoryName, setNewCategoryName] = useState("")
+    const [savingCategory, setSavingCategory] = useState(false)
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -74,6 +79,25 @@ export function ItemForm({ categories, locations, initialData, onSuccess, defaul
             specification: initialData?.specification || defaults?.specification || "",
         },
     })
+
+    async function handleSaveCategory() {
+        if (!newCategoryName.trim()) return
+        setSavingCategory(true)
+        const res = await createCategory(newCategoryName.trim())
+        setSavingCategory(false)
+        if (res.success && res.data) {
+            const created = res.data
+            setLocalCategories(prev => {
+                if (prev.some(c => c.id === created.id)) return prev
+                return [...prev, created].sort((a, b) => a.name.localeCompare(b.name))
+            })
+            form.setValue("categoryId", created.id)
+            setNewCategoryName("")
+            setIsAddingCategory(false)
+        } else {
+            alert(res.error || "Gagal membuat kategori")
+        }
+    }
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
         setLoading(true)
@@ -144,21 +168,73 @@ export function ItemForm({ categories, locations, initialData, onSuccess, defaul
                         name="categoryId"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Kategori</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                    <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Pilih kategori" />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                        {categories.map((cat) => (
-                                            <SelectItem key={cat.id} value={cat.id}>
-                                                {cat.name}
+                                <div className="flex items-center justify-between">
+                                    <FormLabel>Kategori</FormLabel>
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsAddingCategory((v) => !v)}
+                                        className="text-[11px] font-bold text-brand hover:underline cursor-pointer flex items-center gap-1"
+                                    >
+                                        <Plus className="size-3" />
+                                        <span>{isAddingCategory ? "Pilih list" : "+ Baru"}</span>
+                                    </button>
+                                </div>
+                                {isAddingCategory ? (
+                                    <div className="flex items-center gap-1.5 p-1 rounded-md border border-brand/30 bg-surface-2">
+                                        <Input
+                                            value={newCategoryName}
+                                            onChange={(e) => setNewCategoryName(e.target.value)}
+                                            placeholder="Nama kategori baru..."
+                                            className="h-8 text-xs flex-1"
+                                            autoFocus
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") {
+                                                    e.preventDefault()
+                                                    handleSaveCategory()
+                                                }
+                                            }}
+                                        />
+                                        <Button
+                                            type="button"
+                                            size="sm"
+                                            onClick={handleSaveCategory}
+                                            disabled={savingCategory || !newCategoryName.trim()}
+                                            className="h-8 px-2.5 text-xs bg-brand text-white font-bold"
+                                        >
+                                            {savingCategory ? <Loader2 className="size-3 animate-spin" /> : "Simpan"}
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <Select
+                                        onValueChange={(val) => {
+                                            if (val === "__new__") {
+                                                setIsAddingCategory(true)
+                                            } else {
+                                                field.onChange(val)
+                                            }
+                                        }}
+                                        value={field.value}
+                                    >
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Pilih kategori" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {localCategories.map((cat) => (
+                                                <SelectItem key={cat.id} value={cat.id}>
+                                                    {cat.name}
+                                                </SelectItem>
+                                            ))}
+                                            <SelectItem
+                                                value="__new__"
+                                                className="text-brand font-bold border-t border-line mt-1 cursor-pointer"
+                                            >
+                                                + Tambah Kategori Baru...
                                             </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                        </SelectContent>
+                                    </Select>
+                                )}
                                 <FormMessage />
                             </FormItem>
                         )}

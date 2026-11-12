@@ -120,7 +120,33 @@ export async function deleteItem(id: string) {
 }
 
 export async function getCategories() {
-    return await prisma.category.findMany()
+    return await prisma.category.findMany({
+        orderBy: { name: 'asc' }
+    })
+}
+
+export async function createCategory(name: string) {
+    try {
+        const trimmed = name.trim()
+        if (!trimmed) {
+            return { success: false, error: "Nama kategori tidak boleh kosong" }
+        }
+        const existing = await prisma.category.findFirst({
+            where: { name: { equals: trimmed, mode: "insensitive" } }
+        })
+        if (existing) {
+            return { success: true, data: existing }
+        }
+        const category = await prisma.category.create({
+            data: { name: trimmed }
+        })
+        revalidatePath("/inventory")
+        revalidatePath("/inventory/barcode")
+        return { success: true, data: category }
+    } catch (error: any) {
+        console.error("Error createCategory:", error)
+        return { success: false, error: error?.message || "Gagal membuat kategori" }
+    }
 }
 
 export async function getLocations() {

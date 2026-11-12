@@ -13,7 +13,7 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { searchItems, createItemWithBarcode, generateUniqueBarcode } from "@/actions/barcode"
-import { getCategories, getLocations } from "@/actions/inventory"
+import { getCategories, getLocations, createCategory } from "@/actions/inventory"
 import { getSchoolSettings } from "@/actions/settings"
 import { toast } from "sonner"
 import Barcode from "react-barcode"
@@ -60,6 +60,11 @@ export function BarcodeGenerator() {
     const [creating, setCreating] = useState(false)
     const [settings, setSettings] = useState<any>(null)
 
+    // Category Creation State
+    const [isAddingCategory, setIsAddingCategory] = useState(false)
+    const [newCategoryName, setNewCategoryName] = useState("")
+    const [savingCategory, setSavingCategory] = useState(false)
+
     useEffect(() => {
         const fetchData = async () => {
             const [cats, locs, sets] = await Promise.all([
@@ -74,6 +79,8 @@ export function BarcodeGenerator() {
             const gudang = locs.find((l: any) => l.name === "Gudang")
             if (gudang) {
                 setNewItemLocation(gudang.id)
+            } else if (locs.length > 0) {
+                setNewItemLocation(locs[0].id)
             }
         }
         fetchData()
@@ -92,19 +99,44 @@ export function BarcodeGenerator() {
         setGeneratedBarcode(code)
     }
 
+    const handleSaveCategory = async () => {
+        if (!newCategoryName.trim()) return
+        setSavingCategory(true)
+        const res = await createCategory(newCategoryName.trim())
+        setSavingCategory(false)
+        if (res.success && res.data) {
+            const created = res.data
+            setCategories((prev) => {
+                if (prev.some((c) => c.id === created.id)) return prev
+                return [...prev, created].sort((a, b) => a.name.localeCompare(b.name))
+            })
+            setNewItemCategory(created.id)
+            setNewCategoryName("")
+            setIsAddingCategory(false)
+            toast.success(`Kategori "${created.name}" berhasil ditambahkan`)
+        } else {
+            toast.error(res.error || "Gagal menambahkan kategori")
+        }
+    }
+
     const handleCreateAndPrint = async () => {
-        if (!newItemName || !newItemCategory || !newItemLocation || !generatedBarcode) {
+        const targetLocation =
+            newItemLocation ||
+            locations.find((l: any) => l.name === "Gudang")?.id ||
+            locations[0]?.id
+
+        if (!newItemName.trim() || !newItemCategory || !targetLocation || !generatedBarcode.trim()) {
             toast.error("Mohon lengkapi semua data")
             return
         }
 
         setCreating(true)
         const result = await createItemWithBarcode({
-            name: newItemName,
+            name: newItemName.trim(),
             categoryId: newItemCategory,
-            locationId: newItemLocation,
-            barcode: generatedBarcode,
-            specification: newItemSpecification,
+            locationId: targetLocation,
+            barcode: generatedBarcode.trim(),
+            specification: newItemSpecification.trim(),
         })
         setCreating(false)
 
@@ -115,7 +147,7 @@ export function BarcodeGenerator() {
             setNewItemName("")
             setNewItemSpecification("")
             setNewItemCategory("")
-            setNewItemLocation("")
+            setNewItemLocation(targetLocation)
             setGeneratedBarcode("")
         } else {
             toast.error(result.error || "Gagal membuat barang")
@@ -481,22 +513,84 @@ export function BarcodeGenerator() {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div className="flex flex-col gap-1">
-                                        <Label className="label-caps">KATEGORI</Label>
-                                        <Select
-                                            value={newItemCategory}
-                                            onValueChange={setNewItemCategory}
-                                        >
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Pilih Kategori" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {categories.map((c) => (
-                                                    <SelectItem key={c.id} value={c.id}>
-                                                        {c.name}
+                                        <div className="flex items-center justify-between">
+                                            <Label className="label-caps">KATEGORI</Label>
+                                            <button
+                                                type="button"
+                                                onClick={() => setIsAddingCategory((v) => !v)}
+                                                className="text-[11px] font-bold text-brand hover:underline cursor-pointer flex items-center gap-1"
+                                            >
+                                                <Plus className="size-3" />
+                                                <span>{isAddingCategory ? "Pilih dari daftar" : "+ Kategori Baru"}</span>
+                                            </button>
+                                        </div>
+
+                                        {isAddingCategory ? (
+                                            <div className="flex items-center gap-2 p-1.5 rounded-[10px] bg-surface-2 border border-brand/30">
+                                                <Input
+                                                    value={newCategoryName}
+                                                    onChange={(e) => setNewCategoryName(e.target.value)}
+                                                    placeholder="Nama kategori baru..."
+                                                    className="h-9 text-xs flex-1 bg-surface"
+                                                    autoFocus
+                                                    onKeyDown={(e) => {
+                                                        if (e.key === "Enter") {
+                                                            e.preventDefault()
+                                                            handleSaveCategory()
+                                                        }
+                                                    }}
+                                                />
+                                                <Button
+                                                    type="button"
+                                                    size="sm"
+                                                    onClick={handleSaveCategory}
+                                                    disabled={savingCategory || !newCategoryName.trim()}
+                                                    className="h-9 px-3 text-xs bg-brand text-white font-bold"
+                                                >
+                                                    {savingCategory ? <Loader2 className="size-3 animate-spin" /> : "Simpan"}
+                                                </Button>
+                                                <Button
+                                                    type="button"
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        setIsAddingCategory(false)
+                                                        setNewCategoryName("")
+                                                    }}
+                                                    className="h-9 px-2 text-xs text-muted-ink"
+                                                >
+                                                    Batal
+                                                </Button>
+                                            </div>
+                                        ) : (
+                                            <Select
+                                                value={newItemCategory}
+                                                onValueChange={(val) => {
+                                                    if (val === "__new__") {
+                                                        setIsAddingCategory(true)
+                                                    } else {
+                                                        setNewItemCategory(val)
+                                                    }
+                                                }}
+                                            >
+                                                <SelectTrigger>
+                                                    <SelectValue placeholder="Pilih Kategori" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    {categories.map((c) => (
+                                                        <SelectItem key={c.id} value={c.id}>
+                                                            {c.name}
+                                                        </SelectItem>
+                                                    ))}
+                                                    <SelectItem
+                                                        value="__new__"
+                                                        className="text-brand font-bold border-t border-line mt-1 cursor-pointer"
+                                                    >
+                                                        + Tambah Kategori Baru...
                                                     </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                                                </SelectContent>
+                                            </Select>
+                                        )}
                                     </div>
 
                                     <div className="flex flex-col gap-1">
