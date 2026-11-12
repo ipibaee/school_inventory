@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { useFormState, useFormStatus } from "react-dom"
+import { useState, useActionState } from "react"
+import { useFormStatus } from "react-dom"
 import { authenticate } from "@/actions/auth"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -47,7 +47,7 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ settings }: LoginFormProps) {
-    const [errorMessage, dispatch] = useFormState(authenticate, undefined)
+    const [errorMessage, dispatch] = useActionState(authenticate, undefined)
     const [showPassword, setShowPassword] = useState(false)
     const [rememberMe, setRememberMe] = useState(true)
 

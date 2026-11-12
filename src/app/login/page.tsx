@@ -6,7 +6,12 @@ import { GraduationCap } from "lucide-react"
 export const dynamic = "force-dynamic"
 
 export default async function LoginPage() {
-    const settings = await getSchoolSettings()
+    let settings = null
+    try {
+        settings = await getSchoolSettings()
+    } catch (e) {
+        console.error("Failed to load school settings:", e)
+    }
     const schoolName = settings?.schoolName || "SMK HKTI 2"
 
     return (

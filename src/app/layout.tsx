@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -25,7 +23,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="id" className={jakarta.variable} suppressHydrationWarning>
-            <body className="min-h-screen bg-app font-sans text-ink antialiased">
+            <body className="min-h-screen bg-app font-sans text-ink antialiased" suppressHydrationWarning>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -34,10 +32,9 @@ export default function RootLayout({
                 >
                     {children}
                     <Toaster />
-                    <Analytics />
-                    <SpeedInsights />
                 </ThemeProvider>
             </body>
         </html>
     );
 }
+
