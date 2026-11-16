@@ -54,6 +54,7 @@ interface PrintableLabel {
   unitIndex: number
   totalUnits: number
   categoryName: string
+  labelCode: string
 }
 
 export function BapBarcodeBatchPrinter({
@@ -74,6 +75,16 @@ export function BapBarcodeBatchPrinter({
     return initial
   })
 
+  // Pengaturan Format Label Stiker (Sama persis dengan Menu Cetak Barcode Inventaris)
+  const [entryYear, setEntryYear] = useState(
+    (procurement.periodYear || new Date().getFullYear()).toString()
+  )
+  const [entryMonth, setEntryMonth] = useState(
+    (procurement.periodMonth || new Date().getMonth() + 1).toString().padStart(2, "0")
+  )
+  const [selectedDepartment, setSelectedDepartment] = useState("TKJ")
+  const [startNumber, setStartNumber] = useState(1)
+
   // Pengaturan Ukuran Label Stiker (Standar Thermal 2 Kolom)
   const [labelWidth, setLabelWidth] = useState(33) // mm
   const [labelHeight, setLabelHeight] = useState(15) // mm
@@ -82,6 +93,11 @@ export function BapBarcodeBatchPrinter({
   const [includeLogo, setIncludeLogo] = useState(true)
 
   const printRef = useRef<HTMLDivElement>(null)
+
+  const formatLabelText = (seqNumber: number) => {
+    const numStr = seqNumber.toString().padStart(2, "0")
+    return `BOS/${entryYear}/${entryMonth}/HKTI2/${selectedDepartment}/${numStr}`
+  }
 
   // Toggle select all
   const allSelected = procurement.items.every(
@@ -123,8 +139,10 @@ export function BapBarcodeBatchPrinter({
     }))
   }
 
-  // Buat daftar semua label individual yang akan dicetak
+  // Buat daftar semua label individual yang akan dicetak dengan nomor urut berlanjut
   const labelsToPrint: PrintableLabel[] = []
+  let currentSeq = Number(startNumber) || 1
+
   procurement.items.forEach((item) => {
     const sel = itemSelections[item.id]
     if (sel?.selected && sel.count > 0) {
@@ -137,7 +155,9 @@ export function BapBarcodeBatchPrinter({
           unitIndex: i,
           totalUnits: sel.count,
           categoryName: item.categoryName || "Umum",
+          labelCode: formatLabelText(currentSeq),
         })
+        currentSeq++
       }
     }
   })
@@ -320,8 +340,57 @@ export function BapBarcodeBatchPrinter({
                     onChange={(e) => setIncludeLogo(e.target.checked)}
                     className="rounded border-line"
                   />
-                  <span>Tampilkan Logo Sekolah</span>
+                  <span>Tampilkan Logo</span>
                 </label>
+              </div>
+            </div>
+
+            {/* Pengaturan Kode Header Stiker (Format Inventaris) */}
+            <div className="border-t border-line/60 pt-3 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div>
+                <label className="text-[10px] font-bold uppercase text-muted-ink block mb-1">
+                  Jurusan / Unit
+                </label>
+                <Input
+                  value={selectedDepartment}
+                  onChange={(e) => setSelectedDepartment(e.target.value.toUpperCase())}
+                  placeholder="TKJ"
+                  className="h-8 text-xs font-mono font-bold uppercase"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold uppercase text-muted-ink block mb-1">
+                  Tahun Anggaran
+                </label>
+                <Input
+                  value={entryYear}
+                  onChange={(e) => setEntryYear(e.target.value)}
+                  placeholder="2026"
+                  className="h-8 text-xs font-mono"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold uppercase text-muted-ink block mb-1">
+                  Bulan
+                </label>
+                <Input
+                  value={entryMonth}
+                  onChange={(e) => setEntryMonth(e.target.value)}
+                  placeholder="11"
+                  className="h-8 text-xs font-mono"
+                />
+              </div>
+              <div>
+                <label className="text-[10px] font-bold uppercase text-muted-ink block mb-1">
+                  Nomor Urut Awal
+                </label>
+                <Input
+                  type="number"
+                  min={1}
+                  value={startNumber}
+                  onChange={(e) => setStartNumber(Number(e.target.value) || 1)}
+                  className="h-8 text-xs font-mono font-bold"
+                />
               </div>
             </div>
           </div>
@@ -447,8 +516,8 @@ export function BapBarcodeBatchPrinter({
                             height: `${labelHeight * 3.78}px`,
                           }}
                         >
-                          <div className="text-[6.5px] font-bold text-center leading-tight whitespace-nowrap w-full overflow-hidden text-black uppercase tracking-tight">
-                            {schoolSettings?.schoolName || "SMK HKTI 2 PURWOREJO"}
+                          <div className="text-[6.5px] font-bold text-center leading-tight whitespace-nowrap w-full overflow-hidden text-black font-mono">
+                            {pair[0].labelCode}
                           </div>
 
                           <div className="flex items-center justify-between w-full flex-1 gap-1 px-1">
@@ -457,7 +526,7 @@ export function BapBarcodeBatchPrinter({
                                 <img
                                   src={schoolSettings.logoUrl}
                                   alt="Logo"
-                                  className="max-w-full max-h-[20px] object-contain"
+                                  className="max-w-full max-h-[22px] object-contain"
                                 />
                               </div>
                             )}
@@ -466,13 +535,13 @@ export function BapBarcodeBatchPrinter({
                               <Barcode
                                 value={pair[0].barcode}
                                 width={1}
-                                height={20}
+                                height={22}
                                 fontSize={0}
                                 margin={0}
                                 displayValue={false}
                               />
                               <div className="text-[6px] font-bold text-center leading-tight mt-0.5 whitespace-nowrap w-full overflow-hidden text-black">
-                                {pair[0].itemName.substring(0, 16)} · {pair[0].barcode} ({pair[0].unitIndex}/{pair[0].totalUnits})
+                                {pair[0].itemName.substring(0, 16)} | {pair[0].barcode}
                               </div>
                             </div>
                           </div>
@@ -488,8 +557,8 @@ export function BapBarcodeBatchPrinter({
                             height: `${labelHeight * 3.78}px`,
                           }}
                         >
-                          <div className="text-[6.5px] font-bold text-center leading-tight whitespace-nowrap w-full overflow-hidden text-black uppercase tracking-tight">
-                            {schoolSettings?.schoolName || "SMK HKTI 2 PURWOREJO"}
+                          <div className="text-[6.5px] font-bold text-center leading-tight whitespace-nowrap w-full overflow-hidden text-black font-mono">
+                            {pair[1].labelCode}
                           </div>
 
                           <div className="flex items-center justify-between w-full flex-1 gap-1 px-1">
@@ -498,7 +567,7 @@ export function BapBarcodeBatchPrinter({
                                 <img
                                   src={schoolSettings.logoUrl}
                                   alt="Logo"
-                                  className="max-w-full max-h-[20px] object-contain"
+                                  className="max-w-full max-h-[22px] object-contain"
                                 />
                               </div>
                             )}
@@ -507,13 +576,13 @@ export function BapBarcodeBatchPrinter({
                               <Barcode
                                 value={pair[1].barcode}
                                 width={1}
-                                height={20}
+                                height={22}
                                 fontSize={0}
                                 margin={0}
                                 displayValue={false}
                               />
                               <div className="text-[6px] font-bold text-center leading-tight mt-0.5 whitespace-nowrap w-full overflow-hidden text-black">
-                                {pair[1].itemName.substring(0, 16)} · {pair[1].barcode} ({pair[1].unitIndex}/{pair[1].totalUnits})
+                                {pair[1].itemName.substring(0, 16)} | {pair[1].barcode}
                               </div>
                             </div>
                           </div>
@@ -596,10 +665,10 @@ export function BapBarcodeBatchPrinter({
                       width: "100%",
                       overflow: "hidden",
                       color: "#000",
-                      textTransform: "uppercase",
+                      fontFamily: "monospace",
                     }}
                   >
-                    {schoolSettings?.schoolName || "SMK HKTI 2 PURWOREJO"}
+                    {pair[0].labelCode}
                   </div>
 
                   <div
@@ -675,7 +744,7 @@ export function BapBarcodeBatchPrinter({
                           color: "#000",
                         }}
                       >
-                        {pair[0].itemName.substring(0, 16)} · {pair[0].barcode} ({pair[0].unitIndex}/{pair[0].totalUnits})
+                        {pair[0].itemName.substring(0, 16)} | {pair[0].barcode}
                       </div>
                     </div>
                   </div>
@@ -707,10 +776,10 @@ export function BapBarcodeBatchPrinter({
                       width: "100%",
                       overflow: "hidden",
                       color: "#000",
-                      textTransform: "uppercase",
+                      fontFamily: "monospace",
                     }}
                   >
-                    {schoolSettings?.schoolName || "SMK HKTI 2 PURWOREJO"}
+                    {pair[1].labelCode}
                   </div>
 
                   <div
@@ -786,7 +855,7 @@ export function BapBarcodeBatchPrinter({
                           color: "#000",
                         }}
                       >
-                        {pair[1].itemName.substring(0, 16)} · {pair[1].barcode} ({pair[1].unitIndex}/{pair[1].totalUnits})
+                        {pair[1].itemName.substring(0, 16)} | {pair[1].barcode}
                       </div>
                     </div>
                   </div>

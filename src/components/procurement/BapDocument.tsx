@@ -53,9 +53,10 @@ export function BapDocument({
       style={{
         width: "210mm",
         minHeight: "297mm",
-        padding: "10mm 14mm",
+        padding: "12mm 14mm",
         boxSizing: "border-box",
         color: "#0B1B2E",
+        margin: "0 auto",
       }}
     >
       {/* Watermark untuk status non-VERIFIED */}
@@ -135,15 +136,15 @@ export function BapDocument({
 
       {/* ── TABEL RINCIAN BARANG ── */}
       <div className="my-1.5 border border-black">
-        <table className="w-full border-collapse text-[7.5pt]">
+        <table className="w-full border-collapse text-[7.5pt]" style={{ tableLayout: "fixed" }}>
           <thead>
             <tr className="bg-[#F8FAFC] border-b border-black text-black font-bold uppercase text-[7pt]">
-              <th className="py-1 px-1.5 text-center border-r border-black w-[8mm]">No</th>
-              <th className="py-1 px-1.5 text-center border-r border-black w-[22mm]">Kode / Barcode</th>
-              <th className="py-1 px-2 text-left border-r border-black">Nama Barang &amp; Spesifikasi Teknis</th>
-              <th className="py-1 px-1.5 text-right border-r border-black w-[15mm]">Volume</th>
-              <th className="py-1 px-1.5 text-center border-r border-black w-[13mm]">Satuan</th>
-              <th className="py-1 px-1.5 text-center w-[18mm]">Kondisi</th>
+              <th className="py-1 px-1 text-center border-r border-black" style={{ width: "8mm" }}>No</th>
+              <th className="py-1 px-1.5 text-center border-r border-black" style={{ width: "22mm" }}>Kode / Barcode</th>
+              <th className="py-1 px-2 text-left border-r border-black" style={{ width: "106mm" }}>Nama Barang &amp; Spesifikasi Teknis</th>
+              <th className="py-1 px-1.5 text-right border-r border-black" style={{ width: "15mm" }}>Volume</th>
+              <th className="py-1 px-1.5 text-center border-r border-black" style={{ width: "13mm" }}>Satuan</th>
+              <th className="py-1 px-1.5 text-center" style={{ width: "18mm" }}>Kondisi</th>
             </tr>
           </thead>
           <tbody>

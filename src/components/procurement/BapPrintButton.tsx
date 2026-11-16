@@ -33,7 +33,7 @@ export function BapPrintButton({
     pageStyle: `
       @page {
         size: A4 portrait;
-        margin: 8mm 10mm 8mm 10mm !important;
+        margin: 0mm !important;
       }
       @media print {
         html, body {
@@ -41,21 +41,25 @@ export function BapPrintButton({
           color: #000000 !important;
           margin: 0mm !important;
           padding: 0mm !important;
+          width: 210mm !important;
         }
         .no-print, header, nav, aside {
           display: none !important;
         }
         .bap-sheet {
-          width: 100% !important;
-          min-height: auto !important;
-          margin: 0 !important;
-          padding: 0 !important;
+          width: 210mm !important;
+          max-width: 210mm !important;
+          min-height: 297mm !important;
+          margin: 0 auto !important;
+          padding: 12mm 14mm !important;
+          box-sizing: border-box !important;
           box-shadow: none !important;
           border: none !important;
           overflow: visible !important;
         }
         table {
           width: 100% !important;
+          table-layout: fixed !important;
           page-break-inside: auto;
         }
         thead {
