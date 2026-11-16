@@ -166,60 +166,30 @@ export function VerifyDocumentCard({
               Guru Pengawas / Pemeriksa
             </span>
             <span className="text-xs font-semibold text-ink-soft">
-              {bap.inspector?.name || "Guru Pengawas"}
+              {bap.verifiedBy?.name || bap.inspector?.name || "Guru Pengawas"}
             </span>
           </div>
 
-          {/* Status Fisik Barang */}
+          {/* Status Dokumen / Tanda Tangan */}
           <div className="py-2.5 flex flex-col gap-0.5">
             <span className="text-[9px] font-bold tracking-wider text-muted-ink uppercase">
-              Status Fisik Barang
+              Status Tanda Tangan Digital
             </span>
             {isVerified ? (
               <span className="text-xs font-bold text-mint flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-mint animate-pulse" />
-                100% Lengkap &amp; Kondisi Baik
+                Sah &amp; Terverifikasi Resmi
               </span>
             ) : isSubmitted ? (
               <span className="text-xs font-bold text-amber flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-amber animate-pulse" />
-                Menunggu Pemeriksaan Fisik Guru
+                Menunggu Pengesahan Guru
               </span>
             ) : (
               <span className="text-xs font-semibold text-muted-ink">
-                Belum Diverifikasi
+                Draf Dokumen
               </span>
             )}
-          </div>
-        </div>
-
-        {/* Table of Approved Items */}
-        <div className="px-4 pt-3 pb-2 border-t border-line">
-          <div className="flex items-center justify-between pb-1.5 text-[9px] font-bold text-muted-ink tracking-wider uppercase">
-            <span>Daftar Barang</span>
-            <span>Volume</span>
-          </div>
-          <div className="divide-y divide-line/60">
-            {bap.items.map((item) => (
-              <div
-                key={item.id}
-                className="py-2 flex items-center justify-between text-xs gap-3"
-              >
-                <div className="flex flex-col min-w-0 pr-2">
-                  <span className="font-medium text-ink truncate">
-                    {item.name}
-                  </span>
-                  {item.specification && (
-                    <span className="text-[10px] text-muted-ink truncate">
-                      {item.specification}
-                    </span>
-                  )}
-                </div>
-                <span className="font-bold text-ink-soft whitespace-nowrap shrink-0">
-                  {formatNumberId(item.quantity)} {item.unit}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
 
@@ -237,19 +207,19 @@ export function VerifyDocumentCard({
             <>
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
               <span>
-                Terverifikasi sistem · {formatNumberId(totalUnits)} unit sesuai dokumen
+                Dokumen BAP Sah &amp; Terverifikasi Sistem
               </span>
             </>
           ) : isSubmitted ? (
             <>
               <Clock className="w-3.5 h-3.5" />
               <span>
-                Dalam pemeriksaan · {formatNumberId(totalUnits)} unit terdata
+                Menunggu Pengesahan Guru Pengawas
               </span>
             </>
           ) : (
             <span>
-              Draf Pengadaan · {formatNumberId(totalUnits)} unit diajukan
+              Draf Pengadaan Belanja BOS
             </span>
           )}
         </div>
