@@ -501,11 +501,10 @@ export default function SettingsPage() {
 
                 {/* ── Mobile sticky footer save button ── */}
                 <div className="fixed bottom-[62px] left-0 right-0 z-30 px-4 py-2.5 bg-surface border-t border-line lg:hidden">
-                    <Button type="submit" variant="primary" className="w-full" disabled={saving}>
+                    <Button type="button" variant="primary" className="w-full" disabled={saving} onClick={() => formRef.current?.requestSubmit()}>
                         {saving ? <><Loader2 className="h-4 w-4 animate-spin" /> Menyimpan…</> : <><Check className="h-4 w-4" /> Simpan Perubahan</>}
                     </Button>
                 </div>
-            </form>
         </>
     )
 }
