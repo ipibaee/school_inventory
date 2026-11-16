@@ -114,6 +114,7 @@ export default async function BapDetailPage({
                 bap={bap}
                 schoolSettings={schoolSettings}
                 qrSvg={qrSvg}
+                verifyUrl={verifyUrl}
                 label="Cetak Lembar BAP (A4)"
               />
             </div>
@@ -140,6 +141,7 @@ export default async function BapDetailPage({
                 bap={bap}
                 schoolSettings={schoolSettings}
                 qrSvg={qrSvg}
+                verifyUrl={verifyUrl}
                 label="Cetak"
               />
             </div>

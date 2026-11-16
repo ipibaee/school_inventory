@@ -10,6 +10,7 @@ interface BapPrintButtonProps {
   bap: any
   schoolSettings?: any
   qrSvg?: string
+  verifyUrl?: string
   label?: string
   className?: string
   variant?: "primary" | "secondary" | "outline"
@@ -19,6 +20,7 @@ export function BapPrintButton({
   bap,
   schoolSettings,
   qrSvg,
+  verifyUrl,
   label = "Cetak Dokumen BAP",
   className = "",
   variant = "primary",
@@ -31,7 +33,7 @@ export function BapPrintButton({
     pageStyle: `
       @page {
         size: A4 portrait;
-        margin: 0mm !important;
+        margin: 8mm 10mm 8mm 10mm !important;
       }
       @media print {
         html, body {
@@ -44,11 +46,31 @@ export function BapPrintButton({
           display: none !important;
         }
         .bap-sheet {
-          width: 210mm !important;
-          min-height: 297mm !important;
+          width: 100% !important;
+          min-height: auto !important;
           margin: 0 !important;
+          padding: 0 !important;
           box-shadow: none !important;
           border: none !important;
+          overflow: visible !important;
+        }
+        table {
+          width: 100% !important;
+          page-break-inside: auto;
+        }
+        thead {
+          display: table-header-group !important;
+        }
+        tfoot {
+          display: table-footer-group !important;
+        }
+        tr {
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+        .bap-signature-section {
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
         }
         * {
           -webkit-print-color-adjust: exact !important;
@@ -76,6 +98,7 @@ export function BapPrintButton({
             bap={bap}
             schoolSettings={schoolSettings}
             qrSvg={qrSvg}
+            verifyUrl={verifyUrl}
           />
         </div>
       </div>
