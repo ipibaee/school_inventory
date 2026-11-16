@@ -40,6 +40,11 @@ export function Sidebar({ user, settings }: SidebarProps) {
                   icon: ClipboardCheck,
                   href: "/procurement",
               },
+              {
+                  label: "Pengaturan",
+                  icon: Settings,
+                  href: "/settings",
+              },
           ]
         : [
               {

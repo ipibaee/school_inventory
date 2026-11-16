@@ -15,6 +15,8 @@ import { useTheme } from "next-themes"
 import { PageHeader } from "@/components/layout/PageHeader"
 import { MobileAppBar } from "@/components/layout/MobileAppBar"
 import { UserManagement } from "@/components/settings/UserManagement"
+import { MyProfileForm } from "@/components/settings/MyProfileForm"
+import { getMyProfile } from "@/actions/users"
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
     return (
@@ -28,6 +30,7 @@ export default function SettingsPage() {
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState(false)
     const [settings, setSettings] = useState<any>(null)
+    const [currentUser, setCurrentUser] = useState<any>(null)
     const [logoPreview, setLogoPreview] = useState<string | null>(null)
     const [isDragging, setIsDragging] = useState(false)
     const fileInputRef = useRef<HTMLInputElement>(null)
@@ -36,6 +39,7 @@ export default function SettingsPage() {
 
     useEffect(() => {
         loadSettings()
+        getMyProfile().then(setCurrentUser)
     }, [])
 
     const loadSettings = async () => {
@@ -111,6 +115,93 @@ export default function SettingsPage() {
         </Button>
     )
 
+    const isTeacher = currentUser?.role === "TEACHER"
+
+    if (isTeacher) {
+        return (
+            <>
+                {/* ── Desktop topbar ── */}
+                <div className="hidden lg:block">
+                    <PageHeader
+                        title="Pengaturan Akun"
+                        subtitle="Kelola profil pribadi, ganti alamat email login, dan perbarui kata sandi."
+                    />
+                </div>
+
+                {/* ── Mobile app bar ── */}
+                <div className="lg:hidden">
+                    <MobileAppBar
+                        title="Pengaturan Akun"
+                        subtitle="Profil &amp; Keamanan"
+                        back
+                    />
+                </div>
+
+                {/* Desktop: 2-column layout */}
+                <div className="flex flex-col lg:flex-row gap-4 items-start px-4 lg:px-0 pb-24 lg:pb-0">
+                    {/* ── LEFT: My Profile Form ── */}
+                    <div className="flex-1 w-full min-w-0">
+                        <MyProfileForm />
+                    </div>
+
+                    {/* ── RIGHT: Theme + Session ── */}
+                    <div className="flex flex-col gap-4 w-full lg:w-[332px] shrink-0">
+                        {/* Tampilan Aplikasi */}
+                        <div className="rounded-2xl border border-line bg-surface p-[18px] flex flex-col gap-3">
+                            <div className="flex flex-col gap-0.5">
+                                <span className="text-[14px] font-bold text-ink">Tampilan Aplikasi</span>
+                                <span className="text-[10.5px] text-muted-ink">Pilih tema yang paling nyaman dipakai.</span>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                {themeOptions.map(({ value, label, icon: Icon }) => {
+                                    const active = theme === value
+                                    return (
+                                        <button
+                                            key={value}
+                                            type="button"
+                                            onClick={() => setTheme(value)}
+                                            className={`flex items-center gap-2.5 px-[11px] py-[10px] rounded-[10px] border transition-all text-left ${active
+                                                ? "bg-brand-soft border-brand/35 dark:bg-brand/15"
+                                                : "bg-surface border-line hover:bg-surface-2"
+                                                }`}
+                                        >
+                                            <Icon className={`size-3.5 ${active ? "text-brand" : "text-muted-ink"}`} />
+                                            <span className={`flex-1 text-[11.5px] font-bold ${active ? "text-brand-deep dark:text-[#8AB4F8]" : "text-ink-soft"}`}>
+                                                {label}
+                                            </span>
+                                            <span className={`size-3.5 rounded-full flex items-center justify-center border ${active ? "bg-brand border-brand" : "bg-surface border-line"}`}>
+                                                {active && <span className="size-[4.5px] rounded-full bg-white" />}
+                                            </span>
+                                        </button>
+                                    )
+                                })}
+                            </div>
+                        </div>
+
+                        {/* Sesi & Keamanan */}
+                        <div className="rounded-2xl bg-navy p-[18px] flex flex-col gap-2.5">
+                            <span className="text-[13px] font-bold text-white">Sesi &amp; Keamanan</span>
+                            <span className="text-[10.5px] leading-[1.5] text-[#8296B4]">
+                                Masuk sebagai {currentUser?.name} ({currentUser?.email})
+                            </span>
+                            <Button
+                                type="button"
+                                variant="danger"
+                                size="sm"
+                                className="mt-1 w-full"
+                                onClick={() => logout()}
+                            >
+                                <LogOut className="h-3.5 w-3.5" />
+                                Keluar dari Akun
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </>
+        )
+    }
+
     return (
         <>
             {/* ── Desktop topbar ── */}
@@ -132,14 +223,14 @@ export default function SettingsPage() {
             </div>
 
             {/* ── Page body ── */}
-            <form ref={formRef} onSubmit={handleSubmit}>
-                {/* Desktop: 2-column layout */}
-                <div className="flex gap-4 items-start px-4 lg:px-0 pb-24 lg:pb-0">
+            <div className="flex gap-4 items-start px-4 lg:px-0 pb-24 lg:pb-0 flex-col lg:flex-row">
+                {/* ── LEFT: Profil Akun + Identitas + User Management ── */}
+                <div className="flex-1 w-full min-w-0 flex flex-col gap-4">
+                    {/* Profil Saya Form */}
+                    <MyProfileForm />
 
-                    {/* ── LEFT: Identitas + User Management ── */}
-                    <div className="flex-1 min-w-0 flex flex-col gap-4">
-
-                        {/* Identitas Sekolah card */}
+                    {/* Form Identitas Sekolah */}
+                    <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-4">
                         <div className="rounded-2xl border border-line bg-surface overflow-hidden flex flex-col">
                             {/* Head */}
                             <div className="flex items-center justify-between px-5 py-4 border-b border-line">
@@ -210,24 +301,37 @@ export default function SettingsPage() {
                                 <span className="text-[10.5px] text-muted-ink">
                                     Informasi ditampilkan pada kop laporan & barcode.
                                 </span>
-                                <button
-                                    type="button"
-                                    className="text-[10.5px] font-bold text-muted-ink hover:text-ink transition-colors"
-                                    onClick={() => setSettings(null)}
+                                <Button
+                                    type="submit"
+                                    variant="primary"
+                                    size="sm"
+                                    disabled={saving}
+                                    className="gap-1.5 text-xs font-bold"
                                 >
-                                    Kembalikan default
-                                </button>
+                                    {saving ? (
+                                        <>
+                                            <Loader2 className="size-3.5 animate-spin" />
+                                            <span>Menyimpan...</span>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Check className="size-3.5" />
+                                            <span>Simpan Identitas</span>
+                                        </>
+                                    )}
+                                </Button>
                             </div>
                         </div>
+                    </form>
 
-                        {/* User Management */}
-                        <div>
-                            <UserManagement />
-                        </div>
+                    {/* User Management */}
+                    <div>
+                        <UserManagement />
                     </div>
+                </div>
 
-                    {/* ── RIGHT: Logo + Theme + Session ── */}
-                    <div className="hidden lg:flex flex-col gap-4 w-[332px] shrink-0">
+                {/* ── RIGHT: Logo + Theme + Session ── */}
+                <div className="hidden lg:flex flex-col gap-4 w-[332px] shrink-0">
 
                         {/* Logo Sekolah */}
                         <div className="rounded-2xl border border-line bg-surface p-[18px] flex flex-col gap-3.5">

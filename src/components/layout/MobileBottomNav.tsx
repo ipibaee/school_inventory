@@ -12,6 +12,7 @@ import {
     ScanBarcode,
     ShoppingCart,
     ChartColumn,
+    Settings,
 } from "lucide-react"
 
 export function MobileBottomNav({ user }: { user?: any }) {
@@ -22,6 +23,7 @@ export function MobileBottomNav({ user }: { user?: any }) {
         ? [
               { label: "Dasbor", icon: LayoutDashboard, href: "/dashboard" },
               { label: "Validasi BOS", icon: ClipboardCheck, href: "/procurement" },
+              { label: "Pengaturan", icon: Settings, href: "/settings" },
           ]
         : [
               { label: "Dasbor", icon: LayoutDashboard, href: "/dashboard" },

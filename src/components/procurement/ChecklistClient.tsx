@@ -101,19 +101,37 @@ export function ChecklistClient({ procurement, currentUserId }: ChecklistClientP
   }
 
   return (
-    <div className="flex flex-col gap-3.5 pb-24 max-w-[640px] mx-auto w-full px-4 sm:px-0">
-      {/* ── Banner Periode ── */}
-      <div className="rounded-2xl border border-line bg-brand-soft/60 dark:bg-brand/10 p-3.5 flex flex-col gap-1.5">
-        <div className="flex items-center gap-2">
-          <ClipboardCheck className="size-4 text-brand" />
-          <span className="text-[12.5px] font-bold text-brand-deep dark:text-[#8AB4F8]">
-            Periode: {monthName} {procurement.periodYear}
-          </span>
+    <div className="flex flex-col gap-3.5 pb-10 max-w-[640px] mx-auto w-full px-4 sm:px-0">
+      {/* ── Banner Periode & Progres Verifikasi ── */}
+      <div className="rounded-2xl border border-line bg-brand-soft/60 dark:bg-brand/10 p-3.5 flex flex-col gap-2.5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <ClipboardCheck className="size-4 text-brand" />
+            <span className="text-[12.5px] font-bold text-brand-deep dark:text-[#8AB4F8]">
+              Periode: {monthName} {procurement.periodYear}
+            </span>
+          </div>
+          <span className="text-brand font-bold text-xs">{progressPercent}%</span>
         </div>
+
         <p className="text-[11px] text-brand-deep/80 dark:text-[#8AB4F8]/80 leading-relaxed">
           {totalCount} Jenis Barang ({procurement.totalUnits || items.reduce((a, b) => a + (b.quantity || 0), 0)} Unit).
           Silakan periksa fisik barang di gudang sekolah sebelum disahkan.
         </p>
+
+        {/* Progres Bar di Header (Tidak Floating / Tidak Menutupi Layar) */}
+        <div className="pt-2 border-t border-brand/15 dark:border-brand/20 flex flex-col gap-1">
+          <div className="flex items-center justify-between text-[11px] font-semibold text-ink-soft">
+            <span>Status Verifikasi:</span>
+            <span>{checkedCount} dari {totalCount} barang diperiksa</span>
+          </div>
+          <div className="w-full h-2 rounded-full bg-surface/80 dark:bg-black/30 overflow-hidden border border-brand/10">
+            <div
+              className="h-full bg-brand transition-all duration-300 rounded-full"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </div>
+        </div>
       </div>
 
       {/* ── Checklist Cards Per Barang ── */}
@@ -226,51 +244,48 @@ export function ChecklistClient({ procurement, currentUserId }: ChecklistClientP
         </div>
       </div>
 
-      {/* ── Sticky Bottom Action Bar ── */}
-      <div className="fixed bottom-[62px] inset-x-0 bg-surface/95 backdrop-blur-md border-t border-line p-3 z-30 max-w-[640px] mx-auto">
-        <div className="flex flex-col gap-2">
-          {/* Progress row */}
-          <div className="flex items-center justify-between text-xs font-semibold">
-            <span className="text-ink-soft">
-              {checkedCount} dari {totalCount} barang terverifikasi
-            </span>
-            <span className="text-brand font-bold">{progressPercent}%</span>
-          </div>
-
-          {/* Progress bar */}
-          <div className="w-full h-1.5 rounded-full bg-line overflow-hidden">
-            <div
-              className="h-full bg-brand transition-all duration-300 rounded-full"
-              style={{ width: `${progressPercent}%` }}
-            />
-          </div>
-
-          {/* Button Sahkan & Terbitkan */}
-          <Button
-            type="button"
-            variant="primary"
-            disabled={!isAllChecked || publishing}
-            onClick={handlePublish}
-            className={`w-full h-11 text-xs font-bold gap-2 ${
-              isAllChecked
-                ? "bg-[#0EA47A] hover:bg-[#0EA47A]/90 text-white"
-                : "bg-surface-2 text-muted-ink border border-line"
-            }`}
-          >
-            {publishing ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : isAllChecked ? (
-              <CheckCircle2 className="size-4" />
-            ) : (
-              <Lock className="size-4" />
-            )}
-            <span>
-              {isAllChecked
-                ? "Sahkan & Terbitkan BAP Sekarang"
-                : "Centang Semua Barang untuk Mengesahkan"}
-            </span>
-          </Button>
+      {/* ── Tombol Pengesahan (Inline, Tidak Menutupi Layar) ── */}
+      <div className="rounded-2xl border border-line bg-surface p-4 flex flex-col gap-3 shadow-xs">
+        <div className="flex items-center justify-between text-xs font-semibold">
+          <span className="text-ink-soft">
+            {checkedCount} dari {totalCount} barang terverifikasi
+          </span>
+          <span className="text-brand font-bold">{progressPercent}%</span>
         </div>
+
+        <div className="w-full h-2 rounded-full bg-line overflow-hidden">
+          <div
+            className="h-full bg-brand transition-all duration-300 rounded-full"
+            style={{ width: `${progressPercent}%` }}
+          />
+        </div>
+
+        {/* Button Sahkan & Terbitkan */}
+        <Button
+          type="button"
+          size="lg"
+          variant="primary"
+          disabled={!isAllChecked || publishing}
+          onClick={handlePublish}
+          className={`w-full h-12 text-xs sm:text-sm font-bold gap-2 ${
+            isAllChecked
+              ? "bg-[#0EA47A] hover:bg-[#0EA47A]/90 text-white cursor-pointer shadow-sm"
+              : "bg-surface-2 text-muted-ink border border-line cursor-not-allowed"
+          }`}
+        >
+          {publishing ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : isAllChecked ? (
+            <CheckCircle2 className="size-4 sm:size-5" />
+          ) : (
+            <Lock className="size-4" />
+          )}
+          <span>
+            {isAllChecked
+              ? "Sahkan & Terbitkan BAP Sekarang"
+              : `Centang Semua Barang untuk Mengesahkan (${checkedCount}/${totalCount})`}
+          </span>
+        </Button>
       </div>
 
       {/* ── MODAL DIALOG PENGESAHAN BERHASIL ── */}

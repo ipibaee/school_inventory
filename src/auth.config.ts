@@ -35,12 +35,12 @@ export const authConfig = {
                     return Response.redirect(loginUrl)
                 }
 
-                // Guru Pengawas hanya fokus pada Dasbor dan Validasi/Cetak Dokumen BAP
+                // Guru Pengawas memiliki akses ke Dasbor, Validasi BOS, dan Pengaturan Akun
                 if (userRole === "TEACHER") {
                     if (
                         nextUrl.pathname.startsWith("/inventory") ||
                         nextUrl.pathname.startsWith("/borrow") ||
-                        nextUrl.pathname.startsWith("/settings") ||
+                        nextUrl.pathname.startsWith("/reports") ||
                         nextUrl.pathname.includes("/barcode")
                     ) {
                         return Response.redirect(new URL("/dashboard", nextUrl))
