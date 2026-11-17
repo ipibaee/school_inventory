@@ -5,7 +5,13 @@ import { GraduationCap } from "lucide-react"
 
 export const dynamic = "force-dynamic"
 
-export default async function LoginPage() {
+export default async function LoginPage({
+    searchParams,
+}: {
+    searchParams: Promise<{ error?: string }>
+}) {
+    const { error } = await searchParams
+
     let settings = null
     try {
         settings = await getSchoolSettings()
@@ -86,7 +92,7 @@ export default async function LoginPage() {
 
             {/* Right Form Panel */}
             <div className="flex-1 flex flex-col justify-center items-center p-6 sm:p-12 lg:p-[52px_48px] overflow-y-auto">
-                <LoginForm settings={settings} />
+                <LoginForm settings={settings} initialError={error} />
             </div>
         </div>
     )
