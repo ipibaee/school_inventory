@@ -84,6 +84,7 @@ export function BapBarcodeBatchPrinter({
   )
   const [selectedDepartment, setSelectedDepartment] = useState("TKJ")
   const [startNumber, setStartNumber] = useState(1)
+  const [numberingMode, setNumberingMode] = useState<"per_item" | "continuous">("per_item")
 
   // Pengaturan Ukuran Label Stiker (Standar Thermal 2 Kolom)
   const [labelWidth, setLabelWidth] = useState(33) // mm
@@ -139,15 +140,19 @@ export function BapBarcodeBatchPrinter({
     }))
   }
 
-  // Buat daftar semua label individual yang akan dicetak dengan nomor urut berlanjut
+  // Buat daftar semua label individual yang akan dicetak
+  // Mode "per_item" (default): Setiap barang nomor urutnya diulang dari startNumber (misal barang A: 1-5, barang B: 1-6)
+  // Mode "continuous": Nomor urut berlanjut terus untuk semua barang (misal 1-11)
   const labelsToPrint: PrintableLabel[] = []
-  let currentSeq = Number(startNumber) || 1
+  let continuousSeq = Number(startNumber) || 1
 
   procurement.items.forEach((item) => {
     const sel = itemSelections[item.id]
     if (sel?.selected && sel.count > 0) {
       const barcodeValue = item.barcode || item.id.slice(-6).toUpperCase()
+      const baseSeq = Number(startNumber) || 1
       for (let i = 1; i <= sel.count; i++) {
+        const seqToUse = numberingMode === "per_item" ? (baseSeq + i - 1) : continuousSeq
         labelsToPrint.push({
           key: `${item.id}-${i}`,
           itemName: item.name,
@@ -155,9 +160,9 @@ export function BapBarcodeBatchPrinter({
           unitIndex: i,
           totalUnits: sel.count,
           categoryName: item.categoryName || "Umum",
-          labelCode: formatLabelText(currentSeq),
+          labelCode: formatLabelText(seqToUse),
         })
-        currentSeq++
+        continuousSeq++
       }
     }
   })
@@ -382,7 +387,7 @@ export function BapBarcodeBatchPrinter({
               </div>
               <div>
                 <label className="text-[10px] font-bold uppercase text-muted-ink block mb-1">
-                  Nomor Urut Awal
+                  Nomor Urut Awal {numberingMode === "per_item" ? "(Per Barang)" : ""}
                 </label>
                 <Input
                   type="number"
@@ -391,6 +396,37 @@ export function BapBarcodeBatchPrinter({
                   onChange={(e) => setStartNumber(Number(e.target.value) || 1)}
                   className="h-8 text-xs font-mono font-bold"
                 />
+              </div>
+            </div>
+
+            {/* Pilihan Sistem Penomoran Label */}
+            <div className="border-t border-line/60 pt-3 flex flex-col gap-1.5">
+              <label className="text-[10px] font-bold uppercase text-muted-ink">
+                Sistem Penomoran Kode Label Stiker
+              </label>
+              <div className="flex flex-wrap gap-2 text-xs">
+                <button
+                  type="button"
+                  onClick={() => setNumberingMode("per_item")}
+                  className={`px-3 py-1.5 rounded-lg border font-semibold transition-all ${
+                    numberingMode === "per_item"
+                      ? "bg-brand text-white border-brand shadow-xs"
+                      : "bg-surface border-line text-ink hover:bg-surface-2"
+                  }`}
+                >
+                  ✓ Ulang Per Barang (01 - 05, barang berikutnya 01 - 06, dst.)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setNumberingMode("continuous")}
+                  className={`px-3 py-1.5 rounded-lg border font-semibold transition-all ${
+                    numberingMode === "continuous"
+                      ? "bg-brand text-white border-brand shadow-xs"
+                      : "bg-surface border-line text-ink hover:bg-surface-2"
+                  }`}
+                >
+                  Nomor Berlanjut (01 s/d total semua barang)
+                </button>
               </div>
             </div>
           </div>
