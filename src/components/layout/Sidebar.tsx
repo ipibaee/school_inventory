@@ -16,6 +16,7 @@ import {
     Settings,
     GraduationCap,
     LogOut,
+    FileText,
 } from "lucide-react"
 import { User } from "next-auth"
 
@@ -41,6 +42,11 @@ export function Sidebar({ user, settings }: SidebarProps) {
                   href: "/procurement",
               },
               {
+                  label: "Pengajuan ARKAS",
+                  icon: FileText,
+                  href: "/arkas",
+              },
+              {
                   label: "Pengaturan",
                   icon: Settings,
                   href: "/settings",
@@ -61,6 +67,11 @@ export function Sidebar({ user, settings }: SidebarProps) {
                   label: "Pengadaan BOS",
                   icon: ClipboardList,
                   href: "/procurement",
+              },
+              {
+                  label: "Pengajuan ARKAS",
+                  icon: FileText,
+                  href: "/arkas",
               },
               {
                   label: "Cetak Barcode",

@@ -105,6 +105,7 @@ model User {
   createdProcurements   Procurement[] @relation("ProcurementCreated")
   inspectedProcurements Procurement[] @relation("ProcurementInspector")
   verifiedProcurements  Procurement[] @relation("ProcurementVerified")
+  arkasSubmissions      ArkasSubmission[]
 }
 
 // ---------------------------------------------------------------------------
@@ -209,3 +210,25 @@ model Counter {
   key   String @id            // "bap:2026"
   value Int    @default(0)
 }
+
+// ---------------------------------------------------------------------------
+// Pengajuan ARKAS (Dokumen Foto Acuan Verifikasi untuk Guru / Pengawas)
+// ---------------------------------------------------------------------------
+
+model ArkasSubmission {
+  id          String   @id @default(cuid())
+  title       String
+  year        Int      @default(2026)
+  period      String?  // misal: "Tahap 1", "Tahap 2", "Semester Genap", "November 2026"
+  description String?  // Catatan / arahan acuan pemeriksa
+  images      String[] // Array URL gambar lembar pengajuan ARKAS
+  fileNames   String[] // Array nama file asli
+  createdById String?
+  createdBy   User?    @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([year])
+  @@index([createdAt])
+}
+

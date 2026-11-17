@@ -21,7 +21,8 @@ export const authConfig = {
                 nextUrl.pathname.startsWith("/borrow") ||
                 nextUrl.pathname.startsWith("/reports") ||
                 nextUrl.pathname.startsWith("/settings") ||
-                nextUrl.pathname.startsWith("/procurement")
+                nextUrl.pathname.startsWith("/procurement") ||
+                nextUrl.pathname.startsWith("/arkas")
 
             if (isProtected) {
                 if (!isLoggedIn) {
